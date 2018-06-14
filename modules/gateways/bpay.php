@@ -60,7 +60,7 @@ function gateway_check_version(){
     curl_close ($ch);
 
     $remoteVersion = str_replace("\n", "", $remoteVersion);
-    
+
   if($remoteVersion > gate_bpay_version()){
     return " - <b><a style='color:red' href='https://github.com/beanonymous/whmcsBPAY'>Download New Update!</a></b>";
   }else if($remoteVersion == gate_bpay_version()){
@@ -361,7 +361,7 @@ function setup_resource_dir($dir_base){
       mkdir( $dir_base.'bpay', 0755, true);
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-credit-horizontal.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -371,7 +371,7 @@ function setup_resource_dir($dir_base){
     }
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-credit-vertical.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -381,7 +381,7 @@ function setup_resource_dir($dir_base){
     }
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-fixed-payments.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -391,7 +391,7 @@ function setup_resource_dir($dir_base){
     }
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-horizontal.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -401,7 +401,7 @@ function setup_resource_dir($dir_base){
     }
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-no-credit-horizontal.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -411,7 +411,7 @@ function setup_resource_dir($dir_base){
     }
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-no-credit-vertical.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -421,7 +421,7 @@ function setup_resource_dir($dir_base){
     }
 
     if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg')) {
-      $ch = curl_init('https://www.relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-vertical.jpg');
+      $ch = curl_init('https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg');
       $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg', 'wb');
       curl_setopt($ch, CURLOPT_FILE, $fp);
       curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -613,22 +613,6 @@ function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength
 
       if (!file_exists($dir.'bpay')) {
         mkdir($dir.'bpay', 0755, true);
-        $ch = curl_init('https://relentlesshosting.com.au/members/images/BPAY.jpg');
-        $fp = fopen($dir.'bpay/BPay.jpg', 'wb');
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp); 
-
-        $ch = curl_init('https://relentlesshosting.com.au/members/images/arial.ttf');
-        $fp = fopen($dir.'bpay/arial.ttf', 'wb');
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp); 
-
         // Add index.html to directorys for security
         fopen($dir."bpay/index.php", "w") ;
       }

@@ -97,9 +97,7 @@ function bpay_rh_activate() {
             ('CRNLength', '8'),
             ('crnMethod', 'Customer ID'),
             ('mod10type', 'MOD10v5'),
-            ('key', ''),
             ('num_padding', 'before'),
-            ('localKey',''),
             ('Merchant_settings', 'manual'),
             ('prefix', '');";
             $result = $conn->query($sql);
@@ -858,7 +856,7 @@ function bpay_rh_output($vars) {
         $system_manager_version = bpay_version();
         $current_version = get_bpay_lastest_version();
         if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://www.relentlesshosting.com.au/members/link.php?id=15'>Download New Update!</a>";
+            $update_manager_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_manager_error = 'class="alert alert-danger"';
         }
@@ -867,7 +865,7 @@ function bpay_rh_output($vars) {
         $system_hooks_version = bpay_hook_version();
         $current_hooks_version = get_hooks_lastest_version();
         if($system_hooks_version < $current_hooks_version){
-            $update_hooks_needed = "<a style='color:red' href='https://www.relentlesshosting.com.au/members/link.php?id=15'>Download New Update!</a>";
+            $update_hooks_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_hooks_error = 'class="alert alert-danger"';
         }
@@ -876,7 +874,7 @@ function bpay_rh_output($vars) {
         $system_gateway_version = gate_bpay_version();
         $current_gateway_version = gateway_check_version();
         if($system_gateway_version < $current_gateway_version){
-            $update_gateway_needed = "<a style='color:red' href='https://www.relentlesshosting.com.au/members/link.php?id=15'>Download New Update!</a>";
+            $update_gateway_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_gateway_error = 'class="alert alert-danger"';
         }
@@ -1318,31 +1316,31 @@ function bpay_rh_output($vars) {
             <tbody>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="horizontal" '.$horizontal.'>Horizontal</label>
-            <p class="help-block"><img src="https://www.bpay.com.au/app_themes/bpay/images/img-bpay-biller-code-horizontal.png" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="vertical" '.$vertical.'>Vertical</label>
-            <p class="help-block"><img src="https://www.bpay.com.au/app_themes/bpay/images/img-bpay-biller-code-vertical.png" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg" width="300" /></p>
             </div></div></td></tr>
             
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="credit-horizontal" '.$credit_horizontal.'>Accepts Credit Cards - Horizontal</label>
-            <p class="help-block"><img src="http://relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-credit-horizontal-example.jpg" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="credit-vertical" '.$credit_vertical.'>Accepts Credit Cards - Vertical</label>
-            <p class="help-block"><img src="https://www.bpay.com.au/app_themes/bpay/images/img-bpay-biller-code-credit.png" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="no-credit-horizontal" '.$no_credit_horizontal.'>Does Not Accept Credit Cards - Horizontal</label>
-            <p class="help-block"><img src="http://relentlesshosting.com.au/members/images/bpay/img-bpay-biller-code-no-credit-horizontal-examople.jpg" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="no-credit-vertical" '.$no_credit_vertical.'>Does Not Accept Credit Cards - Vertical</label>
-            <p class="help-block"><img src="https://www.bpay.com.au/app_themes/bpay/images/img-bpay-biller-code-no-credit.png" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="fixed-payments" '.$fixed_payments.'>Fixed Payments</label>
-            <p class="help-block"><img src="https://www.bpay.com.au/BPay/media/BPAYMediaGallery/Zips/img-bpay-icrn-biller-box.png" /></p>
+            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg" width="300" /></p>
             </div></div></td></tr>
 
             </tbody>
@@ -2069,7 +2067,7 @@ function health_check(){
 
     // check addon version is current
     if(get_bpay_lastest_version() > bpay_version()){
-        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://www.relentlesshosting.com.au/members/link.php?id=15" role="button" target="_blank">Download New Update!</a></div>';
+        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
     }
 
     // check if bpay files for hooks exist
@@ -2083,7 +2081,7 @@ function health_check(){
         if(get_hooks_lastest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://www.relentlesshosting.com.au/members/link.php?id=15" role="button" target="_blank">Download New Update!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
             
         }
     }
@@ -2100,7 +2098,7 @@ function health_check(){
         if(get_hooks_lastest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://www.relentlesshosting.com.au/members/link.php?id=15" role="button" target="_blank">Download New Update!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
             
         }
     }
@@ -2116,7 +2114,7 @@ function health_check(){
         if(get_bpay_lastest_version() > gate_bpay_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://www.relentlesshosting.com.au/members/link.php?id=15" role="button" target="_blank">Download New Update!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
             
         }
 
@@ -2375,7 +2373,7 @@ function installPhase($HTML_Output){
         $system_manager_version = bpay_version();
         $current_version = get_bpay_lastest_version();
         if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://www.relentlesshosting.com.au/members/link.php?id=15'>Download New Update!</a>";
+            $update_manager_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_manager_error = 'class="alert alert-danger"';
         }
@@ -2385,7 +2383,7 @@ function installPhase($HTML_Output){
             $system_hooks_version = bpay_hook_version();
             $current_hooks_version = get_hooks_lastest_version();
             if($system_hooks_version < $current_hooks_version){
-                $update_hooks_needed = "<a style='color:red' href='https://www.relentlesshosting.com.au/members/link.php?id=15'>Download New Update!</a>";
+                $update_hooks_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
                 $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
                 $bpay_hooks_error = 'class="alert alert-danger"';
             }
@@ -2400,7 +2398,7 @@ function installPhase($HTML_Output){
             $system_gateway_version = gate_bpay_version();
             $current_gateway_version = gateway_check_version();
             if($system_gateway_version < $current_gateway_version){
-                $update_gateway_needed = "<a style='color:red' href='https://www.relentlesshosting.com.au/members/link.php?id=15'>Download New Update!</a>";
+                $update_gateway_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
                 $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             }
         }else{
@@ -2654,7 +2652,7 @@ function installPhase($HTML_Output){
     echo "<div class='tab-content'>$HTML_Output
         <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStrat."
         <h1>Welcome - BPAY ".bpay_version()."</h1>
-        <p>Welcome to BPAY Module, Developed by Relentless Hosting Pty Ltd </p>
+        <p>Welcome to BPAY Module, Developed by <a href='https://www.linkedin.com/in/clinton-nesbitt/'>Clinton Nesbitt</a> </p>
         <p>This module is a standalone application that generates BPAY CRN codes to your banks requirments and gives you the flexability to customise how it works within your WHMCS.</p>
         <p>Some cool feature to note with this BPAY module is that once a CRN is generated for an invoice or client, Depending on the settings selected, you can actually use the WHMCS global search bar to search for any CRN payments that appear within your bank account.</p>
         <p>You can customise all sorts of things with your BPAY setup like where the BPAY details appear on an invoice.</p>
