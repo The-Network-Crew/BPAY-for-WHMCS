@@ -10,9 +10,6 @@
 
 /******* Shortcuts for debug **********
 *
-* Get JSON results of users whmc setup with BPAY product (user: relentless, pass: KcC9K1ug)
-* http://../modules/addons/bpay_rh/bpay_rh.php?stats_monitor
-* 
 * Bypass initialized with out need to go through install again. (need active WHMCS seesion)
 * http://../admin/addonmodules.php?module=bpay_rh&initialise_record_bypass=1
 * 
