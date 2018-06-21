@@ -69,7 +69,6 @@ function gateway_check_version(){
   return "";
 }
 
-// get licence data and check if licence is valid
 function gate_db_access($action,$key = 0, $display_errors = true){
   if (file_exists(ROOTDIR.'/configuration.php')) {require(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {require("../configuration.php");}elseif(file_exists('../../configuration.php')) {require("../../configuration.php");}else{echo "No configuration.php file found."; return;}
 
@@ -574,6 +573,8 @@ function getBaseURL(){
 function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength = null, $genCustNum = false){
 
   $output = array();
+$output["img"] = "EMPTY";
+  if(!$_SERVER['SCRIPT_FILENAME']){
 
     if(!$BillerCode){
       $BillerCode = $CRNLength = "";
@@ -602,17 +603,40 @@ function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength
     }
     $dir = "";
     // check if images exist, if not create and store
-    if($BPAY_enabled == true){
-      if (file_exists('modules/gateways/bpay.php')) {
+    // if($BPAY_enabled == true){
+      if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {
+       $dir = ROOTDIR.'/modules/gateways/'; 
+      }else if (file_exists('modules/gateways/bpay.php')) {
        $dir = "modules/gateways/";
-      }else if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {
-       $dir = ROOTDIR."/modules/gateways/";
+      }else if (file_exists('../modules/gateways/bpay.php')) {
+       $dir = "../modules/gateways/";
+      }else if (file_exists('../../modules/gateways/bpay.php')) {
+       $dir = "../../modules/gateways/";
+      }else if (file_exists('../../../modules/gateways/bpay.php')) {
+       $dir = "../../../modules/gateways/";
       }else{
         die('Error - no database found');
       }
 
       if (!file_exists($dir.'bpay')) {
         mkdir($dir.'bpay', 0755, true);
+        setup_resource_dir(ROOTDIR.'/modules/gateways/bpay/');
+        // $ch = curl_init('https://relentlesshosting.com.au/members/images/BPAY.jpg');
+        // $fp = fopen($dir.'bpay/BPay.jpg', 'wb');
+        // curl_setopt($ch, CURLOPT_FILE, $fp);
+        // curl_setopt($ch, CURLOPT_HEADER, 0);
+        // curl_exec($ch);
+        // curl_close($ch);
+        // fclose($fp); 
+
+        // $ch = curl_init('https://relentlesshosting.com.au/members/images/arial.ttf');
+        // $fp = fopen($dir.'bpay/arial.ttf', 'wb');
+        // curl_setopt($ch, CURLOPT_FILE, $fp);
+        // curl_setopt($ch, CURLOPT_HEADER, 0);
+        // curl_exec($ch);
+        // curl_close($ch);
+        // fclose($fp); 
+
         // Add index.html to directorys for security
         fopen($dir."bpay/index.php", "w") ;
       }
@@ -640,28 +664,27 @@ function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength
       }
 
       // check if images directory are there and if not create them
-      if($crnMethod == "Customer ID" || $genCustNum == true){if (!file_exists($dir.'bpay/customers/')) {mkdir($dir.'bpay/customers/', 0755, true); fopen($dir.'bpay/customers/index.php', "w");}}
-      else{if (!file_exists($dir.'bpay/invoices/')) {mkdir($dir.'bpay/invoices/', 0755, true); fopen($dir.'bpay/invoices/index.php', "w");}}
+      if($crnMethod == "Customer ID" || $genCustNum == true){
+        if (!file_exists($dir.'bpay/customers/')) {
+          mkdir($dir.'bpay/customers/', 0755, true); 
+          fopen($dir.'bpay/customers/index.php', "w");
+        }
+        $img = ROOTDIR.'/modules/gateways/bpay/customers/'.$customer_id.'.jpg';
+      }else{
+        if (!file_exists($dir.'bpay/invoices/')) {
+          mkdir($dir.'bpay/invoices/', 0755, true); 
+          fopen($dir.'bpay/invoices/index.php', "w");
+        }
+        $img = ROOTDIR.'/modules/gateways/bpay/invoices/'.$invoiceNumb.'.jpg';
+      }
 
       if($BillerCode == 0 || $BillerCode == ""){$BillerCode="0";}
 
       // determine if file already exists from previous generate
-      if($crnMethod == "Customer ID" && file_exists(ROOTDIR.'/modules/gateways/bpay/customers/'.$customer_id.'.jpg')){
-
-      }else if($crnMethod == "Invoice Number" && file_exists(ROOTDIR.'/modules/gateways/bpay/invoices/'.$invoiceNumb.'.jpg')){ //invoice ID
-
-      }else{
-
-        // store to file
-        if($crnMethod == "Customer ID" || $genCustNum == true){
-          $img = ROOTDIR.'/modules/gateways/bpay/customers/'.$customer_id.'.jpg';
-        }else{ //invoice ID
-          $img = ROOTDIR.'/modules/gateways/bpay/invoices/'.$invoiceNumb.'.jpg';
-        }
-
+      if(!file_exists($img)){
         generateImage($BillerCode, $crnNumber, $output_type = "file", $img);
-
       }
+
       // return $img;
       //$pdf->Image(ROOTDIR.'/modules/gateways/bpay/customers/'.$clientsdetails["id"].'.jpg',126,45,50);
       
@@ -669,18 +692,22 @@ function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength
 
       $db_results = gate_db_access("pdf_display_details");
 
-      if($db_results->pdf_display->enabled != 1){
-        return false; //bpay in invoice display not active
-      }
+      // if($db_results->pdf_display->enabled != 1){
+      //   return false; //bpay in invoice display not active
+      // }
       // return serialize( $db_results);
       $output["Xaxis"] = $db_results->pdf_display->Xaxis;
       $output["Yaxis"] = $db_results->pdf_display->Yaxis;
       $output["size"] = $db_results->pdf_display->size;
-
+      $output["img"] = $img;
       return $output;
-    }else{
-      return false;
-    }
+    // }else{
+    //   return false;
+    // }
+  }else{
+
+    return false;
+  }
 }
 ///////////////////////////////////////////////////////////////////////////
 /// END BPay Generator
@@ -695,6 +722,7 @@ if(isset($_GET['CRNMethod'])){
 ///////////////////////////////////////////////////////////////////////////
 
 else if(isset($_GET['cust_id'])){
+
 
     $data = gate_db_access("manager_settings");
     if(is_array($data)){
