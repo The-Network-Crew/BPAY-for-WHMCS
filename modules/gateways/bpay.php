@@ -70,7 +70,7 @@ function gateway_check_version(){
 }
 
 function gate_db_access($action,$key = 0, $display_errors = true){
-  if (file_exists(ROOTDIR.'/configuration.php')) {require(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {require("../configuration.php");}elseif(file_exists('../../configuration.php')) {require("../../configuration.php");}else{echo "No configuration.php file found."; return;}
+  if (file_exists(ROOTDIR.'/configuration.php')) {require_once(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {require_once("../configuration.php");}elseif(file_exists('../../configuration.php')) {require_once("../../configuration.php");}else{echo "No configuration.php file found."; return;}
 
   $servername = $db_host;
   $username = $db_username;
@@ -452,7 +452,7 @@ function generateImage($biller_code, $CRN, $output_type = "image", $output_locat
     $dir_base = 'modules/gateways/';
   else if(basename($_SERVER['SCRIPT_FILENAME']) == "cron.php"){
     if (file_exists(ROOTDIR.'/configuration.php')) {
-      require(ROOTDIR."/configuration.php");
+      require_once(ROOTDIR."/configuration.php");
       if(isset($crons_dir) && $crons_dir != '')
         $dir_base = $crons_dir;
       else
