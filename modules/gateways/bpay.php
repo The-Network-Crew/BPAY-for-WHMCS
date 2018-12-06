@@ -70,6 +70,7 @@ function gateway_check_version(){
 }
 
 function gate_db_access($action,$key = 0, $display_errors = true){
+  if(!isset($db_host))
   if (file_exists(ROOTDIR.'/configuration.php')) {require_once(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {require_once("../configuration.php");}elseif(file_exists('../../configuration.php')) {require_once("../../configuration.php");}else{echo "No configuration.php file found."; return;}
 
   $servername = $db_host;
