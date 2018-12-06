@@ -23,8 +23,9 @@ else if(!mysqli_ping($conn))
 function connect_DB(){
   GLOBAL $conn;
   // load DB connection for global access
-  if (file_exists('configuration.php')) {require("configuration.php");}else if (file_exists(ROOTDIR.'/configuration.php')) {require(ROOTDIR."/configuration.php");}else{echo_die('Error - no database found');}
-
+  if(!isset($db_host))
+  	if (file_exists('configuration.php')) {include("configuration.php");}else if (file_exists(ROOTDIR.'/configuration.php')) {include(ROOTDIR."/configuration.php");}else{echo_die('Error - no database found');}
+    
   // Create connection
   $conn = new mysqli($db_host, $db_username, $db_password, $db_name);
 
@@ -271,7 +272,7 @@ function bpay_rh_output($vars) {
         // validate inputs
         $error = false;
 
-        if(isset($_POST['BillerCode']) && isset($_POST['CRNLength']) && isset($_POST['crnMethod']) && isset($_POST['mod10type']) && isset($_POST['mod10type']) && isset($_POST['key']) && isset($_POST['Merchant_settings'])){
+        if(isset($_POST['BillerCode']) && isset($_POST['CRNLength']) && isset($_POST['crnMethod']) && isset($_POST['mod10type']) && isset($_POST['Merchant_settings'])){
             // all data submitted not time to validate each field posted 
 
             if(!isset($_POST['Merchant_settings']) && $_POST['Merchant_settings'] != "manual" && $_POST['Merchant_settings'] != "ezidebit"){
@@ -315,15 +316,6 @@ function bpay_rh_output($vars) {
                 $error = true;
                 $crnLengthError = 'alert-danger';
             }
-
-            
-            if(!isset($_POST['key'])){
-                $licenceKeyError = 'class="alert-danger"';
-                $error = true;
-            }
-
-            
-            
                 
         }else{
             $error = true;
