@@ -6,11 +6,9 @@
  * This hook is used to manage the invoice management for the BPay crm system
  *
  * @package    WHMCS
- * @author     Relentless Hosting Pty Ltd <admin@relentlesshosting.com.au>
- * @copyright  Copyright (c) Relentless Hosting Pty Ltd 2005-2016
- * @license    http://www.whmcs.com/license/ WHMCS Eula
- * @version    1.4
- * @link       http://www.relentlesshosting.com.au/
+ * @author     Clinton Nesbitt - www.relentlesshosting.com.au
+ * @copyright  Copyright (c) Relentless Hosting Pty Ltd 2006-2019
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 
