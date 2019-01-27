@@ -33,6 +33,9 @@ If you encounter any issue using the module with the version specifications list
 
 ## Change Log
 ###### Bug fixes in 2.1.8 is:
+- Installation bug fix - Fixed bug where a database value were missing for fresh install of this product
+- Installation bug fix - Fixed bug file verification was not working correctly
+###### Bug fixes in 2.1.8 is:
 - Added Feature - Artwork change from 7 different variations
 - Added Feature - PHP 7.2 support
 - Removed Feature - Removed Ioncude Encoding Requirments
