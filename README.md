@@ -32,7 +32,7 @@ Below is a list of specifications that your system must have in order for BPAY g
 If you encounter any issue using the module with the version specifications listed above, please let our support team know.
 
 ## Change Log
-###### Bug fixes in 2.1.8 is:
+###### Bug fixes in 2.1.9 is:
 - Installation bug fix - Fixed bug where a database value were missing for fresh install of this product
 - Installation bug fix - Fixed bug file verification was not working correctly
 ###### Bug fixes in 2.1.8 is:
