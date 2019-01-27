@@ -1,19 +1,20 @@
 <?php
-##### notes to do still #####
-// RH control panel to manage clients / view details remotely for RH support staff. (JSON feed Completed)
-// install page needs same settings normal page
 
-//commbank - MOD10v5 - pad 0 before gen
-//westpac - MOD10v5 - pad 0 before gen
-//nab -  Mod10v1 - pad 0 before gen
-
+/**
+ * @package     whmcsBPAY
+ * @author      Clinton Nesbitt - www.relentlesshosting.com.au
+ *
+ * @copyright   Copyright (C) 2006 - 2019 Relentless Hosting. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 /******* Shortcuts for debug **********
 *
-* Bypass initialized with out need to go through install again. (need active WHMCS seesion)
-* http://../admin/addonmodules.php?module=bpay_rh&initialise_record_bypass=1
+* Bypass initializion with out need to go through install again. (need active WHMCS session)
+* http://../{whmcs_admin_dir}/addonmodules.php?module=bpay_rh&initialise_record_bypass=1
 * 
 * */
+
 $conn;
 if(!defined($conn))
     connect_DB();
@@ -97,8 +98,10 @@ function bpay_rh_activate() {
             ('mod10type', 'MOD10v5'),
             ('num_padding', 'before'),
             ('Merchant_settings', 'manual'),
-            ('prefix', '');";
+            ('prefix', ''),
+            ('imgType', 'vertical');";
             $result = $conn->query($sql);
+            db_access("sqlQuery", "INSERT INTO `mod_bpay_display` (`option`, `value`) VALUES ('imgType', 'vertical');");
         }
 
         $sql = "ALTER TABLE `mod_bpay_record` ADD UNIQUE INDEX `crn` (`crn`), ADD UNIQUE INDEX `invoiceID` (`invoiceID`);";
@@ -785,8 +788,8 @@ function bpay_rh_output($vars) {
         $arial_file_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/arial.ttf')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
         $arial_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/arial.ttf')), -4);
 
-        $bpay_image_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/BPay.jpg')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $bpay_image_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/BPay.jpg')), -4);
+        // $bpay_image_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/BPay.jpg')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+        // $bpay_image_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/BPay.jpg')), -4);
 
         $customers_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/customers/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
         $customers_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/customers/')), -4);
@@ -801,39 +804,39 @@ function bpay_rh_output($vars) {
         $bpay_hooks_include_file_status = (file_exists(ROOTDIR.'/includes/hooks/bpay_rh.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
         $bpay_hooks_include_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/includes/hooks/bpay_rh.php')), -4);
 
-        if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission > 644){
+        if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
             $bpay_file_error = 'class="alert alert-danger"';
             $bpay_file_download = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&bpay_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
-        if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission > 644){
+        if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
             $arial_file_error = 'class="alert alert-danger"';
             $arial_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&ttf_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
-        if($bpay_image_status == "<font color='red'>Missing</font>" || $bpay_image_permission > 644){
-            $bpay_image_error = 'class="alert alert-danger"';
-            $bpay_image_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&jpg_perm_fix=".rand()."#info'>Resolve</a>";
-        }
+        // if($bpay_image_status == "<font color='red'>Missing</font>" || $bpay_image_permission < 644){
+        //     $bpay_image_error = 'class="alert alert-danger"';
+        //     $bpay_image_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&jpg_perm_fix=".rand()."#info'>Resolve</a>";
+        // }
 
-        if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission > 755){
-            if($crnMethod != "Invoice Number")
-                $customers_dir_error = 'class="alert alert-danger"';
+        if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
+            // if($crnMethod != "Invoice Number")
+            $customers_dir_error = 'class="alert alert-danger"';
             $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_cust_dir=".rand()."#info'>Resolve</a>";
         }
 
-        if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission > 755){
-            if($crnMethod != "Customer ID")
-                $invoices_dir_error = 'class="alert alert-danger"';
+        if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
+            // if($crnMethod != "Customer ID")
+            $invoices_dir_error = 'class="alert alert-danger"';
             $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_inv_dir=".rand()."#info'>Resolve</a>";
         }
 
-        if($bpay_hooks_core_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_core_file_permission > 644){
+        if($bpay_hooks_core_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_core_file_permission < 644){
             $bpay_hooks_core_error = 'class="alert alert-danger"';
             $bpay_hooks_core_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&bpay_hook_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
-        if($bpay_hooks_include_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_include_file_permission > 644){
+        if($bpay_hooks_include_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_include_file_permission < 644){
             $bpay_hooks_include_error = 'class="alert alert-danger"';
             $bpay_hooks_include_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&bpay_inc_hook_perm_fix=".rand()."#info'>Resolve</a>";
         }
@@ -1057,13 +1060,6 @@ function bpay_rh_output($vars) {
             <td>'.$arial_file_status.'</td>
             <td>'.$arial_file_permission.'</td>
             <td>'.$arial_file_fix.'</td>
-            </tr>
-            <tr '.$bpay_image_error.'>
-            <td>bpay.jpg</td>
-            <td>JPG (Joint Photographic Group)</td>
-            <td>'.$bpay_image_status.'</td>
-            <td>'.$bpay_image_permission.'</td>
-            <td>'.$bpay_image_file_fix.'</td>
             </tr>
             <tr '.$bpay_hooks_core_error.'>
             <td>bpay_rh_hooks.php</td>
@@ -1395,7 +1391,7 @@ function bpay_rh_output($vars) {
 }
 
 function bpay_version()
-{    return "2.1.8";
+{    return "2.1.9";
 }
 
 function is_bpay_out_dated(){
@@ -2319,37 +2315,29 @@ function installPhase($HTML_Output){
         $arial_file_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/arial.ttf')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
         $arial_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/arial.ttf')), -4);
 
-        $bpay_image_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/BPay.jpg')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $bpay_image_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/BPay.jpg')), -4);
-
         $customers_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/customers/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
         $customers_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/customers/')), -4);
 
         $invoices_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/invoices/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
         $invoices_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/invoices/')), -4);
 
-        if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission > 644){
+        if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
             $bpay_file_error = 'class="alert alert-danger"';
             $bpay_file_download = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_rh&bpay_perm_fix=1#step1'>Resolve</a>";
         }
 
-        if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission > 644){
+        if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
             $arial_file_error = 'class="alert alert-danger"';
             $arial_file_fix = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_rh&ttf_perm_fix=1#step1'>Resolve</a>";
         }
 
-        if($bpay_image_status == "<font color='red'>Missing</font>" || $bpay_image_permission > 644){
-            $bpay_image_error = 'class="alert alert-danger"';
-            $bpay_image_file_fix = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_rh&jpg_perm_fix=1#step1'>Resolve</a>";
-        }
-
-        if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission > 755){
+        if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
             if($crnMethod != "Invoice Number")
                 $customers_dir_error = 'class="alert alert-danger"';
             $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_cust_dir=1#step1'>Resolve</a>";
         }
 
-        if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission > 755){
+        if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
             if($crnMethod != "Customer ID")
                 $invoices_dir_error = 'class="alert alert-danger"';
             $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_inv_dir=1#step1'>Resolve</a>";
@@ -2699,13 +2687,6 @@ function installPhase($HTML_Output){
             <td>'.$arial_file_permission.'</td>
             <td>'.$arial_file_fix.'</td>
             </tr>
-            <tr '.$bpay_image_error.'>
-            <td>bpay.jpg</td>
-            <td>JPG (Joint Photographic Group)</td>
-            <td>'.$bpay_image_status.'</td>
-            <td>'.$bpay_image_permission.'</td>
-            <td>'.$bpay_image_file_fix.'</td>
-            </tr>
             <tr '.$customers_dir_error.'>
             <td>Customers</td>
             <td>Directory</td>
@@ -2847,25 +2828,35 @@ function echo_die($message = ""){
 
 function change_log(){
     return "
-        <p>Bug fixes 2.1.8 is:<ul>
+        <p>Bug fixes 2.1.9 is:
+        <ul>
+        <li><strong>Installation bug fix</strong> - Fixed bug where a database value were missing for fresh install of this product</li>
+        <li><strong>Installation bug fix</strong> - Fixed bug file verification was not working correctly</li>
+        </ul>
+
+        <p>Bug fixes 2.1.8 is:
+        <ul>
         <li><strong>Added Feature</strong> - Artwork change from 7 different variations</li>
         <li><strong>Added Feature</strong> - PHP 7.2 support</li>
         <li><strong>Added Feature</strong> - Ioncude 10.2 support</li>
         <li><strong>Cron base directory</strong> - Added check for users who cron's run from rood directory rather than base web directory</li>
         </ul>
 
-        <p>Bug fixes in 2.1.7 is:<ul>
+        <p>Bug fixes in 2.1.7 is:
+        <ul>
         <li><strong>Added Feature</strong> - Added prefix support through EziDebit</li>
         <li><strong>Added Feature</strong> - Added option to use pre-configured bank requirements for BPAY (please let us know if your bank is not listed)</li>
         <li><strong>Added Feature</strong> - Modified Example BPAY image to demonstrate an actual BPAY image generated based off settings made in settings area.</li>
         <li><strong>Added Feature</strong> - Added preview button on appearances page to quickly view new placement of an invoice after change made.</li>
         <li><strong>Added Feature</strong> - Added name lookup feature based off biller code entered</li>
         </ul>
-        <p>Bug fixes in 2.1.6 is:<ul>
+        <p>Bug fixes in 2.1.6 is:
+        <ul>
         <li><strong>Invoice PDF bug</strong> - Fixed bug with loading BPAY Ref on order complete</li>
         <li><strong>Invoice PDF bug</strong> - Fixed MOD10v1 check digit issue</li>
         </ul>
-        <p>Bug fixes in 2.1.5 is:<ul>
+        <p>Bug fixes in 2.1.5 is:
+        <ul>
         <li><strong>Invoice PDF bug</strong> - Fixed minor bug with loading BPAY library assets</li>
         <li><strong>Invoice PDF bug</strong> - Fixed minor bug where the BPAY details would only load on one PDF if invoice overflowed to multiple pages</li>
         <li><strong>CSS for Hooks</strong> - Added the ability for developers to manipulate BPAY elements generated by WHMCS hooks</li>
