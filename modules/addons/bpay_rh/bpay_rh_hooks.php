@@ -33,7 +33,7 @@ function connect_hook_DB(){
 }
 
 function bpay_hook_version(){
-    return "2.1.8";
+    return "2.1.9";
 }
 
 function is_hook_out_dated(){
