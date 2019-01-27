@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * @package     whmcsBPAY
+ * @author      Clinton Nesbitt - www.relentlesshosting.com.au
+ *
+ * @copyright   Copyright (C) 2006 - 2019 Relentless Hosting. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
 function bpay_config() {
   $configarray = array(
    "FriendlyName" => array("Type" => "System", "Value"=>"BPAY"),
@@ -49,7 +58,7 @@ function bpay_link($params) {
 }
 
 function gate_bpay_version(){
-  return "2.1.8";
+  return "2.1.9";
 }
 
 function gateway_check_version(){
@@ -71,15 +80,10 @@ function gateway_check_version(){
 
 function gate_db_access($action,$key = 0, $display_errors = true){
   if(!isset($db_host))
-  if (file_exists(ROOTDIR.'/configuration.php')) {require_once(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {require_once("../configuration.php");}elseif(file_exists('../../configuration.php')) {require_once("../../configuration.php");}else{echo "No configuration.php file found."; return;}
-
-  $servername = $db_host;
-  $username = $db_username;
-  $password = $db_password;
-  $db = $db_name;
+  if (file_exists(ROOTDIR.'/configuration.php')) {include(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {include("../configuration.php");}elseif(file_exists('../../configuration.php')) {include("../../configuration.php");}else{echo "No configuration.php file found."; return;}
 
     // Create connection
-  $connGate = new mysqli($servername, $username, $password,$db);
+  $connGate = new mysqli($db_host, $db_username, $db_password,$db_name);
 
     // Check connection
   if ($connGate->connect_error) {
