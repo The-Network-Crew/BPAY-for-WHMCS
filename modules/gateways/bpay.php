@@ -576,12 +576,11 @@ function getBaseURL(){
 ///////////////////////////////////////////////////////////////////////////
 
 function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength = null, $genCustNum = false){
-
   $output = array();
 $output["img"] = "EMPTY";
-  if(!$_SERVER['SCRIPT_FILENAME']){
 
     if(!$BillerCode){
+      
       $BillerCode = $CRNLength = "";
       $BPAY_enabled = false;
       // $table = "mod_bpay_display";
@@ -709,15 +708,10 @@ $output["img"] = "EMPTY";
     // }else{
     //   return false;
     // }
-  }else{
-
-    return false;
-  }
 }
 ///////////////////////////////////////////////////////////////////////////
 /// END BPay Generator
 ///////////////////////////////////////////////////////////////////////////
-
 if(isset($_GET['CRNMethod'])){
   echo gate_db_access("crnMethod");
 }
