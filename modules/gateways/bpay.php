@@ -41,7 +41,6 @@ function bpay_link($params) {
 
   //get CRN ref from db
   $crn = gate_db_access("get_crn_ref", $data);
-
   if(!$crn)
     return false;
 
@@ -52,7 +51,7 @@ function bpay_link($params) {
   // }
 
   # Enter your code submit to the gateway...
-  $code = null;
+  $code = "<img id='rhBpayAdminViewInvoice' src='../modules/gateways/bpay.php?cust_id=$crn' width='250px' style='margin-top:-20px;'>";
 
  return $code;
 }
