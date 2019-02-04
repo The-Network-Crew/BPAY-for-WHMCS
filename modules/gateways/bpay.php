@@ -79,7 +79,7 @@ function gateway_check_version(){
 
 function gate_db_access($action,$key = 0, $display_errors = true){
   if(!isset($db_host))
-  if (file_exists(ROOTDIR.'/configuration.php')) {include(ROOTDIR."/configuration.php");}elseif(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {include("../configuration.php");}elseif(file_exists('../../configuration.php')) {include("../../configuration.php");}else{echo "No configuration.php file found."; return;}
+  if(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {include("../configuration.php");}elseif(file_exists('../../configuration.php')) {include("../../configuration.php");}else{echo "No configuration.php file found."; return;}
 
     // Create connection
   $connGate = new mysqli($db_host, $db_username, $db_password,$db_name);
