@@ -112,7 +112,7 @@ function get_hooks_lastest_version(){
         return false; // search no specified thus default off
     }
 
-    if($vars['addon_modules']['bpay_manager'] != "BPAY Manager"){
+    if($vars['addon_modules']['bpay_mgr'] != "BPAY Manager"){
         return false; //user does not have access to BPAY addon
     }
     
@@ -169,7 +169,7 @@ function get_hooks_lastest_version(){
           };
           $.ajax({
             type: "POST",
-            url: "addonmodules.php?module=bpay_manager&searchGlobal=1",
+            url: "addonmodules.php?module=bpay_mgr&searchGlobal=1",
             dataType: "json",
             data: post_data,
             success: function(response)
