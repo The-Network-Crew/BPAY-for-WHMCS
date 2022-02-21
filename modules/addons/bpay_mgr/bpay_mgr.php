@@ -899,10 +899,10 @@ function bpay_mgr_output($vars) {
         $HTML_Output .= '  <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search</a></li>
-        <li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">'.$info_icon.'Info</a></li>
+        <li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">'.$info_icon.'Health</a></li>
         <li role="presentation"><a href="#appearance" aria-controls="appearance" role="tab" data-toggle="tab">Appearance</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-        <li role="presentation"><a href="#change_log" aria-controls="change_log" role="tab" data-toggle="tab">Change log</a></li>
+        <li role="presentation"><a href="#change_log" aria-controls="change_log" role="tab" data-toggle="tab">Changelog</a></li>
         </ul>';
 
         // search Tab
@@ -1376,7 +1376,7 @@ function bpay_mgr_output($vars) {
 
         $HTML_Output .= health_check();
 
-        $change_log = "<h1>Change Logs</h1>".change_log();
+        $change_log = "<h1>Changelog</h1>".change_log();
 
         $HTML_Output .= "<div class='tab-content'>
         <div role='tabpanel' class='tab-pane active' id='search'>".$HTML_search_form.$HTML_search."</div>
@@ -2119,7 +2119,7 @@ function health_check(){
             }
         }else{
             // BPAY is not installed on gateway
-            $results .= '<div class="errorbox"><strong><span class="title">BPAY is NOT an activate GATEWAY!</span></strong><br>BPAY has not been activated on "Payment Gateway". Please go to "Payment Gateways" and add BPAY to the gateway.<br><br><a class="btn btn-danger" href="configgateways.php" role="button" target="_blank">Payment Gateways</a></div>';
+            $results .= '<div class="errorbox"><strong><span class="title">BPAY has NOT been Activated as a Gateway!</span></strong><br>BPAY has not been activated as a "Payment Gateway". Please go to "Payment Gateways" and activate BPAY.<br><br><a class="btn btn-danger" href="configgateways.php" role="button" target="_blank">Payment Gateways</a></div>';
         }
 
         
@@ -2639,9 +2639,8 @@ function installPhase($HTML_Output){
         <p>Click the <strong>".'"'."Get Started".'"'."</strong> button at the bottom when you are ready to go ahead with installation.</p>
         <p><strong>ENJOY THE MODULE!</strong></p>
         <p>For more information on BPAY and how it works, please go to <a href='https://bpay.com.au' target='_blank'>BPAY.com.au</a></p>
-        <h3><strong>BPAY Update History</strong></h3>
         ".$change_log."
-        <a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
+        <br><a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
         ".$tableEnd."</div>
         <div role='tabpanel' class='tab-pane' id='step1'>".$tableStrat."<h1>Step 1</h1>";
         $health_check = health_check();
@@ -2789,9 +2788,9 @@ function installPhase($HTML_Output){
         echo $HTML_Settings;
         echo "<a class='btn btn-primary hidden' href='#confirm' id='settings_next' aria-controls='confirm' role='tab' data-toggle='tab'>Next Step</a>";
         echo $tableEnd."</div>
-        <div role='tabpanel' class='tab-pane' id='confirm'>".$tableStrat."<h1>Confirm Details</h1>";
+        <div role='tabpanel' class='tab-pane' id='confirm'>".$tableStrat."<h1>Confirm your BPAY Set-up</h1>";
         echo "Total number of BPAY references that need to be generated based off your existing BPAY settings: <strong>".$initialiseRowsToProcess."</strong><br>";
-        echo "BPAY references will be generated based off: <strong>".$crnMethod."</strong><br>If you are happy with the above details, please click Finalised and we can get started.<p>";
+        echo "BPAY references will be generated based off: <strong>".$crnMethod."</strong><br>If you are happy with the above, please Finalise.<p>";
         echo "<center><a class='btn btn-success' href='addonmodules.php?module=bpay_mgr&initialise_record=1'>Finalise Install</a></center>";
         echo $tableEnd."</div>
         </div>";
