@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package     whmcsBPAY
- * @author      Clinton Nesbitt - www.relentlesshosting.com.au
+ * @package     BPAY for WHMCS (BPAY Manager)
+ * @author      The Network Crew Pty Ltd and Clinton Nesbitt
  *
- * @copyright   Copyright (C) 2006 - 2019 Relentless Hosting. All rights reserved.
+ * @copyright   Copyright (C) The Network Crew Pty Ltd. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -51,7 +51,7 @@ function bpay_link($params) {
   // }
 
   # Enter your code submit to the gateway...
-  $code = "<img id='rhBpayAdminViewInvoice' src='../modules/gateways/bpay.php?cust_id=$crn' width='250px' style='margin-top:-20px;'>";
+  $code = "<img id='BpayAdminViewInvoice' src='../modules/gateways/bpay.php?cust_id=$crn' width='250px' style='margin-top:-20px;'>";
 
  return $code;
 }

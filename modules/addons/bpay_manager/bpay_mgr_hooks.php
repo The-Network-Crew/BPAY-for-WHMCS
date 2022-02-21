@@ -2,18 +2,6 @@
 
 if (!defined("WHMCS") && !$rh)
     die("This file cannot be accessed directly");
-
-// add_hook("ClientAdd",1,"InvoiceCreation");
-
-// HOOKS to ADD
-// Invoice creation - http://docs.whmcs.com/Hooks:InvoiceCreation
-// Invoice gets made unpaid again from other status - http://docs.whmcs.com/Hooks:InvoiceUnpaid
-// Admin view Invoice outside PDF - http://docs.whmcs.com/Hooks:ViewInvoiceDetailsPage
-// Client creation - http://docs.whmcs.com/Hooks:ClientAdd
-// Client Summary Admin Page - http://docs.whmcs.com/Hooks:AdminAreaClientSummaryPage
-// Client home page (client CRM mode only) - http://docs.whmcs.com/Hooks:ClientAreaHomepage
-// 
-// need to check if bpay prefs have this turned on or not (view invoice hook).
 $conn;
 
 connect_hook_DB();
@@ -38,13 +26,13 @@ function bpay_hook_version(){
 
 function is_hook_out_dated(){
     if(get_hooks_lastest_version() > bpay_hook_version()){
-        return "<br><span style='float:right;'><b>BPAY Manager Hooks is out of Date: <a style='color:red' href='https://github.com/beanonymous/whmcsBPAY'>Download New Update!</a></span>";
+        return "<br><span style='float:right;'><b>BPAY Manager Hooks is outdated: <a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a></span>";
     }
 }
 
 function get_hooks_lastest_version(){
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/version");
+    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/lsthompson/BPAY-for-WHMCS/master/version");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close ($ch);
@@ -94,13 +82,13 @@ function get_hooks_lastest_version(){
     
     echo '<script>
     setTimeout(function() { 
-      $image = $("<img id='."'".'rhBpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
+      $image = $("<img id='."'".'BpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
       $image.insertBefore( $('."'".'#tab1 table td form'."'".'));
     }, 500);
     </script>';
     
   }
-  // global search hyjack jquery
+  // global search hijack jQuery
   function bpay_global_search($vars){
     GLOBAL $conn;
 
@@ -124,7 +112,7 @@ function get_hooks_lastest_version(){
         return false; // search no specified thus default off
     }
 
-    if($vars['addon_modules']['bpay_rh'] != "BPAY Manager"){
+    if($vars['addon_modules']['bpay_manager'] != "BPAY Manager"){
         return false; //user does not have access to BPAY addon
     }
     
@@ -181,7 +169,7 @@ function get_hooks_lastest_version(){
           };
           $.ajax({
             type: "POST",
-            url: "addonmodules.php?module=bpay_rh&searchGlobal=1",
+            url: "addonmodules.php?module=bpay_manager&searchGlobal=1",
             dataType: "json",
             data: post_data,
             success: function(response)
@@ -389,7 +377,7 @@ function get_hooks_lastest_version(){
         setTimeout(function() { 
           console.log($('textarea[name=adminnotes]').parent().parent().parent().html());
           
-          $(".'"'."</div><div id='rhBpayClientSummaryAdminArea' class='clientssummarybox'><div class='title'>BPAY Details</div><img src='../modules/gateways/bpay.php?cust_id=".$crn."' width='100%' align='middle' />".'"'.")
+          $(".'"'."</div><div id='BpayClientSummaryAdminArea' class='clientssummarybox'><div class='title'>BPAY Details</div><img src='../modules/gateways/bpay.php?cust_id=".$crn."' width='100%' align='middle' />".'"'.")
           .insertBefore($('textarea[name=adminnotes]').parent().parent().parent());
 
           // .insertAfter($('#clientsummarycontainer div div:eq(20)').children().next());/**/
@@ -399,7 +387,7 @@ function get_hooks_lastest_version(){
         </script>";
 
         echo "<style>
-#rhBpayClientSummaryAdminArea {
+#BpayClientSummaryAdminArea {
     color=green;
     }
 </style>";

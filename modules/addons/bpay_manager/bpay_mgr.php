@@ -1,17 +1,17 @@
 <?php
 
 /**
- * @package     whmcsBPAY
- * @author      Clinton Nesbitt - www.relentlesshosting.com.au
+ * @package     BPAY for WHMCS (BPAY Manager)
+ * @author      The Network Crew Pty Ltd and Clinton Nesbitt
  *
- * @copyright   Copyright (C) 2006 - 2019 Relentless Hosting. All rights reserved.
+ * @copyright   Copyright (C) The Network Crew Pty Ltd. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 /******* Shortcuts for debug **********
 *
 * Bypass initializion with out need to go through install again. (need active WHMCS session)
-* http://../{whmcs_admin_dir}/addonmodules.php?module=bpay_rh&initialise_record_bypass=1
+* http://../{whmcs_admin_dir}/addonmodules.php?module=bpay_manager&initialise_record_bypass=1
 * 
 * */
 
@@ -52,19 +52,19 @@ function con_sanitize($data)
     return $output;
 }
 
-function bpay_rh_config() {
+function bpay_mgr_config() {
     $configarray = array(
         "name" => "BPAY Manager",
-        "description" => "Manager your BPAY gateway settings, appearance on WHMCS and search for invoices that relate to BPAY references received from your bank.".is_bpay_out_dated(),
+        "description" => "Manage your BPAY Gateway settings, appearance in WHMCS and search for invoices that relate to BPAY References receipted at your bank.".is_bpay_out_dated(),
         "version" => bpay_version(),
-        "author" => "<a href='https://www.linkedin.com/in/clinton-nesbitt/'>Clinton Nesbitt</a>",
+        "author" => "The Network Crew Pty Ltd",
         "fields" => array(
             )
         );
 return $configarray;
 }
 
-function bpay_rh_activate() {
+function bpay_mgr_activate() {
     GLOBAL $conn;
 
     # Create Custom DB Table
@@ -120,7 +120,7 @@ function bpay_rh_activate() {
     //  a message to the user');
 }
 
-function bpay_rh_deactivate() {
+function bpay_mgr_deactivate() {
     GLOBAL $conn;
 
     # Create Custom DB Table
@@ -139,7 +139,7 @@ function bpay_rh_deactivate() {
 }
 
 // https://developers.whmcs.com/addon-modules/upgrades/
-function bpay_rh_upgrade($vars) {
+function bpay_mgr_upgrade($vars) {
     GLOBAL $conn;
     $version = $vars['version'];
 
@@ -176,7 +176,7 @@ function bpay_rh_upgrade($vars) {
 
 }
 
-function bpay_rh_output($vars) {
+function bpay_mgr_output($vars) {
     
     // $modulelink = $vars['modulelink'];
     // $version = $vars['version'];
@@ -250,24 +250,24 @@ function bpay_rh_output($vars) {
     }
 
     if(isset($_GET['bpay_hook_perm_fix'])){
-        if (file_exists(ROOTDIR.'/modules/addons/bpay_rh/bpay_rh_hooks.php')){
-            if (chmod(ROOTDIR."/modules/addons/bpay_rh/bpay_rh_hooks.php", 0644))
+        if (file_exists(ROOTDIR.'/modules/addons/bpay_manager/bpay_mgr_hooks.php')){
+            if (chmod(ROOTDIR."/modules/addons/bpay_manager/bpay_mgr_hooks.php", 0644))
                 $HTML_Output .= '<div class="successbox"><strong><span class="title">File Permissions Fixed Successfully!</span></strong></div>';
             else
-                $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error changing File Permissions!</span></strong><br>The file Permissions were not changed. Please manually change the file permissions for the file "bpay_rh_hooks.php". This is located in the following directory: "/modules/addons/bpay_rh/", Please change files permissions to "644".</div>';
+                $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error changing File Permissions!</span></strong><br>The file Permissions were not changed. Please manually change the file permissions for the file "bpay_mgr_hooks.php". This is located in the following directory: "/modules/addons/bpay_manager/", Please change files permissions to "644".</div>';
         }else{
-            $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error File Missing!</span></strong><br>The file "bpay_rh_hooks.php" is missing. Please manually upload the file "bpay_rh_hooks.php". This is to be uploaded to the directory: "/modules/addons/bpay_rh/", Please change files permissions to "644".</div>';
+            $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error File Missing!</span></strong><br>The file "bpay_mgr_hooks.php" is missing. Please manually upload the file "bpay_mgr_hooks.php". This is to be uploaded to the directory: "/modules/addons/bpay_manager/", Please change files permissions to "644".</div>';
         }
     }
 
     if(isset($_GET['bpay_inc_hook_perm_fix'])){
-        if (file_exists(ROOTDIR.'/includes/hooks/bpay_rh.php')){
-            if (chmod(ROOTDIR."/includes/hooks/bpay_rh.php", 0644))
+        if (file_exists(ROOTDIR.'/includes/hooks/bpay_mgr_inc.php')){
+            if (chmod(ROOTDIR."/includes/hooks/bpay_mgr_inc.php", 0644))
                 $HTML_Output .= '<div class="successbox"><strong><span class="title">File Permissions Fixed Successfully!</span></strong></div>';
             else
-                $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error changing File Permissions!</span></strong><br>The file Permissions were not changed. Please manually change the file permissions for the file "bpay_rh.php". This is located in the following directory: "/includes/hooks/", Please change files permissions to "644".</div>';
+                $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error changing File Permissions!</span></strong><br>The file Permissions were not changed. Please manually change the file permissions for the file "bpay_mgr_inc.php". This is located in the following directory: "/includes/hooks/", Please change files permissions to "644".</div>';
         }else{
-            $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error File Missing!</span></strong><br>The file "bpay_rh.php" is missing. Please manually upload the file "bpay_rh.php". This is to be uploaded to the directory: "/includes/hooks/", Please change files permissions to "644".</div>';
+            $HTML_Output .= '<div class="errorbox"><strong><span class="title">Error File Missing!</span></strong><br>The file "bpay_mgr_inc.php" is missing. Please manually upload the file "bpay_mgr_inc.php". This is to be uploaded to the directory: "/includes/hooks/", Please change files permissions to "644".</div>';
         }
     }
 
@@ -470,7 +470,7 @@ function bpay_rh_output($vars) {
 
                 // $result = $conn->query($sql);
                 if(count($globalSearch) > 0) {
-                    $output = '<div class="searchresultheader rhBpaySearch">BPAY clients</div>';
+                    $output = '<div class="searchresultheader BpaySearch">BPAY clients</div>';
                     foreach ($globalSearch as $value) {
                         # code...
                         $link = "";
@@ -480,7 +480,7 @@ function bpay_rh_output($vars) {
                             $link = "invoices.php?action=edit&id=".$value['invoiceID'];
                         }
                     
-                        $output .= '<div class="searchresult rhBpaySearchClient">
+                        $output .= '<div class="searchresult BpaySearchClient">
                         <a href="'.$link.'">
                         <strong>'.$value['firstname']." ".$value['lastname'].'</strong>
                         #'.$value['clientID'];
@@ -541,7 +541,7 @@ function bpay_rh_output($vars) {
             $searchKey->crn = $_REQUEST['crn'];
             $searchKey->limit = (isset($_REQUEST['limit']))?$_REQUEST['limit']:"10";
             $searchKey->offset = (isset($_REQUEST['offset']))?$_REQUEST['offset']:"0";
-            $paginationLink = "addonmodules.php?module=bpay_rh&search=1&crn=".$searchKey->crn;
+            $paginationLink = "addonmodules.php?module=bpay_manager&search=1&crn=".$searchKey->crn;
         }
         else if($crnMethod == "Invoice Number"){
             $HTML_search .= "<th>CRN</th><th>Invoice Number</th><th>Total</th><th>Status</th><th>View Invoices</th>"; // some button - clientssummary.php?userid=1112
@@ -551,7 +551,7 @@ function bpay_rh_output($vars) {
             $searchKey->searchBy = $_REQUEST['searchBy'];
             $searchKey->limit = (isset($_REQUEST['limit']))?$_REQUEST['limit']:"10";
             $searchKey->offset = (isset($_REQUEST['offset']))?$_REQUEST['offset']:"0";
-            $paginationLink = "addonmodules.php?module=bpay_rh&search=1&crn=".$searchKey->crn."&searchBy=".$searchKey->searchBy;
+            $paginationLink = "addonmodules.php?module=bpay_manager&search=1&crn=".$searchKey->crn."&searchBy=".$searchKey->searchBy;
         }
 
         // $paginationLink &limit=".$searchKey->limit."&offset=".$searchKey->offset.";
@@ -798,47 +798,47 @@ function bpay_rh_output($vars) {
         $invoices_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/invoices/')), -4);
 
 
-        $bpay_hooks_core_file_status = (file_exists(ROOTDIR.'/modules/addons/bpay_rh/bpay_rh_hooks.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $bpay_hooks_core_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/addons/bpay_rh/bpay_rh_hooks.php')), -4);
+        $bpay_hooks_core_file_status = (file_exists(ROOTDIR.'/modules/addons/bpay_manager/bpay_mgr_hooks.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+        $bpay_hooks_core_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/addons/bpay_manager/bpay_mgr_hooks.php')), -4);
 
-        $bpay_hooks_include_file_status = (file_exists(ROOTDIR.'/includes/hooks/bpay_rh.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $bpay_hooks_include_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/includes/hooks/bpay_rh.php')), -4);
+        $bpay_hooks_include_file_status = (file_exists(ROOTDIR.'/includes/hooks/bpay_mgr_inc.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+        $bpay_hooks_include_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/includes/hooks/bpay_mgr_inc.php')), -4);
 
         if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
             $bpay_file_error = 'class="alert alert-danger"';
-            $bpay_file_download = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&bpay_perm_fix=".rand()."#info'>Resolve</a>";
+            $bpay_file_download = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_manager&bpay_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
         if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
             $arial_file_error = 'class="alert alert-danger"';
-            $arial_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&ttf_perm_fix=".rand()."#info'>Resolve</a>";
+            $arial_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_manager&ttf_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
         // if($bpay_image_status == "<font color='red'>Missing</font>" || $bpay_image_permission < 644){
         //     $bpay_image_error = 'class="alert alert-danger"';
-        //     $bpay_image_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&jpg_perm_fix=".rand()."#info'>Resolve</a>";
+        //     $bpay_image_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_manager&jpg_perm_fix=".rand()."#info'>Resolve</a>";
         // }
 
         if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
             // if($crnMethod != "Invoice Number")
             $customers_dir_error = 'class="alert alert-danger"';
-            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_cust_dir=".rand()."#info'>Resolve</a>";
+            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_manager&create_cust_dir=".rand()."#info'>Resolve</a>";
         }
 
         if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
             // if($crnMethod != "Customer ID")
             $invoices_dir_error = 'class="alert alert-danger"';
-            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_inv_dir=".rand()."#info'>Resolve</a>";
+            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_manager&create_inv_dir=".rand()."#info'>Resolve</a>";
         }
 
         if($bpay_hooks_core_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_core_file_permission < 644){
             $bpay_hooks_core_error = 'class="alert alert-danger"';
-            $bpay_hooks_core_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&bpay_hook_perm_fix=".rand()."#info'>Resolve</a>";
+            $bpay_hooks_core_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_manager&bpay_hook_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
         if($bpay_hooks_include_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_include_file_permission < 644){
             $bpay_hooks_include_error = 'class="alert alert-danger"';
-            $bpay_hooks_include_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_rh&bpay_inc_hook_perm_fix=".rand()."#info'>Resolve</a>";
+            $bpay_hooks_include_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_manager&bpay_inc_hook_perm_fix=".rand()."#info'>Resolve</a>";
         }
 
         if($bpay_file_error || $arial_file_error || $bpay_image_error || $customers_dir_error || $invoices_dir_error || $bpay_hooks_core_error || $bpay_hooks_include_error)
@@ -848,16 +848,16 @@ function bpay_rh_output($vars) {
         $system_manager_version = bpay_version();
         $current_version = get_bpay_lastest_version();
         if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
+            $update_manager_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_manager_error = 'class="alert alert-danger"';
         }
 
-        include_once("bpay_rh_hooks.php");
+        include_once("bpay_mgr_hooks.php");
         $system_hooks_version = bpay_hook_version();
         $current_hooks_version = get_hooks_lastest_version();
         if($system_hooks_version < $current_hooks_version){
-            $update_hooks_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
+            $update_hooks_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_hooks_error = 'class="alert alert-danger"';
         }
@@ -866,7 +866,7 @@ function bpay_rh_output($vars) {
         $system_gateway_version = gate_bpay_version();
         $current_gateway_version = gateway_check_version();
         if($system_gateway_version < $current_gateway_version){
-            $update_gateway_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
+            $update_gateway_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_gateway_error = 'class="alert alert-danger"';
         }
@@ -907,7 +907,7 @@ function bpay_rh_output($vars) {
 
         // search Tab
         
-        $HTML_search_form .= "<form method='post' action='?module=bpay_rh#search'>
+        $HTML_search_form .= "<form method='post' action='?module=bpay_manager#search'>
         <input type='hidden' name='search' value='true' />
         <table class='form' width='100%' border='0' cellspacing='2' cellpadding='3'>
         <tr><td class='fieldlabel'>Search for client based on the BPAY CRN:</td></tr>
@@ -922,7 +922,7 @@ function bpay_rh_output($vars) {
         </form>";
 
         // Settings Tab
-        $HTML_Settings = "<form method='post' action='?module=bpay_rh#settings' onsubmit='return mySettings()'>
+        $HTML_Settings = "<form method='post' action='?module=bpay_manager#settings' onsubmit='return mySettings()'>
         <input type='hidden' name='settings' value='true' />";
 
         $HTML_Settings .= '
@@ -1012,7 +1012,7 @@ function bpay_rh_output($vars) {
         }
         //num_padding, MOD10, crnGenBy
         $('#BillerCode').on('focusout', function () {
-        $.post('addonmodules.php?module=bpay_rh',
+        $.post('addonmodules.php?module=bpay_manager',
             {
                 billerCode: $('#BillerCode').val(),
                 get_biller_code: true
@@ -1062,14 +1062,14 @@ function bpay_rh_output($vars) {
             <td>'.$arial_file_fix.'</td>
             </tr>
             <tr '.$bpay_hooks_core_error.'>
-            <td>bpay_rh_hooks.php</td>
+            <td>bpay_mgr_hooks.php</td>
             <td>PHP (Personal Home Page)</td>
             <td>'.$bpay_hooks_core_file_status.'</td>
             <td>'.$bpay_hooks_core_file_permission.'</td>
             <td>'.$bpay_hooks_core_fix.'</td>
             </tr>
             <tr '.$bpay_hooks_include_error.'>
-            <td>/includes/hooks/bpay_rh.php</td>
+            <td>/includes/hooks/bpay_mgr_inc.php</td>
             <td>PHP (Personal Home Page)</td>
             <td>'.$bpay_hooks_include_file_status.'</td>
             <td>'.$bpay_hooks_include_file_permission.'</td>
@@ -1231,7 +1231,7 @@ function bpay_rh_output($vars) {
             }
 
             // Appearance tab
-            $HTML_appearence .= '<form method="post" action="?module=bpay_rh#appearance">
+            $HTML_appearence .= '<form method="post" action="?module=bpay_manager#appearance">
             <input type="hidden" name="appearance" value="true" />
             ';
 
@@ -2056,13 +2056,13 @@ function health_check(){
     }
 
     // check if bpay files for hooks exist
-    if (!file_exists(ROOTDIR.'/modules/addons/bpay_rh/bpay_rh_hooks.php')){
+    if (!file_exists(ROOTDIR.'/modules/addons/bpay_manager/bpay_mgr_hooks.php')){
         // File Missing, need to re download file and add to DIR
-        $results .= '<div class="errorbox"><strong><span class="title">BPAY Hooks Manager file is missing</span></strong><br>The BPAY Hooks Manager file is missing<br>Please re-upload both the BPAY Manager Hooks file to resolve this issue. (/modules/addons/bpay_rh/bpay_rh_hooks.php)</div>';
+        $results .= '<div class="errorbox"><strong><span class="title">BPAY Hooks Manager file is missing</span></strong><br>The BPAY Hooks Manager file is missing<br>Please re-upload both the BPAY Manager Hooks file to resolve this issue. (/modules/addons/bpay_manager/bpay_mgr_hooks.php)</div>';
         
     }else{
         // file exist check its version
-        include_once(ROOTDIR."/modules/addons/bpay_rh/bpay_rh_hooks.php");
+        include_once(ROOTDIR."/modules/addons/bpay_manager/bpay_mgr_hooks.php");
         if(get_hooks_lastest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
@@ -2073,13 +2073,13 @@ function health_check(){
 
 
     // check if bpay files for hooks exist
-    if (!file_exists(ROOTDIR.'/includes/hooks/bpay_rh.php')){
+    if (!file_exists(ROOTDIR.'/includes/hooks/bpay_mgr_inc.php')){
         // File Missing, need to re download file and add to DIR
-        $results .= '<div class="errorbox"><strong><span class="title">BPAY Hooks file is missing</span></strong><br>The BPAY Hooks file is missing<br>Please re-upload both the BPAY Hooks file to resolve this issue. (/includes/hooks/bpay_rh.php)</div>';
+        $results .= '<div class="errorbox"><strong><span class="title">BPAY Hooks file is missing</span></strong><br>The BPAY Hooks file is missing<br>Please re-upload both the BPAY Hooks file to resolve this issue. (/includes/hooks/bpay_mgr_inc.php)</div>';
         
     }else{
         // file exist check its version
-        include_once(ROOTDIR."/modules/addons/bpay_rh/bpay_rh_hooks.php");
+        include_once(ROOTDIR."/modules/addons/bpay_manager/bpay_mgr_hooks.php");
         if(get_hooks_lastest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
@@ -2323,24 +2323,24 @@ function installPhase($HTML_Output){
 
         if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
             $bpay_file_error = 'class="alert alert-danger"';
-            $bpay_file_download = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_rh&bpay_perm_fix=1#step1'>Resolve</a>";
+            $bpay_file_download = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_manager&bpay_perm_fix=1#step1'>Resolve</a>";
         }
 
         if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
             $arial_file_error = 'class="alert alert-danger"';
-            $arial_file_fix = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_rh&ttf_perm_fix=1#step1'>Resolve</a>";
+            $arial_file_fix = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_manager&ttf_perm_fix=1#step1'>Resolve</a>";
         }
 
         if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
             if($crnMethod != "Invoice Number")
                 $customers_dir_error = 'class="alert alert-danger"';
-            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_cust_dir=1#step1'>Resolve</a>";
+            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_manager&create_cust_dir=1#step1'>Resolve</a>";
         }
 
         if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
             if($crnMethod != "Customer ID")
                 $invoices_dir_error = 'class="alert alert-danger"';
-            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_rh&create_inv_dir=1#step1'>Resolve</a>";
+            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_manager&create_inv_dir=1#step1'>Resolve</a>";
         }
 
         if($bpay_file_error || $arial_file_error || $bpay_image_error || $customers_dir_error || $invoices_dir_error)
@@ -2350,13 +2350,13 @@ function installPhase($HTML_Output){
         $system_manager_version = bpay_version();
         $current_version = get_bpay_lastest_version();
         if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
+            $update_manager_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_manager_error = 'class="alert alert-danger"';
         }
 
-        if(file_exists(ROOTDIR."/modules/addons/bpay_rh/bpay_rh_hooks.php")){
-            include_once(ROOTDIR."/modules/addons/bpay_rh/bpay_rh_hooks.php");
+        if(file_exists(ROOTDIR."/modules/addons/bpay_manager/bpay_mgr_hooks.php")){
+            include_once(ROOTDIR."/modules/addons/bpay_manager/bpay_mgr_hooks.php");
             $system_hooks_version = bpay_hook_version();
             $current_hooks_version = get_hooks_lastest_version();
             if($system_hooks_version < $current_hooks_version){
@@ -2367,7 +2367,7 @@ function installPhase($HTML_Output){
         }else{
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_hooks_error = 'class="alert alert-danger"';
-            $system_hooks_version = "<a style='color:red'>bpay_rh_hooks.php - Missing!</a>";
+            $system_hooks_version = "<a style='color:red'>bpay_mgr_hooks.php - Missing!</a>";
         }
 
         if(file_exists(ROOTDIR."/modules/gateways/bpay.php")){
@@ -2517,7 +2517,7 @@ function installPhase($HTML_Output){
             $CRN = "12345";
 
         // Settings Tab
-        $HTML_Settings = "<form method='post' action='?module=bpay_rh#settings'>
+        $HTML_Settings = "<form method='post' action='?module=bpay_manager#settings'>
         <input type='hidden' name='settings' value='true' />";
 
         $HTML_Settings .= '<table width="100%" class="form" border="0" cellspacing="2" cellpadding="3">
@@ -2607,7 +2607,7 @@ function installPhase($HTML_Output){
         }
         //num_padding, MOD10, crnGenBy
         $('#BillerCode').on('focusout', function () {
-        $.post('addonmodules.php?module=bpay_rh',
+        $.post('addonmodules.php?module=bpay_manager',
             {
                 billerCode: $('#BillerCode').val(),
                 get_biller_code: true
@@ -2628,19 +2628,17 @@ function installPhase($HTML_Output){
 
     echo "<div class='tab-content'>$HTML_Output
         <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStrat."
-        <h1>Welcome - BPAY ".bpay_version()."</h1>
-        <p>Welcome to BPAY Module, Developed by <a href='https://www.linkedin.com/in/clinton-nesbitt/'>Clinton Nesbitt</a> </p>
-        <p>This module is a standalone application that generates BPAY CRN codes to your banks requirments and gives you the flexability to customise how it works within your WHMCS.</p>
-        <p>Some cool feature to note with this BPAY module is that once a CRN is generated for an invoice or client, Depending on the settings selected, you can actually use the WHMCS global search bar to search for any CRN payments that appear within your bank account.</p>
+        <h1>Welcome to BPAY Manager ".bpay_version()."</h1>
+        <p>Developed by The Network Crew Pty Ltd and Clinton Nesbitt.</p>
+        <p>This module is a standalone application that generates BPAY CRN codes to your banks requirements and gives you the flexibility to customise how it works within your WHMCS.</p>
+        <p>Some cool feature to note with this BPAY module is that once a CRN is generated for an invoice or client, depending on your settings, you can use the WHMCS global search bar to find any CRN payments that appear within your bank account, to then reconcile.</p>
         <p>You can customise all sorts of things with your BPAY setup like where the BPAY details appear on an invoice.</p>
 
-        <p>Below is a list of changes made in the past to improve the BPAY module and we are always open to hear new features and ideas on how to impove this module.</p>
-
-        <p>All updates are free to all paid licenses for life.</p>
+        <p>A link to the Changelog is below - we are always open to hearing suggestions & bug reports to help us impove the module.</p>
 
         <p>Click the <strong>".'"'."Get Started".'"'."</strong> button at the bottom when you are ready to go ahead with installation.</p>
-        <p><strong>ENJOY!</strong></p>
-        <p>For more information on BPAY and how it works, please go to <a href='http://bpay.com' target='_blank'>www.bpay.com</a></p>
+        <p><strong>ENJOY THE MODULE!</strong></p>
+        <p>For more information on BPAY and how it works, please go to <a href='https://bpay.com.au' target='_blank'>BPAY.com.au</a></p>
         <h3><strong>BPAY Update History</strong></h3>
         ".$change_log."
         <a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
@@ -2728,14 +2726,14 @@ function installPhase($HTML_Output){
             <th></th>
             </tr>
             <tr>
-            <td>Server OS</td>
+            <td>Operating System (OS)</td>
             <td>'.PHP_OS.'</td>
             <td></td>
             <td></td>
             <td></td>
             </tr>
             <tr>
-            <td>Web Server Software</td>
+            <td>Web Server (Software)</td>
             <td>'.$_SERVER['SERVER_SOFTWARE'].'</td>
             <td></td>
             <td></td>
@@ -2756,21 +2754,21 @@ function installPhase($HTML_Output){
             <td></td>
             </tr>
             <tr '.$bpay_manager_error.'>
-            <td>BPAY Manage Addon Version</td>
+            <td>BPAY Manager: Module Version</td>
             <td>'.$system_manager_version.'</td>
             <td>'.$update_manager_needed.'</td>
             <td></td>
             <td></td>
             </tr>
             <tr '.$bpay_hooks_error.'>
-            <td>BPAY Manage Hooks Version</td>
+            <td>BPAY Manager: Hooks Version</td>
             <td>'.$system_hooks_version.'</td>
             <td>'.$update_hooks_needed.'</td>
             <td></td>
             <td></td>
             </tr>
             <tr '.$bpay_gateway_error.'>
-            <td>BPAY Gateway Version</td>
+            <td>BPAY Gateway: Version</td>
             <td>'.$system_gateway_version.'</td>
             <td>'.$update_gateway_needed.'</td>
             <td></td>
@@ -2794,7 +2792,7 @@ function installPhase($HTML_Output){
         <div role='tabpanel' class='tab-pane' id='confirm'>".$tableStrat."<h1>Confirm Details</h1>";
         echo "Total number of BPAY references that need to be generated based off your existing BPAY settings: <strong>".$initialiseRowsToProcess."</strong><br>";
         echo "BPAY references will be generated based off: <strong>".$crnMethod."</strong><br>If you are happy with the above details, please click Finalised and we can get started.<p>";
-        echo "<center><a class='btn btn-success' href='addonmodules.php?module=bpay_rh&initialise_record=1'>Finalise Install</a></center>";
+        echo "<center><a class='btn btn-success' href='addonmodules.php?module=bpay_manager&initialise_record=1'>Finalise Install</a></center>";
         echo $tableEnd."</div>
         </div>";
 
@@ -2828,70 +2826,7 @@ function echo_die($message = ""){
 
 function change_log(){
     return "
-        <p>Bug fixes 2.1.9 is:
-        <ul>
-        <li><strong>Installation bug fix</strong> - Fixed bug where a database value were missing for fresh install of this product</li>
-        <li><strong>Installation bug fix</strong> - Fixed bug file verification was not working correctly</li>
-        </ul>
-
-        <p>Bug fixes 2.1.8 is:
-        <ul>
-        <li><strong>Added Feature</strong> - Artwork change from 7 different variations</li>
-        <li><strong>Added Feature</strong> - PHP 7.2 support</li>
-        <li><strong>Added Feature</strong> - Ioncude 10.2 support</li>
-        <li><strong>Cron base directory</strong> - Added check for users who cron's run from rood directory rather than base web directory</li>
-        </ul>
-
-        <p>Bug fixes in 2.1.7 is:
-        <ul>
-        <li><strong>Added Feature</strong> - Added prefix support through EziDebit</li>
-        <li><strong>Added Feature</strong> - Added option to use pre-configured bank requirements for BPAY (please let us know if your bank is not listed)</li>
-        <li><strong>Added Feature</strong> - Modified Example BPAY image to demonstrate an actual BPAY image generated based off settings made in settings area.</li>
-        <li><strong>Added Feature</strong> - Added preview button on appearances page to quickly view new placement of an invoice after change made.</li>
-        <li><strong>Added Feature</strong> - Added name lookup feature based off biller code entered</li>
-        </ul>
-        <p>Bug fixes in 2.1.6 is:
-        <ul>
-        <li><strong>Invoice PDF bug</strong> - Fixed bug with loading BPAY Ref on order complete</li>
-        <li><strong>Invoice PDF bug</strong> - Fixed MOD10v1 check digit issue</li>
-        </ul>
-        <p>Bug fixes in 2.1.5 is:
-        <ul>
-        <li><strong>Invoice PDF bug</strong> - Fixed minor bug with loading BPAY library assets</li>
-        <li><strong>Invoice PDF bug</strong> - Fixed minor bug where the BPAY details would only load on one PDF if invoice overflowed to multiple pages</li>
-        <li><strong>CSS for Hooks</strong> - Added the ability for developers to manipulate BPAY elements generated by WHMCS hooks</li>
-        </ul>
-        <p>Bug fixes in 2.1.4 is:
-        <ul>
-        <li><strong>License validation fix</strong> - Allow for BPAY license to stay active without constant polling license service (improves page load time)</li>
-        <li><strong>Pagination fix</strong> - Fixed minor bug pagination on search for CRN's in the BPAY Manager</li>
-        </ul>
-        <p>Bug fixes in 2.1.3 is:
-        <ul>
-        <li><strong>License validation fix</strong> - Allow for BPAY license to stay active without constant polling license service (improves page load time)</li>
-        <li><strong>Image Generator compatibility improvements</strong> - Image generation in this addon is now supported on more shard web hosting servers online</li>
-        <li><strong>Global Search bug fix</strong> - Fixed minor bug with using the global search on WHMCS</li>
-        <li><strong>Hook fix</strong> - Fixed minor bug with some invoices that were in a specific state</li>
-        </ul>
-        <p>Bug fixes in 2.1.2 is:
-        <ul>
-        <li><strong>Ioncube Later Version</strong> - Support for PHP 7.0 requires a later version of PHP</li>
-        </ul>
-        <p>Bug fixes in 2.1.1 is:
-        <ul>
-        <li><strong>Database fix</strong> - Support for MYSQL version 5.6</li>
-        </ul>
-        <p>Bug fixes in 2.1 is:
-        <ul>
-        <li><strong>Incorrect CRN in invocie</strong> - When set to client mode the CRN would always use invoice ID rather than client ID</li>
-        </ul> 
-        <p>New release in 2.0 is:
-        <ul>
-        <li><strong>WHMCS Global Search integration</strong> - you can now use the top search bar on WHMCS to search BPAY references numbers</li>
-        <li><strong>Ability to search BPAY reference codes</strong> - You can actually search for clients with the complete BPAY reference code</li>
-        <li><strong>Centrally control BPAY appearances in one place</strong> - Manage all locations BPAY can be seen on WHMCS is now easy to manage without needing to code anything.</li>
-        <li><strong>BPAY system automated health check function</strong> - Never have issues with BPAY manager not be installed correctly again, with the new automated BPAY health checker</li>
-        </ul>";
+        <a href="https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md" target="_blank">Please click here for the Changelog on GitHub (new tab).";
 }
 
 function getBillerName($billerCode){
