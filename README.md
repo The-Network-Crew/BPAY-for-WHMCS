@@ -2,6 +2,7 @@
 
 ## WIP: This repo is being updated for PHPv7/8 & WHMCSv8.
 For now, the 2019 release is available here, tagged v2.1.9.
+https://github.com/lsthompson/BPAY-for-WHMCS/releases/tag/v2.1.9
 
 ## Requirements 
 Below is a list of requirements to be met in order for BPAY Manager to work properly.
