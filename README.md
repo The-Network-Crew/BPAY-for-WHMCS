@@ -25,4 +25,6 @@ My BPAY image is not appearing on the invoice.
 - Simply go to the BPAY Manager in your WHMCS and click the “info” tab and look for any errors that may be causing BPAY Manager to not work correctly.
 - If all else fails, please raise an Issue on the GitHub Repo.
 
-If you encounter any issue using the module with the version specifications listed above, please open an Issue.
+If you encounter any issues using the module (and your setup meets the requirements), please open an Issue.
+
+BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.

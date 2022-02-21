@@ -2629,20 +2629,19 @@ function installPhase($HTML_Output){
     echo "<div class='tab-content'>$HTML_Output
         <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStrat."
         <h1>Welcome to BPAY Manager ".bpay_version()."</h1>
-        <p>Developed by The Network Crew Pty Ltd and Clinton Nesbitt.</p>
+        <p><strong>Developed by The Network Crew Pty Ltd and Clinton Nesbitt.</strong></p>
         <p>This module is a standalone application that generates BPAY CRN codes to your banks requirements and gives you the flexibility to customise how it works within your WHMCS.</p>
         <p>Some cool feature to note with this BPAY module is that once a CRN is generated for an invoice or client, depending on your settings, you can use the WHMCS global search bar to find any CRN payments that appear within your bank account, to then reconcile.</p>
-        <p>You can customise all sorts of things with your BPAY setup like where the BPAY details appear on an invoice.</p>
+        <p>You can customise all sorts of things with your BPAY setup like where the BPAY details appear on an invoice, how long your reference numbers need to be, etc.</p>
 
-        <p>A link to the Changelog is below - we are always open to hearing suggestions & bug reports to help us impove the module.</p>
+        <p>We are always open to hearing suggestions, ideas / feature requests and bug reports to help us impove the module.</p>
 
         <p>Click the <strong>".'"'."Get Started".'"'."</strong> button at the bottom when you are ready to go ahead with installation.</p>
         <p><strong>ENJOY THE MODULE!</strong></p>
         <p>For more information on BPAY and how it works, please go to <a href='https://bpay.com.au' target='_blank'>BPAY.com.au</a></p>
-	<p>BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.</p>
-        ".$changes."
         <br><a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
-        ".$tableEnd."</div>
+        <p><small>BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.</small></p>
+	".$tableEnd."</div>
         <div role='tabpanel' class='tab-pane' id='step1'>".$tableStrat."<h1>Step 1</h1>";
         $health_check = health_check();
         if($health_check){
@@ -2826,7 +2825,7 @@ function echo_die($message = ""){
 
 function changes(){
     return "
-        <p><a href='https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a> 2019 was the last RH release, in 2022 the module changed hands to TNC.</p>
+        <p><a href='https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a> <strong>2019 was the last RH release, in 2022 the module changed hands to TNC.</strong></p>
 	<br><p><strong>For support requests, please raise an Issue on the GitHub repo - detail the problem, steps to reproduce, attempted debugging, errors/logs/etc.";
 }
 
