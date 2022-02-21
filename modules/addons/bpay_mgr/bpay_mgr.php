@@ -1301,31 +1301,31 @@ function bpay_mgr_output($vars) {
             <tbody>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="horizontal" '.$horizontal.'>Horizontal</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="vertical" '.$vertical.'>Vertical</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg" width="300" /></p>
             </div></div></td></tr>
             
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="credit-horizontal" '.$credit_horizontal.'>Accepts Credit Cards - Horizontal</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="credit-vertical" '.$credit_vertical.'>Accepts Credit Cards - Vertical</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="no-credit-horizontal" '.$no_credit_horizontal.'>Does Not Accept Credit Cards - Horizontal</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="no-credit-vertical" '.$no_credit_vertical.'>Does Not Accept Credit Cards - Vertical</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg" width="300" /></p>
             </div></div></td></tr>
 
             <tr><td class="fieldarea"><div class="row"><div class="col-md-6"><label><input name="imgType" type="radio" value="fixed-payments" '.$fixed_payments.'>Fixed Payments</label>
-            <p class="help-block"><img src="https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg" width="300" /></p>
+            <p class="help-block"><img src="/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg" width="300" /></p>
             </div></div></td></tr>
 
             </tbody>
@@ -1396,13 +1396,13 @@ function bpay_version()
 
 function is_bpay_out_dated(){
     if(get_bpay_lastest_version() > bpay_version()){
-        return "<br><span style='float:right;'><b>BPAY Manager is out of Date: <a style='color:red' href='https://github.com/beanonymous/whmcsBPAY'>Download New Update!</a></span>";
+        return "<br><span style='float:right;'><b>BPAY Manager is out of Date: <a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a></span>";
     }
 }
 
 function get_bpay_lastest_version(){
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/beanonymous/whmcsBPAY/master/version");
+    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/lsthompson/BPAY-for-WHMCS/master/version");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close ($ch);
@@ -2052,7 +2052,7 @@ function health_check(){
 
     // check addon version is current
     if(get_bpay_lastest_version() > bpay_version()){
-        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
+        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
     }
 
     // check if bpay files for hooks exist
@@ -2066,7 +2066,7 @@ function health_check(){
         if(get_hooks_lastest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
     }
@@ -2083,7 +2083,7 @@ function health_check(){
         if(get_hooks_lastest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
     }
@@ -2099,7 +2099,7 @@ function health_check(){
         if(get_bpay_lastest_version() > gate_bpay_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/beanonymous/whmcsBPAY/" role="button" target="_blank">Download New Update!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
 
@@ -2360,7 +2360,7 @@ function installPhase($HTML_Output){
             $system_hooks_version = bpay_hook_version();
             $current_hooks_version = get_hooks_lastest_version();
             if($system_hooks_version < $current_hooks_version){
-                $update_hooks_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
+                $update_hooks_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS/'>Download new version!</a>";
                 $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
                 $bpay_hooks_error = 'class="alert alert-danger"';
             }
@@ -2375,7 +2375,7 @@ function installPhase($HTML_Output){
             $system_gateway_version = gate_bpay_version();
             $current_gateway_version = gateway_check_version();
             if($system_gateway_version < $current_gateway_version){
-                $update_gateway_needed = "<a style='color:red' href='https://github.com/beanonymous/whmcsBPAY/'>Download New Update!</a>";
+                $update_gateway_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS/'>Download new version!</a>";
                 $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             }
         }else{
