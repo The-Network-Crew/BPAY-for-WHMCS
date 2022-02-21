@@ -1116,14 +1116,14 @@ function bpay_mgr_output($vars) {
             <th></th>
             </tr>
             <tr>
-            <td>Server OS</td>
+            <td>Operating System (OS)</td>
             <td>'.PHP_OS.'</td>
             <td></td>
             <td></td>
             <td></td>
             </tr>
             <tr>
-            <td>Web Server Software</td>
+            <td>Web Server (Software)</td>
             <td>'.$_SERVER['SERVER_SOFTWARE'].'</td>
             <td></td>
             <td></td>
@@ -1144,21 +1144,21 @@ function bpay_mgr_output($vars) {
             <td></td>
             </tr>
             <tr '.$bpay_mgr_error.'>
-            <td>BPAY Manage Addon Version</td>
+            <td>BPAY Manager: Addon Version</td>
             <td>'.$system_manager_version.'</td>
             <td>'.$update_manager_needed.'</td>
             <td></td>
             <td></td>
             </tr>
             <tr '.$bpay_hooks_error.'>
-            <td>BPAY Manage Hooks Version</td>
+            <td>BPAY Manager: Hooks Version</td>
             <td>'.$system_hooks_version.'</td>
             <td>'.$update_hooks_needed.'</td>
             <td></td>
             <td></td>
             </tr>
             <tr '.$bpay_gateway_error.'>
-            <td>BPAY Gateway Version</td>
+            <td>BPAY Gateway: Version</td>
             <td>'.$system_gateway_version.'</td>
             <td>'.$update_gateway_needed.'</td>
             <td></td>
