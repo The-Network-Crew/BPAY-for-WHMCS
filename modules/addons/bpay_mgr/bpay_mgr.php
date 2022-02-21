@@ -806,39 +806,39 @@ function bpay_mgr_output($vars) {
 
         if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
             $bpay_file_error = 'class="alert alert-danger"';
-            $bpay_file_download = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&bpay_perm_fix=".rand()."#info'>Resolve</a>";
+            $bpay_file_download = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&bpay_perm_fix=".rand()."#health'>Resolve</a>";
         }
 
         if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
             $arial_file_error = 'class="alert alert-danger"';
-            $arial_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&ttf_perm_fix=".rand()."#info'>Resolve</a>";
+            $arial_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&ttf_perm_fix=".rand()."#health'>Resolve</a>";
         }
 
         // if($bpay_image_status == "<font color='red'>Missing</font>" || $bpay_image_permission < 644){
         //     $bpay_image_error = 'class="alert alert-danger"';
-        //     $bpay_image_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&jpg_perm_fix=".rand()."#info'>Resolve</a>";
+        //     $bpay_image_file_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&jpg_perm_fix=".rand()."#health'>Resolve</a>";
         // }
 
         if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
             // if($crnMethod != "Invoice Number")
             $customers_dir_error = 'class="alert alert-danger"';
-            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_cust_dir=".rand()."#info'>Resolve</a>";
+            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_cust_dir=".rand()."#health'>Resolve</a>";
         }
 
         if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
             // if($crnMethod != "Customer ID")
             $invoices_dir_error = 'class="alert alert-danger"';
-            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_inv_dir=".rand()."#info'>Resolve</a>";
+            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_inv_dir=".rand()."#health'>Resolve</a>";
         }
 
         if($bpay_hooks_core_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_core_file_permission < 644){
             $bpay_hooks_core_error = 'class="alert alert-danger"';
-            $bpay_hooks_core_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&bpay_hook_perm_fix=".rand()."#info'>Resolve</a>";
+            $bpay_hooks_core_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&bpay_hook_perm_fix=".rand()."#health'>Resolve</a>";
         }
 
         if($bpay_hooks_include_file_status == "<font color='red'>Missing</font>" || $bpay_hooks_include_file_permission < 644){
             $bpay_hooks_include_error = 'class="alert alert-danger"';
-            $bpay_hooks_include_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&bpay_inc_hook_perm_fix=".rand()."#info'>Resolve</a>";
+            $bpay_hooks_include_fix = "<a class='btn btn-primary' target='_self' href='addonmodules.php?module=bpay_mgr&bpay_inc_hook_perm_fix=".rand()."#health'>Resolve</a>";
         }
 
         if($bpay_file_error || $arial_file_error || $bpay_image_error || $customers_dir_error || $invoices_dir_error || $bpay_hooks_core_error || $bpay_hooks_include_error)
@@ -899,10 +899,10 @@ function bpay_mgr_output($vars) {
         $HTML_Output .= '  <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search</a></li>
-        <li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">'.$info_icon.'Health</a></li>
+        <li role="presentation"><a href="#health" aria-controls="health" role="tab" data-toggle="tab">'.$info_icon.'Health</a></li>
         <li role="presentation"><a href="#appearance" aria-controls="appearance" role="tab" data-toggle="tab">Appearance</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-        <li role="presentation"><a href="#change_log" aria-controls="change_log" role="tab" data-toggle="tab">Changelog</a></li>
+        <li role="presentation"><a href="#changes" aria-controls="changes" role="tab" data-toggle="tab">Changelog / Support</a></li>
         </ul>';
 
         // search Tab
@@ -1025,7 +1025,7 @@ function bpay_mgr_output($vars) {
         </div>";
 
         // INFO tab
-        $HTML_info .= '
+        $HTML_health .= '
         <div class="panel-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
@@ -1048,42 +1048,42 @@ function bpay_mgr_output($vars) {
             <th>Action</th>
             </tr>
             <tr '.$bpay_file_error.'>
-            <td>bpay.php</td>
-            <td>PHP (Personal Home Page)</td>
+            <td>/modules/gateways/bpay.php</td>
+            <td>PHP (Hypertext Preprocessor)</td>
             <td>'.$bpay_file_status.'</td>
             <td>'.$bpay_file_permission.'</td>
             <td>'.$bpay_file_download.'</td>
             </tr>
             <tr '.$arial_file_error.'>
-            <td>arial.ttf</td>
+            <td>/modules/gateways/bpay/arial.ttf</td>
             <td>TTF (TrueType Font)</td>
             <td>'.$arial_file_status.'</td>
             <td>'.$arial_file_permission.'</td>
             <td>'.$arial_file_fix.'</td>
             </tr>
             <tr '.$bpay_hooks_core_error.'>
-            <td>bpay_mgr_hooks.php</td>
-            <td>PHP (Personal Home Page)</td>
+            <td>bpay_mgr_hooks.php (Addon folder)</td>
+            <td>PHP (Hypertext Preprocessor)</td>
             <td>'.$bpay_hooks_core_file_status.'</td>
             <td>'.$bpay_hooks_core_file_permission.'</td>
             <td>'.$bpay_hooks_core_fix.'</td>
             </tr>
             <tr '.$bpay_hooks_include_error.'>
             <td>/includes/hooks/bpay_mgr_inc.php</td>
-            <td>PHP (Personal Home Page)</td>
+            <td>PHP (Hypertext Preprocessor)</td>
             <td>'.$bpay_hooks_include_file_status.'</td>
             <td>'.$bpay_hooks_include_file_permission.'</td>
             <td>'.$bpay_hooks_include_fix.'</td>
             </tr>
             <tr '.$customers_dir_error.'>
-            <td>Customers</td>
+            <td>Customers (Gateway folder)</td>
             <td>Directory</td>
             <td>'.$customers_dir_status.'</td>
             <td>'.$customers_dir_permission.'</td>
             <td>'.$create_cust_dir.'</td>
             </tr>
             <tr '.$invoices_dir_error.'>
-            <td>Invoices</td>
+            <td>Invoices (Gateway folder)</td>
             <td>Directory</td>
             <td>'.$invoices_dir_status.'</td>
             <td>'.$invoices_dir_permission.'</td>
@@ -1231,11 +1231,11 @@ function bpay_mgr_output($vars) {
             }
 
             // Appearance tab
-            $HTML_appearence .= '<form method="post" action="?module=bpay_mgr#appearance">
+            $HTML_appearance .= '<form method="post" action="?module=bpay_mgr#appearance">
             <input type="hidden" name="appearance" value="true" />
             ';
 
-            $HTML_appearence .= '<div class="panel-body">
+            $HTML_appearance .= '<div class="panel-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingAdmin">
@@ -1259,7 +1259,7 @@ function bpay_mgr_output($vars) {
             </div>
             </div>';
 
-            $HTML_appearence.= '
+            $HTML_appearance.= '
 
            <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingAdmin">
@@ -1286,7 +1286,7 @@ function bpay_mgr_output($vars) {
             </div>
             </div>';
 
-            $HTML_appearence.= '<div class="panel panel-default">
+            $HTML_appearance.= '<div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingAdmin">
             <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseImage" aria-expanded="true" aria-controls="collapseImage">
@@ -1338,14 +1338,14 @@ function bpay_mgr_output($vars) {
             </div>
             </div>';
 
-            $HTML_appearence .= "<div class='btn-container'>
+            $HTML_appearance .= "<div class='btn-container'>
             <input type='submit' value='Save' class='btn btn-success' />
             </div>
             </form>";
 
 
 
-            $HTML_appearence .= "<script>
+            $HTML_appearance .= "<script>
             function invoicePDFbox(){
                 if($('#invoicePDF').is(':checked')){
                     $('#invoicePDFdetails').removeClass('hidden');
@@ -1376,14 +1376,14 @@ function bpay_mgr_output($vars) {
 
         $HTML_Output .= health_check();
 
-        $change_log = "<h1>Changelog</h1>".change_log();
+        $changes = "<h1>Changelog / Support</h1>".changes();
 
         $HTML_Output .= "<div class='tab-content'>
         <div role='tabpanel' class='tab-pane active' id='search'>".$HTML_search_form.$HTML_search."</div>
-        <div role='tabpanel' class='tab-pane' id='info'>".$HTML_info."</div>
-        <div role='tabpanel' class='tab-pane' id='appearance'>".$HTML_appearence."</div>
+        <div role='tabpanel' class='tab-pane' id='health'>".$HTML_health."</div>
+        <div role='tabpanel' class='tab-pane' id='appearance'>".$HTML_appearance."</div>
         <div role='tabpanel' class='tab-pane' id='settings'>".$HTML_Settings."</div>
-        <div role='tabpanel' class='tab-pane' id='change_log'>".$change_log."</div>
+        <div role='tabpanel' class='tab-pane' id='changes'>".$changes."</div>
         </div>";
 
         echo $HTML_Output;
@@ -1939,7 +1939,7 @@ function db_access($action, $key = 0, $display_errors = false){
         }  
     }
 
-    if($action == "get_appearence_settings"){
+    if($action == "get_appearance_settings"){
         return db_access("settings");
     }
 
@@ -2624,7 +2624,7 @@ function installPhase($HTML_Output){
     $tableStrat = "<table class='table table-bordered' style='font-family:arial;'><tr><td>";
     $tableEnd = "</td></tr></table>";
 
-    $change_log = change_log();
+    $changes = changes();
 
     echo "<div class='tab-content'>$HTML_Output
         <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStrat."
@@ -2639,7 +2639,8 @@ function installPhase($HTML_Output){
         <p>Click the <strong>".'"'."Get Started".'"'."</strong> button at the bottom when you are ready to go ahead with installation.</p>
         <p><strong>ENJOY THE MODULE!</strong></p>
         <p>For more information on BPAY and how it works, please go to <a href='https://bpay.com.au' target='_blank'>BPAY.com.au</a></p>
-        ".$change_log."
+	<p>BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.</p>
+        ".$changes."
         <br><a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
         ".$tableEnd."</div>
         <div role='tabpanel' class='tab-pane' id='step1'>".$tableStrat."<h1>Step 1</h1>";
@@ -2823,11 +2824,13 @@ function echo_die($message = ""){
     die($message);
 } // } = echo_die()
 
-function change_log(){
+function changes(){
     return "
-        <a href='https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a>";
+        <p><a href='https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a> 2019 was the last RH release, in 2022 the module changed hands to TNC.</p>
+	<br><p><strong>For support requests, please raise an Issue on the GitHub repo - detail the problem, steps to reproduce, attempted debugging, errors/logs/etc.";
 }
 
+// DEPRECATED, MOVE TO BPAY API - See GitHub Issue #2
 function getBillerName($billerCode){
     if(!is_array($billerCode))
         $billerCode = array('billerCode' => $billerCode);
