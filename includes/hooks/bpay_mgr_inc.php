@@ -4,7 +4,7 @@
  * BPAY Manager - Hook Function
  * This hook is used to manage the invoice management for the BPAY Module system.
  *
- * @package     BPAY for WHMCS
+ * @package     BPAY for WHMCS (BPAY Manager)
  * @author      The Network Crew Pty Ltd and Clinton Nesbitt
  *
  * @copyright   Copyright (C) The Network Crew Pty Ltd. All rights reserved.
@@ -15,20 +15,20 @@
 if (!defined("WHMCS"))
     die("This file cannot be accessed directly");
 
-if (file_exists('modules/addons/bpay_manager/bpay_mgr_hooks.php')) {
-  require_once('modules/addons/bpay_manager/bpay_mgr_hooks.php');
+if (file_exists('modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
+  require_once('modules/addons/bpay_mgr/bpay_mgr_hooks.php');
   call_hooks();
-}else if (file_exists('../modules/addons/bpay_manager/bpay_mgr_hooks.php')) {
-  require_once('../modules/addons/bpay_manager/bpay_mgr_hooks.php');
+}else if (file_exists('../modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
+  require_once('../modules/addons/bpay_mgr/bpay_mgr_hooks.php');
   call_hooks();
-}else if (file_exists('../../modules/addons/bpay_manager/bpay_mgr_hooks.php')) {
-  require_once('../../modules/addons/bpay_manager/bpay_mgr_hooks.php');
+}else if (file_exists('../../modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
+  require_once('../../modules/addons/bpay_mgr/bpay_mgr_hooks.php');
   call_hooks();  
-}else if (file_exists('../../../modules/addons/bpay_manager/bpay_mgr_hooks.php')) {
-  require_once('../../../modules/addons/bpay_manager/bpay_mgr_hooks.php');
+}else if (file_exists('../../../modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
+  require_once('../../../modules/addons/bpay_mgr/bpay_mgr_hooks.php');
   call_hooks();
-}else if (file_exists('../../../../modules/addons/bpay_manager/bpay_mgr_hooks.php')) {
-  require_once('../../../../modules/addons/bpay_manager/bpay_mgr_hooks.php');
+}else if (file_exists('../../../../modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
+  require_once('../../../../modules/addons/bpay_mgr/bpay_mgr_hooks.php');
   call_hooks();
 }else{
   // failed - but dont crash system, just dont run this hook
