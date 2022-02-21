@@ -5,7 +5,7 @@ For now, the 2019 release is available here, tagged v2.1.9.
 
 ## Requirements 
 Below is a list of requirements to be met in order for BPAY Manager to work properly.
-- PHP: v5.6 or greater
+- PHP: v5.6 or v7.2+
 - WHMCS: v5.3 or greater 
 - cURL: Must be enabled in php.ini
 - Firewall: Need to have TCP/80+443 open
