@@ -2826,7 +2826,7 @@ function echo_die($message = ""){
 
 function change_log(){
     return "
-        <a href="https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md" target="_blank">Please click here for the Changelog on GitHub (new tab).";
+        <a href="https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md" target="_blank">Please click here for the Changelog on GitHub (new tab).</a>";
 }
 
 function getBillerName($billerCode){
