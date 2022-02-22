@@ -426,9 +426,9 @@ function bpay_mgr_output($vars) {
                     db_access("get_install_state", "1"); // change state to installed
                     if($install_state === "0"){
                         $install_state = "1"; 
-                        $HTML_Output .= '<div class="successbox"><strong><span class="title">BPAY is now setup!</span></strong><br>Your BPAY database is now setup successfully.<br>Installation is now Complete!<br>Enjoy using BPAY Manager</div>';
+                        $HTML_Output .= '<div class="successbox"><strong><span class="title">BPAY is now setup!</span></strong><br>Your database has been prepared for BPAY Manager.<br>Installation is now complete! Thank you.<br><strong>Enjoy using BPAY Manager.</strong></div>';
                     }else{
-                        $HTML_Output .= '<div class="successbox"><strong><span class="title">BPAY Ref Generation was Successfully!</span></strong><br>Your BPAY Reference database is now up to date.</div>';
+                        $HTML_Output .= '<div class="successbox"><strong><span class="title">BPAY Ref Generation was Successfully!</span></strong><br>Your BPAY Reference database is now up-to-date.</div>';
                     }
                     
                 }else{
@@ -933,7 +933,7 @@ function bpay_mgr_output($vars) {
         <tr><td class="fieldlabel">CRN Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Customer Reference Number length as specified by your bank</td></tr>
         <tr '.$show_prefix.' id="show_prefix"><td class="fieldlabel">CRN Prefix</td><td class="fieldarea"><input class="form-control select-inline"  name="prefix" type="number" size="20" value="'.$prefix.'" '.$prefixCodeError.' id="prefixCode"> Enter your prefix to be at the start of your CRN, as required by EziDebit</td></tr>
         <tr '.$CRN_Generated_via.' id="crnGenBy"><td class="fieldlabel">CRN Generated via</td><td class="fieldarea '.$crnGenBy.'"><label class="radio-inline"><input name="crnMethod" type="radio" value="Customer ID" '.$crnMethodCust.' > Customer ID</label><br><label class="radio-inline"><input name="crnMethod" type="radio" '.$crnMethodInv.' value="Invoice Number"> Invoice Number</label><br></div></td></tr>
-        <tr '.$Merchant_settings_hide.' id="MOD10"><td class="fieldlabel">Check Digit MOD10 Version</td><td class="fieldarea"><select id="mod10type" name="mod10type" class="form-control select-inline"'.$crnMethodError.'"><option '.$MOD10v5.' value="MOD10v5">MOD10v5</option><option '.$MOD10v1.' value="MOD10v1">MOD10v1</option></select> <p class="help-block">CRN encoding algorythm check digit. Most banks use MOD10v5, check with your bank before changing.</p></td></tr>
+        <tr '.$Merchant_settings_hide.' id="MOD10"><td class="fieldlabel">Check Digit MOD10 Version</td><td class="fieldarea"><select id="mod10type" name="mod10type" class="form-control select-inline"'.$crnMethodError.'"><option '.$MOD10v5.' value="MOD10v5">MOD10v5</option><option '.$MOD10v1.' value="MOD10v1">MOD10v1</option></select> <p class="help-block">CRN encoding algorthm check digit. Most banks use MOD10v5, check with your bank before changing.</p></td></tr>
         <tr '.$Merchant_settings_hide.' id="num_padding"><td class="fieldlabel">Pad zero&#39s calculation process for CRN</td><td class="fieldarea"><select id="num_padding" name="num_padding" class="form-control select-inline'.$num_paddingError.'" ><option '.$num_padding_before.' value="before">Before generating Ref number</option><option '.$num_padding_after.' value="after">After generating Ref number</option></select><p class="help-block">If a BPAY CRN number length is smaller than the CRN length, &#39;0&#39; are added to the overall CRN number. Depending on your bank will determine the way you need the CRN generated.</p></td></tr>
         </div>
         <tr><td class="fieldlabel"></td><td class="fieldarea"><strong>Example BPAY image</strong><br><img src="../modules/gateways/bpay.php?cust_id='.generateBpayRef('12345').'" width="300px" /></td></tr>
@@ -2522,12 +2522,12 @@ function installPhase($HTML_Output){
 
         $HTML_Settings .= '<table width="100%" class="form" border="0" cellspacing="2" cellpadding="3">
         <tbody>
-        <tr><td class="fieldlabel">BPay Merchant</td><td class="fieldarea"><select name="Merchant_settings" class="form-control select-inline" '.$Merchant_settings_Error.' id="Merchant_settings" onchange="merchantChange()">'.$Merchant_settings_form.'</select> Either use pre-config merchant settings or manually setup settings.</td></tr>
-        <tr><td class="fieldlabel">Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your biller code ID provided by your bank<br/>Biller name:  <span id="billerName">'.$BillerName.'</span></td></tr>
-        <tr><td class="fieldlabel">Customer Reference Number (CRN) Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Enter length of CRN specified by your bank</td></tr>
+        <tr><td class="fieldlabel">BPAY Merchant/Bank</td><td class="fieldarea"><select name="Merchant_settings" class="form-control select-inline" '.$Merchant_settings_Error.' id="Merchant_settings" onchange="merchantChange()">'.$Merchant_settings_form.'</select> Either use pre-configured merchant settings or configure manually.</td></tr>
+        <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<br/>Biller name:  <span id="billerName">'.$BillerName.'</span></td></tr>
+        <tr><td class="fieldlabel">CRN Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Customer Reference Number length as specified by your bank</td></tr>
         <tr '.$show_prefix.' id="show_prefix"><td class="fieldlabel">CRN Prefix</td><td class="fieldarea"><input class="form-control select-inline"  name="prefix" type="number" size="20" value="'.$prefix.'" '.$prefixCodeError.' id="prefixCode"> Enter your prefix to be at the start of your CRN, as required by EziDebit</td></tr>
         <tr '.$CRN_Generated_via.' id="crnGenBy"><td class="fieldlabel">CRN Generated via</td><td class="fieldarea '.$crnGenBy.'"><label class="radio-inline"><input name="crnMethod" type="radio" value="Customer ID" '.$crnMethodCust.' > Customer ID</label><br><label class="radio-inline"><input name="crnMethod" type="radio" '.$crnMethodInv.' value="Invoice Number"> Invoice Number</label><br></div></td></tr>
-        <tr '.$Merchant_settings_hide.' id="MOD10"><td class="fieldlabel">Check Digit MOD10 Version</td><td class="fieldarea"><select id="mod10type" name="mod10type" class="form-control select-inline"'.$crnMethodError.'"><option '.$MOD10v5.' value="MOD10v5">MOD10v5</option><option '.$MOD10v1.' value="MOD10v1">MOD10v1</option></select> <p class="help-block">CRN encoding algorythm check digit. Most banks use MOD10v5, check with your bank before changing.</p></td></tr>
+        <tr '.$Merchant_settings_hide.' id="MOD10"><td class="fieldlabel">Check Digit MOD10 Version</td><td class="fieldarea"><select id="mod10type" name="mod10type" class="form-control select-inline"'.$crnMethodError.'"><option '.$MOD10v5.' value="MOD10v5">MOD10v5</option><option '.$MOD10v1.' value="MOD10v1">MOD10v1</option></select> <p class="help-block">CRN encoding algorithm check digit. Most banks use MOD10v5, check with your bank before changing.</p></td></tr>
         <tr '.$Merchant_settings_hide.' id="num_padding"><td class="fieldlabel">Pad zero&#39s calculation process for CRN</td><td class="fieldarea"><select id="num_padding" name="num_padding" class="form-control select-inline'.$num_paddingError.'" ><option '.$num_padding_before.' value="before">Before generating Ref number</option><option '.$num_padding_after.' value="after">After generating Ref number</option></select><p class="help-block">If a BPAY CRN number length is smaller than the CRN length, &#39;0&#39; are added to the overall CRN number. Depending on your bank will determine the way you need the CRN generated.</p></td></tr>
         </div>
         <tr><td class="fieldlabel"></td><td class="fieldarea"><strong>Example BPAY image</strong><br><img src="../modules/gateways/bpay.php?cust_id='.$CRN.'" width="300px" /></td></tr>
@@ -2671,28 +2671,28 @@ function installPhase($HTML_Output){
             <th>Action</th>
             </tr>
             <tr '.$bpay_file_error.'>
-            <td>bpay.php</td>
-            <td>PHP (Personal Home Page)</td>
+            <td>/modules/gateways/bpay.php</td>
+            <td>PHP (Hypertext Preprocessor)</td>
             <td>'.$bpay_file_status.'</td>
             <td>'.$bpay_file_permission.'</td>
             <td>'.$bpay_file_download.'</td>
             </tr>
             <tr '.$arial_file_error.'>
-            <td>arial.ttf</td>
+            <td>/modules/gateways/bpay/arial.ttf</td>
             <td>TTF (TrueType Font)</td>
             <td>'.$arial_file_status.'</td>
             <td>'.$arial_file_permission.'</td>
             <td>'.$arial_file_fix.'</td>
             </tr>
             <tr '.$customers_dir_error.'>
-            <td>Customers</td>
+            <td>Customers (Gateway folder)</td>
             <td>Directory</td>
             <td>'.$customers_dir_status.'</td>
             <td>'.$customers_dir_permission.'</td>
             <td>'.$create_cust_dir.'</td>
             </tr>
             <tr '.$invoices_dir_error.'>
-            <td>Invoices</td>
+            <td>Invoices (Gateway folder)</td>
             <td>Directory</td>
             <td>'.$invoices_dir_status.'</td>
             <td>'.$invoices_dir_permission.'</td>
