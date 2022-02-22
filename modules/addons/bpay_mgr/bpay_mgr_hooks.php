@@ -80,13 +80,16 @@ function get_hooks_lastest_version(){
 
     $crn = getCRN($var['invoiceid']);
     
+    // RESOLVED, NEEDS TESTING: Refer to GitHub Issue #3
+    
     echo '<script>
     setTimeout(function() { 
-      $image = $("<img id='."'".'BpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
-      $image.insertBefore( $('."'".'#tab1 table td form'."'".'));
+      $("<img id='."'".'BpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />")
+      .insertBefore($(\'select[name=tplname]\').parent());
+      
     }, 500);
     </script>';
-    
+ 
   }
   // global search hijack jQuery
   function bpay_global_search($vars){
