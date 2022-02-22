@@ -1470,7 +1470,7 @@ function db_access($action, $key = 0, $display_errors = false){
         if($result->num_rows > 0) {
             $list;
             while($row = $result->fetch_assoc()) {
-                $list = combin_invoice_results($list, $row);
+                $list = combine_invoice_results($list, $row);
             }
             return $list;
         }else{
@@ -2025,7 +2025,7 @@ function wipe_image_files(){
     return true;
 }
 
-function combin_invoice_results($list, $row){
+function combine_invoice_results($list, $row){
 
     $found = false;
     foreach ($list as $key => $value) {
@@ -2621,13 +2621,13 @@ function installPhase($HTML_Output){
     //////////// END Settings ///////////
     /////////////////////////////////////
         
-    $tableStrat = "<table class='table table-bordered' style='font-family:arial;'><tr><td>";
+    $tableStart = "<table class='table table-bordered' style='font-family:arial;'><tr><td>";
     $tableEnd = "</td></tr></table>";
 
     $changes = changes();
 
     echo "<div class='tab-content'>$HTML_Output
-        <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStrat."
+        <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStart."
         <h1>Welcome to BPAY Manager ".bpay_version()."</h1>
         <p><strong>Developed by The Network Crew Pty Ltd and Clinton Nesbitt.</strong></p>
         <p>This module is a standalone application that generates BPAY CRN codes to your banks requirements and gives you the flexibility to customise how it works within your WHMCS.</p>
@@ -2642,7 +2642,7 @@ function installPhase($HTML_Output){
         <br><a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
         <p><small>BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.</small></p>
 	".$tableEnd."</div>
-        <div role='tabpanel' class='tab-pane' id='step1'>".$tableStrat."<h1>Step 1</h1>";
+        <div role='tabpanel' class='tab-pane' id='step1'>".$tableStart."<h1>Step 1</h1>";
         $health_check = health_check();
         if($health_check){
             echo $health_check; // display the error that needs to be fixed
@@ -2784,11 +2784,11 @@ function installPhase($HTML_Output){
         if(!$health_check)
             echo "<a class='btn btn-primary' href='#settings' aria-controls='settings' role='tab' data-toggle='tab'>Next Step</a>";
         echo $tableEnd."</div>
-        <div role='tabpanel' class='tab-pane' id='settings'>".$tableStrat."<h1>Step 2</h1>";
+        <div role='tabpanel' class='tab-pane' id='settings'>".$tableStart."<h1>Step 2</h1>";
         echo $HTML_Settings;
         echo "<a class='btn btn-primary hidden' href='#confirm' id='settings_next' aria-controls='confirm' role='tab' data-toggle='tab'>Next Step</a>";
         echo $tableEnd."</div>
-        <div role='tabpanel' class='tab-pane' id='confirm'>".$tableStrat."<h1>Confirm your BPAY Set-up</h1>";
+        <div role='tabpanel' class='tab-pane' id='confirm'>".$tableStart."<h1>Confirm your BPAY Set-up</h1>";
         echo "Total number of BPAY references that need to be generated based off your existing BPAY settings: <strong>".$initialiseRowsToProcess."</strong><br>";
         echo "BPAY references will be generated based off: <strong>".$crnMethod."</strong><br>If you are happy with the above, please Finalise.<p>";
         echo "<center><a class='btn btn-success' href='addonmodules.php?module=bpay_mgr&initialise_record=1'>Finalise Install</a></center>";
