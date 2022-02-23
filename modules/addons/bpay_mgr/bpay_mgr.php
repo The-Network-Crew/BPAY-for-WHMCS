@@ -1732,7 +1732,7 @@ function db_access($action, $key = 0, $display_errors = false){
         if(!$error)
             return false;
         else
-            return ture;
+            return true;
     }
 
     if($action == "updateAppearanceData"){
@@ -2235,7 +2235,7 @@ function initialise_record_table(){
 
 function insertInvoiceFunc($replace = false){
     $insertString = '///////////////////////////////////////////////////////////////////////////
-/// START BPAY Generator v2.1.5
+/// START: BPAY GENERATOR
 ///////////////////////////////////////////////////////////////////////////
     if (file_exists(ROOTDIR."/modules/gateways/bpay.php")) {
         require_once(ROOTDIR."/modules/gateways/bpay.php");
@@ -2252,7 +2252,7 @@ function insertInvoiceFunc($replace = false){
         }
     }
 ///////////////////////////////////////////////////////////////////////////
-/// END BPAY Generator
+/// END: BPAY GENERATOR
 ///////////////////////////////////////////////////////////////////////////';
 
     $template_name = db_access("getWHMCSTemplate");
@@ -2260,7 +2260,7 @@ function insertInvoiceFunc($replace = false){
 
     $invoiceTemplateFile = file_get_contents($file);
     if($replace == false){
-        $pos = strpos($invoiceTemplateFile, "START BPAY Generator");
+        $pos = strpos($invoiceTemplateFile, "START: BPAY GENERATOR");
 
         if ($pos !== false) {
             return false; //bpay function exists dont continue
@@ -2273,15 +2273,15 @@ function insertInvoiceFunc($replace = false){
         $remove_line = false;
         $file_string = "";
 
-        $pos = strpos($invoiceTemplateFile, "START BPAY Generator");
+        $pos = strpos($invoiceTemplateFile, "START: BPAY GENERATOR");
 
         if ($pos !== false) {
             $lines = file($file);
             foreach ($lines as $lineNumber => $line) {
-                if (strpos($line, "START BPAY Generator") !== false) {
-                    $remove_line = ture;
+                if (strpos($line, "START: BPAY GENERATOR") !== false) {
+                    $remove_line = true;
                 }
-                if (strpos($line, "END BPAY Generator") !== false) {
+                if (strpos($line, "END: BPAY GENERATOR") !== false) {
                     $remove_line = false;
                 }
                 if(!$remove_line)
