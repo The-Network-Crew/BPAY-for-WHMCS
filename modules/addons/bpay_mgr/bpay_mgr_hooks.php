@@ -86,7 +86,6 @@ function get_hooks_lastest_version(){
     setTimeout(function() { 
       $image = $("<img id='."'".'BpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
       $image.insertBefore($(\'select[name=tplname]\').parent());
-      
     }, 500);
     </script>';
  

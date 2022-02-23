@@ -1176,7 +1176,7 @@ function bpay_mgr_output($vars) {
         $appearance = $settingsData;
 
         if($appearance){
-            $global_search = $adminInvoicePage = $adminSummaryPage = $invoicePDF = $showInvoiceSpec = $Xaxis = $Yaxis = $size = $credit_horizontal = $credit_vertica = $fixed_payments = $horizontal = $no_credit_horizontal = $no_credit_vertical = $vertical = $horizontal = "";
+            $global_search = $adminInvoicePage = $adminSummaryPage = $invoicePDF = $showInvoiceSpec = $Xaxis = $Yaxis = $size = $credit_horizontal = $credit_vertical = $fixed_payments = $horizontal = $no_credit_horizontal = $no_credit_vertical = $vertical = $horizontal = "";
 
             if(isset($appearance['global_search']))
                 if($appearance['global_search'] === "1")
