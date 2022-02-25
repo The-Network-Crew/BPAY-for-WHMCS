@@ -5,10 +5,11 @@ For now, the 2019 release is available here, tagged [v2.1.9](https://github.com/
 
 ## Module (System) Requirements 
 Below is a list of requirements to be met in order for BPAY Manager to work properly.
-- PHP: v5.6 or v7.2+
-- WHMCS: v5.3 or greater 
+- PHP: v7.4 tested
+- WHMCS: v8.4 or greater 
 - cURL: Must be enabled in php.ini
-- Firewall: Need to have TCP/80+443 open
+- Firewall: Need to have TCP/443 open
+- SSL Certificate: WHMCS needs to use one
 
 ## Installation Instructions 
 Below are the proper steps to Upload & Install the Module/Gateway.
