@@ -66,7 +66,7 @@ function get_hooks_lastest_version(){
       }
 
       // Run code to create remote forum account here...
-      add_hook("InvoiceCreation",1,"invoiceCreate");
+      add_hook("InvoiceCreation",1,"invoiceCreated");
       add_hook("InvoiceUnpaid",1,"unpaidInvoice");
       add_hook("ClientAdd",1,"createClientCRN");
       // ClientAreaPageViewInvoice
