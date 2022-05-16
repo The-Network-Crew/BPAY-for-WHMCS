@@ -240,7 +240,7 @@ function get_hooks_lastest_version(){
 
     // GOING THROUGH THE DATA
     if($result->num_rows == 0) {
-      invoiceCreate($var); //run create invoice function
+      invoiceCreated($var); //run create invoice function
     }
   }
 
