@@ -1,14 +1,19 @@
 # BPAY for WHMCS (Module / Gateway) Australia
 
-## WIP: This repo is being updated for PHPv7/8 & WHMCSv8.
-For now, the 2019 release is available here, tagged [v2.1.9](https://github.com/lsthompson/BPAY-for-WHMCS/releases/tag/v2.1.9) (final version from RH).
+## WIP: This repo is being updated for PHP v8.1+ & WHMCS v8.6+.
+For now, the 2019 release is available here, tagged [v2.1.9](https://github.com/LEOPARD-host/BPAY-for-WHMCS/releases/tag/v2.1.9) (final version from RH).
 
-Please note: The master branch contains updated code, though reports as v2.1.9 also. We'll move to v3.x once issues have been resolved.
+Please note: The master branch contains updated code, though reports as v2.1.9 also. 
+
+Rename: If upgrading, make sure you remove all legacy (_rh etc) files & directories.
+
+We'll bump the version once some of the outstanding issues have been resolved.
 
 ## Module (System) Requirements 
-Below is a list of requirements to be met in order for BPAY Manager to work properly.
-- PHP: v7.4 tested
+Below is a list of requirements to be met in order for BPAY Manager to work.
+- PHP: v7.4 (no v8 yet)
 - WHMCS: v8.4 or greater 
+- ionCube: No requirement for it
 - cURL: Must be enabled in php.ini
 - Firewall: Need to have TCP/443 open
 - SSL Certificate: WHMCS needs to use one
