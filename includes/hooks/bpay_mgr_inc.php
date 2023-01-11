@@ -12,7 +12,7 @@
  */
 
 
-if (!defined("WHMCS"))
+if (!isset("WHMCS"))
     die("This file cannot be accessed directly");
 
 if (file_exists('modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {

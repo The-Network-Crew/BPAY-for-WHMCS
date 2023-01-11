@@ -789,6 +789,6 @@ if(isset($_GET['crn_check'])){
   die(generateBpayRef($_GET['crn_check']));
 }else if(isset($_GET['crn_img'])){
   die(generateImage("23456", $_GET['crn_img']));
-}else if(!defined("WHMCS") && basename($_SERVER["SCRIPT_FILENAME"], '.php') == "bpay"){
+}else if(!isset("WHMCS") && basename($_SERVER["SCRIPT_FILENAME"], '.php') == "bpay"){
   die("Access Denied");
 }

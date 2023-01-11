@@ -2825,7 +2825,7 @@ function echo_die($message = ""){
 
 function changes(){
     return "
-        <p><a href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a> <strong>2019 was the last RH release, in 2022 the module changed hands to TNC.</strong></p>
+        <p><a href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a></p>
 	<br><p><strong>For support requests, please raise an Issue on the GitHub repo - detail the problem, steps to reproduce, attempted debugging, errors/logs/etc.";
 }
 

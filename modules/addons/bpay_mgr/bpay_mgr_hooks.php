@@ -1,6 +1,6 @@
 <?php 
 
-if (!defined("WHMCS") && !$rh)
+if (!isset("WHMCS"))
     die("This file cannot be accessed directly");
 $conn;
 
