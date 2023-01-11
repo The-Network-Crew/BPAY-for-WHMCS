@@ -25,14 +25,14 @@ function bpay_hook_version(){
 }
 
 function is_hook_out_dated(){
-    if(get_hooks_lastest_version() > bpay_hook_version()){
-        return "<br><span style='float:right;'><b>BPAY Manager Hooks is outdated: <a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a></span>";
+    if(get_hooks_latest_version() > bpay_hook_version()){
+        return "<br><span style='float:right;'><b>BPAY Manager Hooks is outdated: <a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></span>";
     }
 }
 
-function get_hooks_lastest_version(){
+function get_hooks_latest_version(){
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/lsthompson/BPAY-for-WHMCS/master/version");
+    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/version");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close ($ch);

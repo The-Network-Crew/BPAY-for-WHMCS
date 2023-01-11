@@ -16,7 +16,7 @@
 * */
 
 $conn;
-if(!defined($conn))
+if(!isset($conn))
     connect_DB();
 else if(!mysqli_ping($conn))
     connect_DB();
@@ -846,18 +846,18 @@ function bpay_mgr_output($vars) {
 
             // Environment STATS
         $system_manager_version = bpay_version();
-        $current_version = get_bpay_lastest_version();
+        $current_version = get_bpay_latest_version();
         if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
+            $update_manager_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_mgr_error = 'class="alert alert-danger"';
         }
 
         include_once("bpay_mgr_hooks.php");
         $system_hooks_version = bpay_hook_version();
-        $current_hooks_version = get_hooks_lastest_version();
+        $current_hooks_version = get_hooks_latest_version();
         if($system_hooks_version < $current_hooks_version){
-            $update_hooks_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
+            $update_hooks_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_hooks_error = 'class="alert alert-danger"';
         }
@@ -866,7 +866,7 @@ function bpay_mgr_output($vars) {
         $system_gateway_version = gate_bpay_version();
         $current_gateway_version = gateway_check_version();
         if($system_gateway_version < $current_gateway_version){
-            $update_gateway_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
+            $update_gateway_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_gateway_error = 'class="alert alert-danger"';
         }
@@ -1395,14 +1395,14 @@ function bpay_version()
 }
 
 function is_bpay_out_dated(){
-    if(get_bpay_lastest_version() > bpay_version()){
-        return "<br><span style='float:right;'><b>BPAY Manager is out of Date: <a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a></span>";
+    if(get_bpay_latest_version() > bpay_version()){
+        return "<br><span style='float:right;'><b>BPAY Manager is out of Date: <a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></span>";
     }
 }
 
-function get_bpay_lastest_version(){
+function get_bpay_latest_version(){
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/lsthompson/BPAY-for-WHMCS/master/version");
+    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/version");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close ($ch);
@@ -2051,8 +2051,8 @@ function health_check(){
     $results = "";
 
     // check addon version is current
-    if(get_bpay_lastest_version() > bpay_version()){
-        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+    if(get_bpay_latest_version() > bpay_version()){
+        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
     }
 
     // check if bpay files for hooks exist
@@ -2063,10 +2063,10 @@ function health_check(){
     }else{
         // file exist check its version
         include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
-        if(get_hooks_lastest_version() > bpay_hook_version()){
+        if(get_hooks_latest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
     }
@@ -2080,10 +2080,10 @@ function health_check(){
     }else{
         // file exist check its version
         include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
-        if(get_hooks_lastest_version() > bpay_hook_version()){
+        if(get_hooks_latest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
     }
@@ -2096,10 +2096,10 @@ function health_check(){
     }else{
         // file exist check its version
         include_once(ROOTDIR."/modules/gateways/bpay.php");
-        if(get_bpay_lastest_version() > gate_bpay_version()){
+        if(get_bpay_latest_version() > gate_bpay_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/lsthompson/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
 
@@ -2348,9 +2348,9 @@ function installPhase($HTML_Output){
 
             // Environment STATS
         $system_manager_version = bpay_version();
-        $current_version = get_bpay_lastest_version();
+        $current_version = get_bpay_latest_version();
         if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS'>Download new version!</a>";
+            $update_manager_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_mgr_error = 'class="alert alert-danger"';
         }
@@ -2358,9 +2358,9 @@ function installPhase($HTML_Output){
         if(file_exists(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php")){
             include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
             $system_hooks_version = bpay_hook_version();
-            $current_hooks_version = get_hooks_lastest_version();
+            $current_hooks_version = get_hooks_latest_version();
             if($system_hooks_version < $current_hooks_version){
-                $update_hooks_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS/'>Download new version!</a>";
+                $update_hooks_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/'>Download new version!</a>";
                 $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
                 $bpay_hooks_error = 'class="alert alert-danger"';
             }
@@ -2375,7 +2375,7 @@ function installPhase($HTML_Output){
             $system_gateway_version = gate_bpay_version();
             $current_gateway_version = gateway_check_version();
             if($system_gateway_version < $current_gateway_version){
-                $update_gateway_needed = "<a style='color:red' href='https://github.com/lsthompson/BPAY-for-WHMCS/'>Download new version!</a>";
+                $update_gateway_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/'>Download new version!</a>";
                 $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             }
         }else{
@@ -2825,7 +2825,7 @@ function echo_die($message = ""){
 
 function changes(){
     return "
-        <p><a href='https://github.com/lsthompson/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a> <strong>2019 was the last RH release, in 2022 the module changed hands to TNC.</strong></p>
+        <p><a href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a> <strong>2019 was the last RH release, in 2022 the module changed hands to TNC.</strong></p>
 	<br><p><strong>For support requests, please raise an Issue on the GitHub repo - detail the problem, steps to reproduce, attempted debugging, errors/logs/etc.";
 }
 
