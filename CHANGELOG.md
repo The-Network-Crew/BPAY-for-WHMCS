@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to BPAY Manager will be documented in this file.
 
-## [2.2.0] - 2023-01-##
+## [2.2.0] - 2023-01-16
  
 ### Added
 - PHP Version now listed in Health Status
@@ -12,7 +12,9 @@ All notable changes to BPAY Manager will be documented in this file.
  
 ### Fixed
 - Resolved issue with BPAY Image not appearing in Admin Area
+- Resolved image not appearing in Client Area, viewing Invoice
 - Implemented fix for delayed image generation, re: cron no-image
+- Collectively, should resolve GitHub Issues: #1, #3, #4, #6, #8 and #9
 
 ## [2.1.9] - 2019-01-27
  

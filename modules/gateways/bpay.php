@@ -55,7 +55,7 @@ function bpay_link($params) {
   // }
 
   # Enter your code submit to the gateway...
-  $code = "<img id='BpayAdminViewInvoice' src='../modules/gateways/bpay.php?cust_id=$crn' width='250px' style='margin-top:-20px;'>";
+  $code = "<img id='BpayViewInvoice' src='../modules/gateways/bpay.php?cust_id=$crn' width='250px' style='margin-top:-20px;'>";
 
   return $code;
 }

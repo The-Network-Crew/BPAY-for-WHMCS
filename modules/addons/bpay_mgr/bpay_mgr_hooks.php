@@ -74,6 +74,7 @@ function call_hooks(){
   }
 
   // WHMCS Hook Index: https://developers.whmcs.com/hooks/hook-index/
+  add_hook("ClientAreaPageViewInvoice",1,"clientViewInvoice");
   add_hook("InvoiceCreationPreEmail",1,"invoiceCreated");
   add_hook("InvoiceUnpaid",1,"unpaidInvoice");
   add_hook("ClientAdd",1,"createClientCRN");
@@ -83,14 +84,29 @@ function call_hooks(){
 }
 
 
+// HOOK FIRES in Admin Area, when viewing Invoice
 function adminViewInvoice($var){
   GLOBAL $conn;
   $crn = getCRN($var['invoiceid']);
 
   echo '<script>
   setTimeout(function() { 
-    $image = $("<img id='."'".'BpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
+    $image = $("<img id='."'".'BpayViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
     $image.insertBefore($(\'select[name=tplname]\').parent());
+    }, 500);
+    </script>';
+}
+
+
+// HOOK FIRES in Client Area, when viewing Invoice
+function clientViewInvoice($var){
+  GLOBAL $conn;
+  $crn = getCRN($var['invoiceid']);
+
+  echo '<script>
+  setTimeout(function() { 
+    $image = $("<img id='."'".'BpayViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:0px;'."'".' />");
+    $image.insertBefore($(\'select[name=gateway]\').parent());
     }, 500);
     </script>';
 }
