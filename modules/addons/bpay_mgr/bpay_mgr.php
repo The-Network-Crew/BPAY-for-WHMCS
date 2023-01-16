@@ -8,18 +8,16 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/******* Shortcuts for debug **********
-*
-* Bypass initializion with out need to go through install again. (need active WHMCS session)
-* http://../{whmcs_admin_dir}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1
-* 
-* */
+// Bypass initializion with out need to go through install again. (need active WHMCS session)
+// URL: https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1
+
 
 $conn;
 if(!isset($conn))
     connect_DB();
 else if(!mysqli_ping($conn))
     connect_DB();
+
 
 function connect_DB(){
   GLOBAL $conn;
@@ -36,21 +34,21 @@ function connect_DB(){
   } 
 }
 
-function con_sanitize($data)
-  {
+
+function con_sanitize($data){
     GLOBAL $conn;
     $search = array(
-    '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
-    '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
-    '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
-    '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
-  );
+        '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+        '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+        '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+        '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+    );
  
     $output = preg_replace($search, '', $data);
-
     $output = $conn->real_escape_string($output);
     return $output;
 }
+
 
 function bpay_mgr_config() {
     $configarray = array(
@@ -59,10 +57,11 @@ function bpay_mgr_config() {
         "version" => bpay_version(),
         "author" => "The Network Crew Pty Ltd",
         "fields" => array(
-            )
-        );
-return $configarray;
+        )
+    );
+    return $configarray;
 }
+
 
 function bpay_mgr_activate() {
     GLOBAL $conn;
@@ -120,6 +119,7 @@ function bpay_mgr_activate() {
     //  a message to the user');
 }
 
+
 function bpay_mgr_deactivate() {
     GLOBAL $conn;
 
@@ -138,7 +138,8 @@ function bpay_mgr_deactivate() {
     }
 }
 
-// https://developers.whmcs.com/addon-modules/upgrades/
+
+// Docs: https://developers.whmcs.com/addon-modules/upgrades/
 function bpay_mgr_upgrade($vars) {
     GLOBAL $conn;
     $version = $vars['version'];
@@ -173,8 +174,8 @@ function bpay_mgr_upgrade($vars) {
     if ($version < '2.1.8') {// add preconfig - param
         db_access("sqlQuery", "INSERT INTO `mod_bpay_display` (`option`, `value`) VALUES ('imgType', 'vertical');");
     }
-
 }
+
 
 function bpay_mgr_output($vars) {
     
@@ -324,13 +325,12 @@ function bpay_mgr_output($vars) {
             $error = true;
         }
 
-                // update DB
+        // update DB
         if($error == false){
             $error = db_access("settings_update", $_POST);
         }
 
-                // return status message 
-
+        // return status message 
         if($error == false){
             $HTML_Output .= '<div class="successbox"><strong><span class="title">Changes Saved Successfully!</span></strong><br>Your changes have been saved.</div>';
         }else{
@@ -437,8 +437,6 @@ function bpay_mgr_output($vars) {
             }
         }
     }
-    
-    
 
     if($install_state === "0"){
         // first time opening page
@@ -1390,15 +1388,18 @@ function bpay_mgr_output($vars) {
     }
 }
 
-function bpay_version()
-{    return "2.1.9";
+
+function bpay_version(){
+    return "2.2.0";
 }
+
 
 function is_bpay_out_dated(){
     if(get_bpay_latest_version() > bpay_version()){
         return "<br><span style='float:right;'><b>BPAY Manager is out of Date: <a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></span>";
     }
 }
+
 
 function get_bpay_latest_version(){
     $ch = curl_init();
@@ -1410,7 +1411,7 @@ function get_bpay_latest_version(){
     return str_replace("\n", "", $result);
 }
 
-// get licence data and check if licence is valid
+
 function db_access($action, $key = 0, $display_errors = false){
     // connect_DB();
     GLOBAL $conn;
@@ -1430,7 +1431,6 @@ function db_access($action, $key = 0, $display_errors = false){
         $result = $conn->query($query) or echo_die($conn->error);
 
         if($result->num_rows > 0) {
-
             $list = array();
             while($row = $result->fetch_assoc()) {
                 return $row['COUNT(mod_bpay_record.crn)'];
@@ -1465,7 +1465,7 @@ function db_access($action, $key = 0, $display_errors = false){
 
         $result = $conn->query($query) or echo_die($conn->error);
 
-          // GOING THROUGH THE DATA
+        // GOING THROUGH THE DATA
 
         if($result->num_rows > 0) {
             $list;
@@ -1847,7 +1847,6 @@ function db_access($action, $key = 0, $display_errors = false){
     }
 
     if($action == "getWHMCSVersion"){
-
         $query = 'select value from `tblconfiguration` where setting = "Version"';
         $result = $conn->query($query);
 
@@ -1862,7 +1861,6 @@ function db_access($action, $key = 0, $display_errors = false){
 
 
     if($action == "getWHMCSTemplate"){
-
         $query = 'select value from `tblconfiguration` where setting = "Template"';
         $result = $conn->query($query);
 
@@ -1876,7 +1874,6 @@ function db_access($action, $key = 0, $display_errors = false){
     }
 
     if($action == "getInvoiceClientID"){
-
         $query = "SELECT * FROM `tblinvoices` WHERE id='".con_sanitize($key->invoiceID)."';";
         $result = $conn->query($query);
 
@@ -1889,13 +1886,11 @@ function db_access($action, $key = 0, $display_errors = false){
     }
 
     if($action == "insertInvoice"){
-
         $query = "INSERT INTO `mod_bpay_record` (`crn`, `clientID`, `invoiceID`, `crn_type`, `created_at`, `updated_at`) VALUES ('".con_sanitize($key->crn)."', '".con_sanitize($key->clientID)."', '".con_sanitize($key->invoiceID)."', '".con_sanitize($key->crn_type)."', '".con_sanitize($key->created_at)."', '".con_sanitize($key->updated_at)."');";
         return $conn->query($query);
     }
 
     if($action == "doesCRNexist"){
-
         $query = "SELECT * FROM `mod_bpay_record` WHERE 'crn' = '".con_sanitize($key->crn)."' AND 'crn_type' = '".con_sanitize($key->crn_type)."';";
         $result = $conn->query($query);
 
@@ -1909,7 +1904,6 @@ function db_access($action, $key = 0, $display_errors = false){
     }
 
     if($action == "whmcs_config_template"){
-
         $query = "SELECT value FROM `tblconfiguration` WHERE 'setting' = 'Template';";
         $result = $conn->query($query);
 
@@ -2011,6 +2005,8 @@ function db_access($action, $key = 0, $display_errors = false){
     ////////////////////////
 }
 
+
+// Purge images on-upgrade, and on-change (ie. BPAY Reference length change)
 function wipe_image_files(){
     if(file_exists(ROOTDIR.'/modules/gateways/bpay/invoices/')){
         $dir = ROOTDIR.'/modules/gateways/bpay/invoices';
@@ -2020,13 +2016,12 @@ function wipe_image_files(){
     if(file_exists(ROOTDIR.'/modules/gateways/bpay/customers/')){
         $dir = ROOTDIR.'/modules/gateways/bpay/customers/';
         array_map('unlink', glob($dir."/*"));
-    }      
-
+    }
     return true;
 }
 
-function combine_invoice_results($list, $row){
 
+function combine_invoice_results($list, $row){
     $found = false;
     foreach ($list as $key => $value) {
         if($value['clientID'] == $row['clientID']){                 
@@ -2046,6 +2041,7 @@ function combine_invoice_results($list, $row){
     return $list;
 }
 
+
 function health_check(){
 
     $results = "";
@@ -2059,7 +2055,6 @@ function health_check(){
     if (!file_exists(ROOTDIR.'/modules/addons/bpay_mgr/bpay_mgr_hooks.php')){
         // File Missing, need to re download file and add to DIR
         $results .= '<div class="errorbox"><strong><span class="title">BPAY Hooks Manager file is missing</span></strong><br>The BPAY Hooks Manager file is missing<br>Please re-upload both the BPAY Manager Hooks file to resolve this issue. (/modules/addons/bpay_mgr/bpay_mgr_hooks.php)</div>';
-        
     }else{
         // file exist check its version
         include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
@@ -2071,12 +2066,10 @@ function health_check(){
         }
     }
 
-
     // check if bpay files for hooks exist
     if (!file_exists(ROOTDIR.'/includes/hooks/bpay_mgr_inc.php')){
         // File Missing, need to re download file and add to DIR
         $results .= '<div class="errorbox"><strong><span class="title">BPAY Hooks file is missing</span></strong><br>The BPAY Hooks file is missing<br>Please re-upload both the BPAY Hooks file to resolve this issue. (/includes/hooks/bpay_mgr_inc.php)</div>';
-        
     }else{
         // file exist check its version
         include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
@@ -2084,7 +2077,6 @@ function health_check(){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
             $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
-            
         }
     }
 
@@ -2132,7 +2124,8 @@ function health_check(){
     }
 
     return $results;
-} // } = health_check()
+}
+
 
 function calculate_page_results($offset,$limit,$count){
     $results = new stdClass();
@@ -2149,6 +2142,7 @@ function calculate_page_results($offset,$limit,$count){
     return $results;
 }
 
+
 function ioncube_loader_version_information(){
     if (function_exists('ioncube_loader_iversion')) {
         $liv = ioncube_loader_iversion();
@@ -2156,6 +2150,7 @@ function ioncube_loader_version_information(){
     }
     return "NULL";
 }
+
 
 function initialise_record_table(){
 
@@ -2189,7 +2184,6 @@ function initialise_record_table(){
         }
     }else{
         // No clients found
-
     }
 
     $query = "select tblinvoices.id, tblinvoices.userid
@@ -2232,6 +2226,7 @@ function initialise_record_table(){
         }
     return true; //processing done
 }
+
 
 function insertInvoiceFunc($replace = false){
     $insertString = '///////////////////////////////////////////////////////////////////////////
@@ -2296,6 +2291,7 @@ function insertInvoiceFunc($replace = false){
     }
 }
 
+
 function installPhase($HTML_Output){
 
     echo ' <!-- Nav tabs -->
@@ -2309,90 +2305,90 @@ function installPhase($HTML_Output){
     /// START System environment Stats //
     /////////////////////////////////////
 
-        $bpay_file_status = (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $bpay_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay.php')), -4);
+    $bpay_file_status = (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+    $bpay_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay.php')), -4);
 
-        $arial_file_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/arial.ttf')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $arial_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/arial.ttf')), -4);
+    $arial_file_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/arial.ttf')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+    $arial_file_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/arial.ttf')), -4);
 
-        $customers_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/customers/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $customers_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/customers/')), -4);
+    $customers_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/customers/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+    $customers_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/customers/')), -4);
 
-        $invoices_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/invoices/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
-        $invoices_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/invoices/')), -4);
+    $invoices_dir_status = (file_exists(ROOTDIR.'/modules/gateways/bpay/invoices/')) ? "<font color='green'>Found</font>" : "<font color='red'>Missing</font>";
+    $invoices_dir_permission = substr(sprintf('%o', fileperms(ROOTDIR.'/modules/gateways/bpay/invoices/')), -4);
 
-        if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
-            $bpay_file_error = 'class="alert alert-danger"';
-            $bpay_file_download = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_mgr&bpay_perm_fix=1#step1'>Resolve</a>";
-        }
+    if($bpay_file_status == "<font color='red'>Missing</font>" || $bpay_file_permission < 644){
+        $bpay_file_error = 'class="alert alert-danger"';
+        $bpay_file_download = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_mgr&bpay_perm_fix=1#step1'>Resolve</a>";
+    }
 
-        if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
-            $arial_file_error = 'class="alert alert-danger"';
-            $arial_file_fix = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_mgr&ttf_perm_fix=1#step1'>Resolve</a>";
-        }
+    if($arial_file_status == "<font color='red'>Missing</font>" || $arial_file_permission < 644){
+        $arial_file_error = 'class="alert alert-danger"';
+        $arial_file_fix = "<a class='btn btn-primary' target='_blank' href='addonmodules.php?module=bpay_mgr&ttf_perm_fix=1#step1'>Resolve</a>";
+    }
 
-        if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
-            if($crnMethod != "Invoice Number")
-                $customers_dir_error = 'class="alert alert-danger"';
-            $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_cust_dir=1#step1'>Resolve</a>";
-        }
+    if($customers_dir_status == "<font color='red'>Missing</font>" || $customers_dir_permission < 755){
+        if($crnMethod != "Invoice Number")
+            $customers_dir_error = 'class="alert alert-danger"';
+        $create_cust_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_cust_dir=1#step1'>Resolve</a>";
+    }
 
-        if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
-            if($crnMethod != "Customer ID")
-                $invoices_dir_error = 'class="alert alert-danger"';
-            $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_inv_dir=1#step1'>Resolve</a>";
-        }
+    if($invoices_dir_status == "<font color='red'>Missing</font>" || $invoices_dir_permission < 755){
+        if($crnMethod != "Customer ID")
+            $invoices_dir_error = 'class="alert alert-danger"';
+        $create_inv_dir = "<a class='btn btn-primary' href='addonmodules.php?module=bpay_mgr&create_inv_dir=1#step1'>Resolve</a>";
+    }
 
-        if($bpay_file_error || $arial_file_error || $bpay_image_error || $customers_dir_error || $invoices_dir_error)
-            $file_permission_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
+    if($bpay_file_error || $arial_file_error || $bpay_image_error || $customers_dir_error || $invoices_dir_error)
+        $file_permission_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
 
-            // Environment STATS
-        $system_manager_version = bpay_version();
-        $current_version = get_bpay_latest_version();
-        if($system_manager_version < $current_version){
-            $update_manager_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a>";
-            $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
-            $bpay_mgr_error = 'class="alert alert-danger"';
-        }
+        // Environment STATS
+    $system_manager_version = bpay_version();
+    $current_version = get_bpay_latest_version();
+    if($system_manager_version < $current_version){
+        $update_manager_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a>";
+        $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
+        $bpay_mgr_error = 'class="alert alert-danger"';
+    }
 
-        if(file_exists(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php")){
-            include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
-            $system_hooks_version = bpay_hook_version();
-            $current_hooks_version = get_hooks_latest_version();
-            if($system_hooks_version < $current_hooks_version){
-                $update_hooks_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/'>Download new version!</a>";
-                $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
-                $bpay_hooks_error = 'class="alert alert-danger"';
-            }
-        }else{
+    if(file_exists(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php")){
+        include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
+        $system_hooks_version = bpay_hook_version();
+        $current_hooks_version = get_hooks_latest_version();
+        if($system_hooks_version < $current_hooks_version){
+            $update_hooks_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
             $bpay_hooks_error = 'class="alert alert-danger"';
-            $system_hooks_version = "<a style='color:red'>bpay_mgr_hooks.php - Missing!</a>";
         }
+    }else{
+        $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
+        $bpay_hooks_error = 'class="alert alert-danger"';
+        $system_hooks_version = "<a style='color:red'>bpay_mgr_hooks.php - Missing!</a>";
+    }
 
-        if(file_exists(ROOTDIR."/modules/gateways/bpay.php")){
-            include_once(ROOTDIR."/modules/gateways/bpay.php");
-            $system_gateway_version = gate_bpay_version();
-            $current_gateway_version = gateway_check_version();
-            if($system_gateway_version < $current_gateway_version){
-                $update_gateway_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/'>Download new version!</a>";
-                $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
-            }
-        }else{
+    if(file_exists(ROOTDIR."/modules/gateways/bpay.php")){
+        include_once(ROOTDIR."/modules/gateways/bpay.php");
+        $system_gateway_version = gate_bpay_version();
+        $current_gateway_version = gateway_check_version();
+        if($system_gateway_version < $current_gateway_version){
+            $update_gateway_needed = "<a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/'>Download new version!</a>";
             $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
-            $system_gateway_version = "<a style='color:red'>bpay.php - Missing!</a>";
-            $bpay_gateway_error = 'class="alert alert-danger"';
         }
+    }else{
+        $environment_error_icon = "<span class='glyphicon glyphicon-warning-sign'></span> ";
+        $system_gateway_version = "<a style='color:red'>bpay.php - Missing!</a>";
+        $bpay_gateway_error = 'class="alert alert-danger"';
+    }
 
-        if($file_permission_error_icon){
-            $info_icon = $file_permission_error_icon;
-            $permission_expand = " in";
-        }elseif($environment_error_icon){
-            $info_icon = $environment_error_icon;
-            $environment_expand = " in";
-        }else{
-            $permission_expand = " in";
-        }
+    if($file_permission_error_icon){
+        $info_icon = $file_permission_error_icon;
+        $permission_expand = " in";
+    }elseif($environment_error_icon){
+        $info_icon = $environment_error_icon;
+        $environment_expand = " in";
+    }else{
+        $permission_expand = " in";
+    }
 
     /////////////////////////////////////
     /// END System environment Stats ////
@@ -2403,220 +2399,220 @@ function installPhase($HTML_Output){
     /////////// START Settings //////////
     /////////////////////////////////////
     
-        // START settings Lookup /////
-        $data = db_access("settings");
+    // START settings Lookup /////
+    $data = db_access("settings");
 
-        // $BillerCode = $CRNLength = $crnMethod = $mod10type = $key = $crnform = $crnMethodCust = $crnMethodInv = $MOD10v1 = $MOD10v5 = "";
-        if(is_array($data)){
+    // $BillerCode = $CRNLength = $crnMethod = $mod10type = $key = $crnform = $crnMethodCust = $crnMethodInv = $MOD10v1 = $MOD10v5 = "";
+    if(is_array($data)){
 
-            if(isset($_POST['BillerCode']))
-                $BillerCode = $_POST['BillerCode'];
-            else
-                $BillerCode = $settingsData['BillerCode'];
-
-            $BillerName = getBillerName($BillerCode);
-
-            if(isset($_POST['CRNLength'])){
-                if(is_numeric($_POST['CRNLength']) && $_POST['CRNLength'] >= 3 || $_POST['CRNLength'] <= 19){
-                    $CRNLength = $_POST['CRNLength'];
-                }
-            }else{
-                $CRNLength = $data['CRNLength'];
-            }
-
-            if(isset($_POST['crnMethod']))
-                $crnMethod = $_POST['crnMethod'];
-            else
-                $crnMethod = $data['crnMethod'];
-
-            if(isset($_POST['mod10type']))
-                $mod10type = $_POST['mod10type'];
-            else
-                $mod10type = $data['mod10type'];
-
-            if(isset($_POST['key']))
-                $key = $_POST['key'];
-            else
-                $key = $data['key'];
-
-            if(isset($_POST['num_padding']))
-                $num_padding = $_POST['num_padding'];
-            else
-                $num_padding = $settingsData['num_padding'];
-
-            if(isset($_POST['Merchant_settings']))
-                $Merchant_settings = $_POST['Merchant_settings'];
-            else
-                $Merchant_settings = $settingsData['Merchant_settings'];
-
-            if(isset($_POST['prefix']))
-                $prefix = $_POST['prefix'];
-            else
-                $prefix = $settingsData['prefix'];
-        }
-
-        if($crnMethod == "Customer ID"){
-            $crnMethodCust = 'checked="checked"';
-            $initialiseRowsToProcess = db_access("countActiveClients");
-        }
-        elseif($crnMethod == "Invoice Number"){
-            $crnMethodInv = 'checked="checked"';
-            $initialiseRowsToProcess = db_access("countUnpaidInvoices");
-        }
-
-        if($mod10type == "MOD10v1")
-            $MOD10v1 = 'selected="selected"';
-        elseif($mod10type == "MOD10v5")
-            $MOD10v5 = 'selected="selected"';
-
-        if($num_padding == "before")
-            $num_padding_before = 'selected="selected"';
+        if(isset($_POST['BillerCode']))
+            $BillerCode = $_POST['BillerCode'];
         else
-            $num_padding_after = 'selected="selected"';
+            $BillerCode = $settingsData['BillerCode'];
 
-        for ($i=3; $i < 20; $i++) { 
-            if($CRNLength == $i)
-                $crnform .= "<option selected='selected' value='$i'>$i</option>";
-            else
-                $crnform .= "<option value='$i'>$i</option>";
-        }
+        $BillerName = getBillerName($BillerCode);
 
-        if($Merchant_settings == "ezidebit"){
-            $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit' selected='selected'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac'>Westpac</option>";
-            $Merchant_settings_hide = $CRN_Generated_via = "style='display: none;'";
-            $show_prefix = "";
-        }
-        elseif($Merchant_settings == "cba"){
-            $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba' selected='selected'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac'>Westpac</option>";
-            $Merchant_settings_hide = "style='display: none;'";
-            $show_prefix = "style='display: none;'";
-            $CRN_Generated_via = "";
-        }
-        elseif($Merchant_settings == "westpac"){
-            $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac' selected='selected'>Westpac</option>";
-            $Merchant_settings_hide = "style='display: none;'";
-            $show_prefix = "style='display: none;'";
-            $CRN_Generated_via = "";
-        }
-        elseif($Merchant_settings == "nab"){
-            $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab' selected='selected'>National Australia Bank</option><option value='westpac'>Westpac</option>";
-            $Merchant_settings_hide = "style='display: none;'";
-            $show_prefix = "style='display: none;'";
-            $CRN_Generated_via = "";
-        }
-        else{
-            $Merchant_settings_form = "<option value='manual' selected='selected'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac'>Westpac</option>";
-            $show_prefix = "style='display: none;'";
-            $CRN_Generated_via = "";
+        if(isset($_POST['CRNLength'])){
+            if(is_numeric($_POST['CRNLength']) && $_POST['CRNLength'] >= 3 || $_POST['CRNLength'] <= 19){
+                $CRNLength = $_POST['CRNLength'];
+            }
+        }else{
+            $CRNLength = $data['CRNLength'];
         }
 
-        // Generate CRN if bpay gateway file exists.
-        if(file_exists(ROOTDIR."/modules/gateways/bpay.php"))
-            $CRN = generateBpayRef('12345');
+        if(isset($_POST['crnMethod']))
+            $crnMethod = $_POST['crnMethod'];
         else
-            $CRN = "12345";
+            $crnMethod = $data['crnMethod'];
 
-        // Settings Tab
-        $HTML_Settings = "<form method='post' action='?module=bpay_mgr#settings'>
-        <input type='hidden' name='settings' value='true' />";
+        if(isset($_POST['mod10type']))
+            $mod10type = $_POST['mod10type'];
+        else
+            $mod10type = $data['mod10type'];
 
-        $HTML_Settings .= '<table width="100%" class="form" border="0" cellspacing="2" cellpadding="3">
-        <tbody>
-        <tr><td class="fieldlabel">BPAY Merchant/Bank</td><td class="fieldarea"><select name="Merchant_settings" class="form-control select-inline" '.$Merchant_settings_Error.' id="Merchant_settings" onchange="merchantChange()">'.$Merchant_settings_form.'</select> Either use pre-configured merchant settings or configure manually.</td></tr>
-        <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<br/>Biller name:  <span id="billerName">'.$BillerName.'</span></td></tr>
-        <tr><td class="fieldlabel">CRN Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Customer Reference Number length as specified by your bank</td></tr>
-        <tr '.$show_prefix.' id="show_prefix"><td class="fieldlabel">CRN Prefix</td><td class="fieldarea"><input class="form-control select-inline"  name="prefix" type="number" size="20" value="'.$prefix.'" '.$prefixCodeError.' id="prefixCode"> Enter your prefix to be at the start of your CRN, as required by EziDebit</td></tr>
-        <tr '.$CRN_Generated_via.' id="crnGenBy"><td class="fieldlabel">CRN Generated via</td><td class="fieldarea '.$crnGenBy.'"><label class="radio-inline"><input name="crnMethod" type="radio" value="Customer ID" '.$crnMethodCust.' > Customer ID</label><br><label class="radio-inline"><input name="crnMethod" type="radio" '.$crnMethodInv.' value="Invoice Number"> Invoice Number</label><br></div></td></tr>
-        <tr '.$Merchant_settings_hide.' id="MOD10"><td class="fieldlabel">Check Digit MOD10 Version</td><td class="fieldarea"><select id="mod10type" name="mod10type" class="form-control select-inline"'.$crnMethodError.'"><option '.$MOD10v5.' value="MOD10v5">MOD10v5</option><option '.$MOD10v1.' value="MOD10v1">MOD10v1</option></select> <p class="help-block">CRN encoding algorithm check digit. Most banks use MOD10v5, check with your bank before changing.</p></td></tr>
-        <tr '.$Merchant_settings_hide.' id="num_padding"><td class="fieldlabel">Pad zero&#39s calculation process for CRN</td><td class="fieldarea"><select id="num_padding" name="num_padding" class="form-control select-inline'.$num_paddingError.'" ><option '.$num_padding_before.' value="before">Before generating Ref number</option><option '.$num_padding_after.' value="after">After generating Ref number</option></select><p class="help-block">If a BPAY CRN number length is smaller than the CRN length, &#39;0&#39; are added to the overall CRN number. Depending on your bank will determine the way you need the CRN generated.</p></td></tr>
-        </div>
-        <tr><td class="fieldlabel"></td><td class="fieldarea"><strong>Example BPAY image</strong><br><img src="../modules/gateways/bpay.php?cust_id='.$CRN.'" width="300px" /></td></tr>
-        
-        </tbody>
-        </table>';
-        $HTML_Settings .= "<div class='btn-container'>
-        <input type='submit' value='Save' class='btn btn-success' />
-        </div>
-        </form>";
+        if(isset($_POST['key']))
+            $key = $_POST['key'];
+        else
+            $key = $data['key'];
+
+        if(isset($_POST['num_padding']))
+            $num_padding = $_POST['num_padding'];
+        else
+            $num_padding = $settingsData['num_padding'];
+
+        if(isset($_POST['Merchant_settings']))
+            $Merchant_settings = $_POST['Merchant_settings'];
+        else
+            $Merchant_settings = $settingsData['Merchant_settings'];
+
+        if(isset($_POST['prefix']))
+            $prefix = $_POST['prefix'];
+        else
+            $prefix = $settingsData['prefix'];
+    }
+
+    if($crnMethod == "Customer ID"){
+        $crnMethodCust = 'checked="checked"';
+        $initialiseRowsToProcess = db_access("countActiveClients");
+    }
+    elseif($crnMethod == "Invoice Number"){
+        $crnMethodInv = 'checked="checked"';
+        $initialiseRowsToProcess = db_access("countUnpaidInvoices");
+    }
+
+    if($mod10type == "MOD10v1")
+        $MOD10v1 = 'selected="selected"';
+    elseif($mod10type == "MOD10v5")
+        $MOD10v5 = 'selected="selected"';
+
+    if($num_padding == "before")
+        $num_padding_before = 'selected="selected"';
+    else
+        $num_padding_after = 'selected="selected"';
+
+    for ($i=3; $i < 20; $i++) { 
+        if($CRNLength == $i)
+            $crnform .= "<option selected='selected' value='$i'>$i</option>";
+        else
+            $crnform .= "<option value='$i'>$i</option>";
+    }
+
+    if($Merchant_settings == "ezidebit"){
+        $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit' selected='selected'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac'>Westpac</option>";
+        $Merchant_settings_hide = $CRN_Generated_via = "style='display: none;'";
+        $show_prefix = "";
+    }
+    elseif($Merchant_settings == "cba"){
+        $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba' selected='selected'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac'>Westpac</option>";
+        $Merchant_settings_hide = "style='display: none;'";
+        $show_prefix = "style='display: none;'";
+        $CRN_Generated_via = "";
+    }
+    elseif($Merchant_settings == "westpac"){
+        $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac' selected='selected'>Westpac</option>";
+        $Merchant_settings_hide = "style='display: none;'";
+        $show_prefix = "style='display: none;'";
+        $CRN_Generated_via = "";
+    }
+    elseif($Merchant_settings == "nab"){
+        $Merchant_settings_form = "<option value='manual'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab' selected='selected'>National Australia Bank</option><option value='westpac'>Westpac</option>";
+        $Merchant_settings_hide = "style='display: none;'";
+        $show_prefix = "style='display: none;'";
+        $CRN_Generated_via = "";
+    }
+    else{
+        $Merchant_settings_form = "<option value='manual' selected='selected'>Manual</option><option value='ezidebit'>EziDebit.com.au</option><option value='cba'>Commonwealth Bank of Australia</option><option value='nab'>National Australia Bank</option><option value='westpac'>Westpac</option>";
+        $show_prefix = "style='display: none;'";
+        $CRN_Generated_via = "";
+    }
+
+    // Generate CRN if bpay gateway file exists.
+    if(file_exists(ROOTDIR."/modules/gateways/bpay.php"))
+        $CRN = generateBpayRef('12345');
+    else
+        $CRN = "12345";
+
+    // Settings Tab
+    $HTML_Settings = "<form method='post' action='?module=bpay_mgr#settings'>
+    <input type='hidden' name='settings' value='true' />";
+
+    $HTML_Settings .= '<table width="100%" class="form" border="0" cellspacing="2" cellpadding="3">
+    <tbody>
+    <tr><td class="fieldlabel">BPAY Merchant/Bank</td><td class="fieldarea"><select name="Merchant_settings" class="form-control select-inline" '.$Merchant_settings_Error.' id="Merchant_settings" onchange="merchantChange()">'.$Merchant_settings_form.'</select> Either use pre-configured merchant settings or configure manually.</td></tr>
+    <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<br/>Biller name:  <span id="billerName">'.$BillerName.'</span></td></tr>
+    <tr><td class="fieldlabel">CRN Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Customer Reference Number length as specified by your bank</td></tr>
+    <tr '.$show_prefix.' id="show_prefix"><td class="fieldlabel">CRN Prefix</td><td class="fieldarea"><input class="form-control select-inline"  name="prefix" type="number" size="20" value="'.$prefix.'" '.$prefixCodeError.' id="prefixCode"> Enter your prefix to be at the start of your CRN, as required by EziDebit</td></tr>
+    <tr '.$CRN_Generated_via.' id="crnGenBy"><td class="fieldlabel">CRN Generated via</td><td class="fieldarea '.$crnGenBy.'"><label class="radio-inline"><input name="crnMethod" type="radio" value="Customer ID" '.$crnMethodCust.' > Customer ID</label><br><label class="radio-inline"><input name="crnMethod" type="radio" '.$crnMethodInv.' value="Invoice Number"> Invoice Number</label><br></div></td></tr>
+    <tr '.$Merchant_settings_hide.' id="MOD10"><td class="fieldlabel">Check Digit MOD10 Version</td><td class="fieldarea"><select id="mod10type" name="mod10type" class="form-control select-inline"'.$crnMethodError.'"><option '.$MOD10v5.' value="MOD10v5">MOD10v5</option><option '.$MOD10v1.' value="MOD10v1">MOD10v1</option></select> <p class="help-block">CRN encoding algorithm check digit. Most banks use MOD10v5, check with your bank before changing.</p></td></tr>
+    <tr '.$Merchant_settings_hide.' id="num_padding"><td class="fieldlabel">Pad zero&#39s calculation process for CRN</td><td class="fieldarea"><select id="num_padding" name="num_padding" class="form-control select-inline'.$num_paddingError.'" ><option '.$num_padding_before.' value="before">Before generating Ref number</option><option '.$num_padding_after.' value="after">After generating Ref number</option></select><p class="help-block">If a BPAY CRN number length is smaller than the CRN length, &#39;0&#39; are added to the overall CRN number. Depending on your bank will determine the way you need the CRN generated.</p></td></tr>
+    </div>
+    <tr><td class="fieldlabel"></td><td class="fieldarea"><strong>Example BPAY image</strong><br><img src="../modules/gateways/bpay.php?cust_id='.$CRN.'" width="300px" /></td></tr>
+    
+    </tbody>
+    </table>';
+    $HTML_Settings .= "<div class='btn-container'>
+    <input type='submit' value='Save' class='btn btn-success' />
+    </div>
+    </form>";
 
 
-        $HTML_Settings .= "<script>
-        function mySettings(){            
-            if($('#CRNLength option:selected').text() != ".$CRNLength."){
+    $HTML_Settings .= "<script>
+    function mySettings(){            
+        if($('#CRNLength option:selected').text() != ".$CRNLength."){
 
-                if (confirm(\"The CRN length has changed from existing settings. \\nIf you still wish to change the CRN length, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
-                    // lets do it
-                } else {
-                    return false;
-                }
-            }else if($('#mod10type option:selected').text() != '".$mod10type."'){
-
-                if (confirm(\"The CRN Check Digit MOD10 Version has changed from existing settings. \\nIf you still wish to change the Check Digit MOD10 Version, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
-                    // lets do it
-                } else {
-                    return false;
-                }
-            }else if($('#num_padding option:selected').val() != '".$num_padding."'){
-
-                if (confirm(\"The Pad zero's calculation process for CRN has changed from existing settings. \\nIf you still wish to change the Pad zero's calculation process for CRN, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
-                    // lets do it
-                } else {
-                    return false;
-                }
-            }else if(document.getElementById('Merchant_settings').options[document.getElementById('Merchant_settings').selectedIndex].value != '".$Merchant_settings."'){
-                if (confirm(\"The BPay Merchant settings has changed from existing settings. \\nIf you still wish to change the BPay Merchant Settings, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
-                    // lets do it
-                } else {
-                    return false;
-                }
+            if (confirm(\"The CRN length has changed from existing settings. \\nIf you still wish to change the CRN length, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
+                // lets do it
+            } else {
+                return false;
             }
+        }else if($('#mod10type option:selected').text() != '".$mod10type."'){
 
+            if (confirm(\"The CRN Check Digit MOD10 Version has changed from existing settings. \\nIf you still wish to change the Check Digit MOD10 Version, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
+                // lets do it
+            } else {
+                return false;
+            }
+        }else if($('#num_padding option:selected').val() != '".$num_padding."'){
+
+            if (confirm(\"The Pad zero's calculation process for CRN has changed from existing settings. \\nIf you still wish to change the Pad zero's calculation process for CRN, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
+                // lets do it
+            } else {
+                return false;
+            }
+        }else if(document.getElementById('Merchant_settings').options[document.getElementById('Merchant_settings').selectedIndex].value != '".$Merchant_settings."'){
+            if (confirm(\"The BPay Merchant settings has changed from existing settings. \\nIf you still wish to change the BPay Merchant Settings, all your existing CRN numbers will be removed and recreated. \\nThis could cause issues matching old CRN payments with WHMCS later.\\nDo you wish to continue?\")) {
+                // lets do it
+            } else {
+                return false;
+            }
         }
-        function merchantChange(){
-            var Merchant_settings = document.getElementById('Merchant_settings').options[document.getElementById('Merchant_settings').selectedIndex].value;
-            if($('#Merchant_settings option:selected').text() == 'Manual'){
-                document.getElementById('num_padding').setAttribute('style', '');
-                document.getElementById('MOD10').setAttribute('style', '');
-                document.getElementById('crnGenBy').setAttribute('style', '');
-                document.getElementById('show_prefix').setAttribute('style', 'display: none;');
-            }
-            else if($('#Merchant_settings option:selected').text() == 'EziDebit.com.au'){
-                document.getElementById('num_padding').setAttribute('style', 'display: none;');
-                document.getElementById('MOD10').setAttribute('style', 'display: none;');
-                document.getElementById('crnGenBy').setAttribute('style', 'display: none;');
-                document.getElementById('show_prefix').setAttribute('style', '');
-            }
-            else if($('#Merchant_settings option:selected').text() == 'Commonwealth Bank of Australia'){
-                document.getElementById('num_padding').setAttribute('style', 'display: none;');
-                document.getElementById('MOD10').setAttribute('style', 'display: none;');
-                document.getElementById('crnGenBy').setAttribute('style', '');
-                document.getElementById('show_prefix').setAttribute('style', 'display: none;');
-            }
-            else if($('#Merchant_settings option:selected').text() == 'Westpac'){
-                document.getElementById('num_padding').setAttribute('style', 'display: none;');
-                document.getElementById('MOD10').setAttribute('style', 'display: none;');
-                document.getElementById('crnGenBy').setAttribute('style', '');
-                document.getElementById('show_prefix').setAttribute('style', 'display: none;');
-            }
-            else if($('#Merchant_settings option:selected').text() == 'National Australia Bank'){
-                document.getElementById('num_padding').setAttribute('style', 'display: none;');
-                document.getElementById('MOD10').setAttribute('style', 'display: none;');
-                document.getElementById('crnGenBy').setAttribute('style', '');
-                document.getElementById('show_prefix').setAttribute('style', 'display: none;');
-            }
+
+    }
+    function merchantChange(){
+        var Merchant_settings = document.getElementById('Merchant_settings').options[document.getElementById('Merchant_settings').selectedIndex].value;
+        if($('#Merchant_settings option:selected').text() == 'Manual'){
+            document.getElementById('num_padding').setAttribute('style', '');
+            document.getElementById('MOD10').setAttribute('style', '');
+            document.getElementById('crnGenBy').setAttribute('style', '');
+            document.getElementById('show_prefix').setAttribute('style', 'display: none;');
         }
-        //num_padding, MOD10, crnGenBy
-        $('#BillerCode').on('focusout', function () {
-        $.post('addonmodules.php?module=bpay_mgr',
-            {
-                billerCode: $('#BillerCode').val(),
-                get_biller_code: true
-            },
-            function(data, status){
-                $('#billerName').html(data);
-            });
+        else if($('#Merchant_settings option:selected').text() == 'EziDebit.com.au'){
+            document.getElementById('num_padding').setAttribute('style', 'display: none;');
+            document.getElementById('MOD10').setAttribute('style', 'display: none;');
+            document.getElementById('crnGenBy').setAttribute('style', 'display: none;');
+            document.getElementById('show_prefix').setAttribute('style', '');
+        }
+        else if($('#Merchant_settings option:selected').text() == 'Commonwealth Bank of Australia'){
+            document.getElementById('num_padding').setAttribute('style', 'display: none;');
+            document.getElementById('MOD10').setAttribute('style', 'display: none;');
+            document.getElementById('crnGenBy').setAttribute('style', '');
+            document.getElementById('show_prefix').setAttribute('style', 'display: none;');
+        }
+        else if($('#Merchant_settings option:selected').text() == 'Westpac'){
+            document.getElementById('num_padding').setAttribute('style', 'display: none;');
+            document.getElementById('MOD10').setAttribute('style', 'display: none;');
+            document.getElementById('crnGenBy').setAttribute('style', '');
+            document.getElementById('show_prefix').setAttribute('style', 'display: none;');
+        }
+        else if($('#Merchant_settings option:selected').text() == 'National Australia Bank'){
+            document.getElementById('num_padding').setAttribute('style', 'display: none;');
+            document.getElementById('MOD10').setAttribute('style', 'display: none;');
+            document.getElementById('crnGenBy').setAttribute('style', '');
+            document.getElementById('show_prefix').setAttribute('style', 'display: none;');
+        }
+    }
+    //num_padding, MOD10, crnGenBy
+    $('#BillerCode').on('focusout', function () {
+    $.post('addonmodules.php?module=bpay_mgr',
+        {
+            billerCode: $('#BillerCode').val(),
+            get_biller_code: true
+        },
+        function(data, status){
+            $('#billerName').html(data);
         });
-        </script>";
+    });
+    </script>";
     /////////////////////////////////////
     //////////// END Settings ///////////
     /////////////////////////////////////
@@ -2627,162 +2623,164 @@ function installPhase($HTML_Output){
     $changes = changes();
 
     echo "<div class='tab-content'>$HTML_Output
-        <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStart."
-        <h1>Welcome to BPAY Manager ".bpay_version()."</h1>
-        <p><strong>Developed by The Network Crew Pty Ltd and Clinton Nesbitt.</strong></p>
-        <p>This module is a standalone application that generates BPAY CRN codes to your banks requirements and gives you the flexibility to customise how it works within your WHMCS.</p>
-        <p>Some cool feature to note with this BPAY module is that once a CRN is generated for an invoice or client, depending on your settings, you can use the WHMCS global search bar to find any CRN payments that appear within your bank account, to then reconcile.</p>
-        <p>You can customise all sorts of things with your BPAY setup like where the BPAY details appear on an invoice, how long your reference numbers need to be, etc.</p>
+    <div role='tabpanel' class='tab-pane active' id='welcome'>".$tableStart."
+    <h1>Welcome to BPAY Manager ".bpay_version()."</h1>
+    <p><strong>Developed by The Network Crew Pty Ltd and Clinton Nesbitt.</strong></p>
+    <p>This module is a standalone application that generates BPAY CRN codes to your banks requirements and gives you the flexibility to customise how it works within your WHMCS.</p>
+    <p>Some cool feature to note with this BPAY module is that once a CRN is generated for an invoice or client, depending on your settings, you can use the WHMCS global search bar to find any CRN payments that appear within your bank account, to then reconcile.</p>
+    <p>You can customise all sorts of things with your BPAY setup like where the BPAY details appear on an invoice, how long your reference numbers need to be, etc.</p>
 
-        <p>We are always open to hearing suggestions, ideas / feature requests and bug reports to help us impove the module.</p>
+    <p>We are always open to hearing suggestions, ideas / feature requests and bug reports to help us impove the module.</p>
 
-        <p>Click the <strong>".'"'."Get Started".'"'."</strong> button at the bottom when you are ready to go ahead with installation.</p>
-        <p><strong>ENJOY THE MODULE!</strong></p>
-        <p>For more information on BPAY and how it works, please go to <a href='https://bpay.com.au' target='_blank'>BPAY.com.au</a></p>
-        <br><a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
-        <p><small>BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.</small></p>
+    <p>Click the <strong>".'"'."Get Started".'"'."</strong> button at the bottom when you are ready to go ahead with installation.</p>
+    <p><strong>ENJOY THE MODULE!</strong></p>
+    <p>For more information on BPAY and how it works, please go to <a href='https://bpay.com.au' target='_blank'>BPAY.com.au</a></p>
+    <br><a class='btn btn-primary' href='#step1' aria-controls='step1' role='tab' data-toggle='tab'>Get Started</a> 
+    <p><small>BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.</small></p>
 	".$tableEnd."</div>
-        <div role='tabpanel' class='tab-pane' id='step1'>".$tableStart."<h1>Step 1</h1>";
-        $health_check = health_check();
-        if($health_check){
-            echo $health_check; // display the error that needs to be fixed
-        }
+    <div role='tabpanel' class='tab-pane' id='step1'>".$tableStart."<h1>Step 1</h1>";
+    $health_check = health_check();
+    if($health_check){
+        echo $health_check; // display the error that needs to be fixed
+    }
 
-        echo '
+    echo '
+    <div class="panel-body">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingAdmin">
+        <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsePermission" aria-expanded="true" aria-controls="collapsePermission">
+        '.$file_permission_error_icon.'File Permissions
+        </a>
+        </h4>
+        </div>
+        <div id="collapsePermission" class="panel-collapse collapse'.$permission_expand.'" role="tabpanel" aria-labelledby="headingAdmin">
         <div class="panel-body">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingAdmin">
-            <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsePermission" aria-expanded="true" aria-controls="collapsePermission">
-            '.$file_permission_error_icon.'File Permissions
-            </a>
-            </h4>
-            </div>
-            <div id="collapsePermission" class="panel-collapse collapse'.$permission_expand.'" role="tabpanel" aria-labelledby="headingAdmin">
-            <div class="panel-body">
-            <table class="table table-condensed" style="margin-bottom: 0">
-            <tbody>
-            <tr>
-            <th><strong>File / Directory Name</strong></th>
-            <th><strong>File Type</strong></th>
-            <th><strong>Status</strong></th>
-            <th><strong>Permission Level</strong></th>
-            <th>Action</th>
-            </tr>
-            <tr '.$bpay_file_error.'>
-            <td>/modules/gateways/bpay.php</td>
-            <td>PHP (Hypertext Preprocessor)</td>
-            <td>'.$bpay_file_status.'</td>
-            <td>'.$bpay_file_permission.'</td>
-            <td>'.$bpay_file_download.'</td>
-            </tr>
-            <tr '.$arial_file_error.'>
-            <td>/modules/gateways/bpay/arial.ttf</td>
-            <td>TTF (TrueType Font)</td>
-            <td>'.$arial_file_status.'</td>
-            <td>'.$arial_file_permission.'</td>
-            <td>'.$arial_file_fix.'</td>
-            </tr>
-            <tr '.$customers_dir_error.'>
-            <td>Customers (Gateway folder)</td>
-            <td>Directory</td>
-            <td>'.$customers_dir_status.'</td>
-            <td>'.$customers_dir_permission.'</td>
-            <td>'.$create_cust_dir.'</td>
-            </tr>
-            <tr '.$invoices_dir_error.'>
-            <td>Invoices (Gateway folder)</td>
-            <td>Directory</td>
-            <td>'.$invoices_dir_status.'</td>
-            <td>'.$invoices_dir_permission.'</td>
-            <td>'.$create_inv_dir.'</td>
-            </tr>
-            </tbody>
-            </table>
-            </div>
-            </div>
-            </div>
-            <!--END File Permissions -->
-            <!--Start Environment -->
-            <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingAdmin">
-            <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEnvironment" aria-expanded="true" aria-controls="collapseEnvironment">
-            '.$environment_error_icon.'System Environment
-            </a>
-            </h4>
-            </div>
-            <div id="collapseEnvironment" class="panel-collapse collapse'.$environment_expand.'" role="tabpanel" aria-labelledby="headingAdmin">
-            <div class="panel-body">
-            <table class="table table-condensed" style="margin-bottom: 0">
-            <tbody>
-            <tr>
-            <th><strong>Environment Type</strong></th>
-            <th><strong>Result</strong></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            </tr>
-            <tr>
-            <td>Operating System (OS)</td>
-            <td>'.PHP_OS.'</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>Web Server (Software)</td>
-            <td>'.$_SERVER['SERVER_SOFTWARE'].'</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>WHMCS Version</td>
-            <td>'.db_access('getWHMCSVersion').'</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr>
-            <td>IonCube Version</td>
-            <td>'.ioncube_loader_version_information().'</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr '.$bpay_mgr_error.'>
-            <td>BPAY Manager: Module Version</td>
-            <td>'.$system_manager_version.'</td>
-            <td>'.$update_manager_needed.'</td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr '.$bpay_hooks_error.'>
-            <td>BPAY Manager: Hooks Version</td>
-            <td>'.$system_hooks_version.'</td>
-            <td>'.$update_hooks_needed.'</td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr '.$bpay_gateway_error.'>
-            <td>BPAY Gateway: Version</td>
-            <td>'.$system_gateway_version.'</td>
-            <td>'.$update_gateway_needed.'</td>
-            <td></td>
-            <td></td>
-            </tr>';
-            echo '</tbody>
-            </table>
-            </div>
-            </div>
-            </div>
-            <!--End Environment -->
-            </div>
-        </div>';
-        if(!$health_check)
-            echo "<a class='btn btn-primary' href='#settings' aria-controls='settings' role='tab' data-toggle='tab'>Next Step</a>";
+        <table class="table table-condensed" style="margin-bottom: 0">
+        <tbody>
+        <tr>
+        <th><strong>File / Directory Name</strong></th>
+        <th><strong>File Type</strong></th>
+        <th><strong>Status</strong></th>
+        <th><strong>Permission Level</strong></th>
+        <th>Action</th>
+        </tr>
+        <tr '.$bpay_file_error.'>
+        <td>/modules/gateways/bpay.php</td>
+        <td>PHP (Hypertext Preprocessor)</td>
+        <td>'.$bpay_file_status.'</td>
+        <td>'.$bpay_file_permission.'</td>
+        <td>'.$bpay_file_download.'</td>
+        </tr>
+        <tr '.$arial_file_error.'>
+        <td>/modules/gateways/bpay/arial.ttf</td>
+        <td>TTF (TrueType Font)</td>
+        <td>'.$arial_file_status.'</td>
+        <td>'.$arial_file_permission.'</td>
+        <td>'.$arial_file_fix.'</td>
+        </tr>
+        <tr '.$customers_dir_error.'>
+        <td>Customers (Gateway folder)</td>
+        <td>Directory</td>
+        <td>'.$customers_dir_status.'</td>
+        <td>'.$customers_dir_permission.'</td>
+        <td>'.$create_cust_dir.'</td>
+        </tr>
+        <tr '.$invoices_dir_error.'>
+        <td>Invoices (Gateway folder)</td>
+        <td>Directory</td>
+        <td>'.$invoices_dir_status.'</td>
+        <td>'.$invoices_dir_permission.'</td>
+        <td>'.$create_inv_dir.'</td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        <!--END File Permissions -->
+        <!--Start Environment -->
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingAdmin">
+        <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEnvironment" aria-expanded="true" aria-controls="collapseEnvironment">
+        '.$environment_error_icon.'System Environment
+        </a>
+        </h4>
+        </div>
+        <div id="collapseEnvironment" class="panel-collapse collapse'.$environment_expand.'" role="tabpanel" aria-labelledby="headingAdmin">
+        <div class="panel-body">
+        <table class="table table-condensed" style="margin-bottom: 0">
+        <tbody>
+        <tr>
+        <th><strong>Environment Type</strong></th>
+        <th><strong>Result</strong></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        <tr>
+        <td>Operating System (OS)</td>
+        <td>'.PHP_OS.'</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Web Server (Software)</td>
+        <td>'.$_SERVER['SERVER_SOFTWARE'].'</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>WHMCS Version</td>
+        <td>'.db_access('getWHMCSVersion').'</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>IonCube Version</td>
+        <td>'.ioncube_loader_version_information().'</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr '.$bpay_mgr_error.'>
+        <td>BPAY Manager: Module Version</td>
+        <td>'.$system_manager_version.'</td>
+        <td>'.$update_manager_needed.'</td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr '.$bpay_hooks_error.'>
+        <td>BPAY Manager: Hooks Version</td>
+        <td>'.$system_hooks_version.'</td>
+        <td>'.$update_hooks_needed.'</td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr '.$bpay_gateway_error.'>
+        <td>BPAY Gateway: Version</td>
+        <td>'.$system_gateway_version.'</td>
+        <td>'.$update_gateway_needed.'</td>
+        <td></td>
+        <td></td>
+        </tr>';
+        echo '</tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        <!--End Environment -->
+        </div>
+    </div>';
+
+    // brackets changed in v2.2.0
+    if(!$health_check) {
+        echo "<a class='btn btn-primary' href='#settings' aria-controls='settings' role='tab' data-toggle='tab'>Next Step</a>";
         echo $tableEnd."</div>
         <div role='tabpanel' class='tab-pane' id='settings'>".$tableStart."<h1>Step 2</h1>";
         echo $HTML_Settings;
@@ -2792,8 +2790,7 @@ function installPhase($HTML_Output){
         echo "Total number of BPAY references that need to be generated based off your existing BPAY settings: <strong>".$initialiseRowsToProcess."</strong><br>";
         echo "BPAY references will be generated based off: <strong>".$crnMethod."</strong><br>If you are happy with the above, please Finalise.<p>";
         echo "<center><a class='btn btn-success' href='addonmodules.php?module=bpay_mgr&initialise_record=1'>Finalise Install</a></center>";
-        echo $tableEnd."</div>
-        </div>";
+        echo $tableEnd."</div></div>";
 
         // settings next button
         echo "<script>var url = document.location.toString();
@@ -2802,7 +2799,6 @@ function installPhase($HTML_Output){
             console.log(url.split('#')[1]);
             $('#settings_next').removeClass('hidden');
         } </script>";
-
 
         echo "<script>
         $(function(){
@@ -2817,19 +2813,24 @@ function installPhase($HTML_Output){
             });
         });
         </script>";
+    }
 }
+
 
 function echo_die($message = ""){
     die($message);
-} // } = echo_die()
+}
 
+
+// Moved to GitHub CHANGELOG.md file to avoid update task per-version
 function changes(){
     return "
         <p><a href='https://github.com/LEOPARD-host/BPAY-for-WHMCS/blob/master/CHANGELOG.md' target='_blank'>Please click here for the Changelog on GitHub (new tab).</a></p>
 	<br><p><strong>For support requests, please raise an Issue on the GitHub repo - detail the problem, steps to reproduce, attempted debugging, errors/logs/etc.";
 }
 
-// DEPRECATED, MOVE TO BPAY API - See GitHub Issue #2
+
+// DEPRECATED, MOVE TO BPAY API OR REMOVE LOOKUP - See GitHub Issue #2
 function getBillerName($billerCode){
     if(!is_array($billerCode))
         $billerCode = array('billerCode' => $billerCode);

@@ -15,6 +15,7 @@
 if (!isset("WHMCS"))
     die("This file cannot be accessed directly");
 
+
 if (file_exists('modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
   require_once('modules/addons/bpay_mgr/bpay_mgr_hooks.php');
   call_hooks();
@@ -39,7 +40,3 @@ if (file_exists('modules/addons/bpay_mgr/bpay_mgr_hooks.php')) {
 	// Write the contents back to the file
 	file_put_contents($file, $current);
 }
-
-
-    
-

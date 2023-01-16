@@ -8,12 +8,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+
 function bpay_config() {
   $configarray = array(
    "FriendlyName" => array("Type" => "System", "Value"=>"BPAY"),
    "version" => array("FriendlyName" => "Version Number", "Description" => gate_bpay_version().gateway_check_version(), ),
    "instructions" => array("FriendlyName" => "Test Link", "Description" => "<a href='../modules/gateways/bpay.php?cust_id=12345' target='_blank'>View Test Image</a>", ),
-   );
+ );
   return $configarray;
 }
 
@@ -53,21 +54,23 @@ function bpay_link($params) {
   # Enter your code submit to the gateway...
   $code = "<img id='BpayAdminViewInvoice' src='../modules/gateways/bpay.php?cust_id=$crn' width='250px' style='margin-top:-20px;'>";
 
- return $code;
+  return $code;
 }
 
+
 function gate_bpay_version(){
-  return "2.1.9";
+  return "2.2.0";
 }
+
 
 function gateway_check_version(){
   $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/version");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $remoteVersion = curl_exec($ch);
-    curl_close ($ch);
+  curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/version");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $remoteVersion = curl_exec($ch);
+  curl_close ($ch);
 
-    $remoteVersion = str_replace("\n", "", $remoteVersion);
+  $remoteVersion = str_replace("\n", "", $remoteVersion);
 
   if($remoteVersion > gate_bpay_version()){
     return " - <b><a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></b>";
@@ -77,19 +80,22 @@ function gateway_check_version(){
   return "";
 }
 
+
 function gate_db_access($action,$key = 0, $display_errors = true){
   if(!isset($db_host))
-  if(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {include("../configuration.php");}elseif(file_exists('../../configuration.php')) {include("../../configuration.php");}else{echo "No configuration.php file found."; return;}
+    if(file_exists('configuration.php')) {require("configuration.php");}elseif(file_exists('../configuration.php')) {include("../configuration.php");}elseif(file_exists('../../configuration.php')) {include("../../configuration.php");}else{echo "No configuration.php file found."; return;}
 
-    // Create connection
+  // Create connection
   $connGate = new mysqli($db_host, $db_username, $db_password,$db_name);
 
-    // Check connection
+  // Check connection
   if ($connGate->connect_error) {
-   if($display_errors == true){show_error_message("Connection failed: " . $connGate->connect_error);}
- } 
-   //echo "Connected successfully";
- 
+    if($display_errors == true){
+      show_error_message("Connection failed: " . $connGate->connect_error);
+    }
+  } 
+  //echo "Connected successfully";
+
   //////////////////////////////
   if($action == "settings"){
 
@@ -99,7 +105,7 @@ function gate_db_access($action,$key = 0, $display_errors = true){
     if($result->num_rows > 0) {
       $list = array();
       while($row = $result->fetch_assoc()) {
-          $list[$row['option']] = $row['value'];
+        $list[$row['option']] = $row['value'];
       }
       return $list;
     }
@@ -159,7 +165,7 @@ function gate_db_access($action,$key = 0, $display_errors = true){
     if($key->crnMethod == "Customer ID"){
       $query = "Select crn from mod_bpay_record where clientID = '".$key->client."' and crn_type = 'Client ID'";
     }else{//"Invoice Number"
-      $query = "Select crn from mod_bpay_record where invoiceID = '".$key->inv."' and crn_type = 'Invoice'";
+    $query = "Select crn from mod_bpay_record where invoiceID = '".$key->inv."' and crn_type = 'Invoice'";
     }
 
     $result = $connGate->query($query) or die($connGate->error);
@@ -196,13 +202,15 @@ function gate_db_access($action,$key = 0, $display_errors = true){
       if(isset($settings['localKey'])){
         $sql = "UPDATE `mod_bpay_display` SET `value`='".$key."' WHERE `option`='localKey';";
         $query = $connGate->query($sql);
-        if(!$query){$error = true;} 
+        if(!$query){
+          $error = true;
+        } 
       }else{
         if(!isset($key))
           $key = "0";
         $sql = "INSERT INTO `mod_bpay_display` (`option`, `value`) VALUES ('localKey', '".$key."');";
-        $query = $connGate->query($sql);
-        if(!$query){$error = true;} 
+          $query = $connGate->query($sql);
+          if(!$query){$error = true;} 
       }
     }
   }elseif($action == "get_img_type"){
@@ -218,33 +226,33 @@ function gate_db_access($action,$key = 0, $display_errors = true){
     }
   }
 
-
   // CLOSE CONNECTION
   // mysqli_close($connGate);
   ////////////////////////
 }
 
+
 //REF: http://www.acnenomor.com/4611685p1/luhncalc-and-bpay-mod10-version-5
 //REF: http://stackoverflow.com/questions/11024309/luhncalc-and-bpay-mod10-version-5118680014797721
 function generateBpayRef($number) {
   $data = gate_db_access("manager_settings");
-    
-    /*******************************************
-    *** start custom code for UBC Web Design ***
-    *******************************************/
-    //total length - check digit added after
-    // if(strlen("1001".$number) < 9){
-    //   do{
-    //     $number = "0".$number;
-    //   }while(strlen("1001".$number) < 9);
-    // }
 
-    // //add number at start of crn
-    // $number = "1001".$number;
+  /*******************************************
+  *** start custom code for UBC Web Design ***
+  *******************************************/
+  //total length - check digit added after
+  // if(strlen("1001".$number) < 9){
+  //   do{
+  //     $number = "0".$number;
+  //   }while(strlen("1001".$number) < 9);
+  // }
 
-    /*******************************************
-    ***  end custom code for UBC Web Design  ***
-    *******************************************/
+  // //add number at start of crn
+  // $number = "1001".$number;
+
+  /*******************************************
+  ***  end custom code for UBC Web Design  ***
+  *******************************************/
 
   if(is_array($data)){
     $modVersion = $data['mod10type']; //gate_db_access("modVersion");
@@ -266,8 +274,6 @@ function generateBpayRef($number) {
       $number = $prefix.substr($number, (strlen($prefix)));
     //END CUSTOM CODE
 
-
-
     // trim string to be CRN length - 1 digit at the end to allow for check digit to be added later
     $number = substr($number, 0, ((int)$CRNLength)-1);
 
@@ -285,22 +291,22 @@ function generateBpayRef($number) {
       // Must be a positive number
       if($number <= 0) return false;
 
-        $revstr = strrev(intval($number));
-        $total = 0;
-        for ($i = 0; $i < strlen($revstr); $i++) {
-            if ($i % 2 == 0) {
-                $multiplier = 2;
-            } else {
-                $multiplier = 1;
-            }
-            $subtotal = intval($revstr[$i]) * $multiplier;
-            if ($subtotal >= 10) {
-                $temp = (string)$subtotal;
-                $subtotal = intval($temp[0]) + intval($temp[1]);
-            }
-            $total += $subtotal;
+      $revstr = strrev(intval($number));
+      $total = 0;
+      for ($i = 0; $i < strlen($revstr); $i++) {
+        if ($i % 2 == 0) {
+          $multiplier = 2;
+        } else {
+          $multiplier = 1;
         }
-        $checkDigit = (10 - ($total % 10)) % 10;
+        $subtotal = intval($revstr[$i]) * $multiplier;
+        if ($subtotal >= 10) {
+          $temp = (string)$subtotal;
+          $subtotal = intval($temp[0]) + intval($temp[1]);
+        }
+        $total += $subtotal;
+      }
+      $checkDigit = (10 - ($total % 10)) % 10;
       // $BpayMemberNo  = $stringMemberNo . $iSum ;
 
       if($num_padding == "after"){
@@ -316,9 +322,9 @@ function generateBpayRef($number) {
       // echo " New: $BpayMemberNo ";
       return ($crn);
     }else{ 
-    /******************************************************/
-    /********************** MOD10v5 ***********************/
-    /******************************************************/
+      /******************************************************/
+      /********************** MOD10v5 ***********************/
+      /******************************************************/
 
       $number = preg_replace("/\D/", "", $number);
 
@@ -359,90 +365,92 @@ function generateBpayRef($number) {
   }
 }
 
+
 function setup_resource_dir($dir_base){
-    if (!file_exists( $dir_base.'bpay'))
-      mkdir( $dir_base.'bpay', 0755, true);
+  if (!file_exists( $dir_base.'bpay'))
+    mkdir( $dir_base.'bpay', 0755, true);
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp); 
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp); 
+  }
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp); 
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp); 
+  }
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp); 
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp); 
+  }
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp); 
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp); 
+  }
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp); 
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp); 
+  }
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp);
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp);
+  }
 
-    if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg')) {
-      $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg');
-      $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg', 'wb');
-      curl_setopt($ch, CURLOPT_FILE, $fp);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      curl_exec($ch);
-      curl_close($ch);
-      fclose($fp);
-    }
+  if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg')) {
+    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg');
+    $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg', 'wb');
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    curl_close($ch);
+    fclose($fp);
+  }
 
     // Add index.html to directorys for security/bots
-    if (!file_exists( $dir_base.'bpay/index.php'))
-      fopen( $dir_base.'bpay/index.php', "w");
+  if (!file_exists( $dir_base.'bpay/index.php'))
+    fopen( $dir_base.'bpay/index.php', "w");
 
-    if (!file_exists( $dir_base.'bpay/customers/index.php'))
-      fopen( $dir_base.'bpay/customers/index.php', "w");
+  if (!file_exists( $dir_base.'bpay/customers/index.php'))
+    fopen( $dir_base.'bpay/customers/index.php', "w");
 
-    if (!file_exists( $dir_base.'bpay/invoices/index.php'))
-      fopen( $dir_base.'bpay/invoices/index.php', "w");
+  if (!file_exists( $dir_base.'bpay/invoices/index.php'))
+    fopen( $dir_base.'bpay/invoices/index.php', "w");
 }
+
 
 function generateImage($biller_code, $CRN, $output_type = "image", $output_location = false){
   ///////////////////////////////////////////////////////////////////////////
@@ -462,7 +470,7 @@ function generateImage($biller_code, $CRN, $output_type = "image", $output_locat
       else
         $dir_base = ROOTDIR.'/modules/gateways/';
     }else
-      $dir_base = ROOTDIR.'/modules/gateways/';
+    $dir_base = ROOTDIR.'/modules/gateways/';
   }
   else
     $dir_base = '';
@@ -482,38 +490,38 @@ function generateImage($biller_code, $CRN, $output_type = "image", $output_locat
       imagettftext($image, $size, 0, 630, 98, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 485, 145, $color, $font, $CRN); // Customer Reference Number
       break;
-    case 'credit-vertical':
+      case 'credit-vertical':
       imagettftext($image, $size, 0, 513, 127, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 335, 188, $color, $font, $CRN); // Customer Reference Number
       break;
-    case 'fixed-payments':
+      case 'fixed-payments':
       imagettftext($image, $size, 0, 513, 127, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 335, 188, $color, $font, $CRN); // Customer Reference Number
       break;
-    case 'horizontal':
+      case 'horizontal':
       imagettftext($image, $size, 0, 630, 98, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 485, 145, $color, $font, $CRN); // Customer Reference Number
       break;
-    case 'no-credit-horizontal':
+      case 'no-credit-horizontal':
       imagettftext($image, $size, 0, 630, 98, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 485, 145, $color, $font, $CRN); // Customer Reference Number
       break;
-    case 'no-credit-vertical':
+      case 'no-credit-vertical':
       imagettftext($image, $size, 0, 513, 127, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 335, 188, $color, $font, $CRN); // Customer Reference Number
       break;
-    case 'vertical':
+      case 'vertical':
       imagettftext($image, $size, 0, 520, 135, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 335, 198, $color, $font, $CRN); // Customer Reference Number
       break;
-    
-    default:
+
+      default:
       imagettftext($image, $size, 0, 630, 98, $color, $font, $biller_code); // Biller Code Number
       imagettftext($image, $size, 0, 485, 145, $color, $font, $CRN); // Customer Reference Number
       break;
-  }
-  
-  if($output_type == "image")
+    }
+
+    if($output_type == "image")
     imagepng($image); // outputting the image
   else{
     imagepng($image, $output_location, 0, NULL);// save the image
@@ -524,11 +532,13 @@ function generateImage($biller_code, $CRN, $output_type = "image", $output_locat
   ///////////////////////////////////////////////////////////////////////////
 }
 
+
 function show_error_message($message){
   // If not in gateway config display error
   if(basename($_SERVER['PHP_SELF'], '.php') != "configgateways")
     echo($message);
 }
+
 
 // get whmcs base url
 function getBaseURL(){
@@ -570,147 +580,140 @@ function getBaseURL(){
   return $string;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////
 /// START BPay Generator
 ///////////////////////////////////////////////////////////////////////////
 
+
 function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength = null, $genCustNum = false){
   $output = array();
-$output["img"] = "EMPTY";
+  $output["img"] = "EMPTY";
 
-    if(!$BillerCode){
-      
-      $BillerCode = $CRNLength = "";
-      $BPAY_enabled = false;
-      // $table = "mod_bpay_display";
-      // $fields = "option,value";
-      // $result = select_query($table,$fields,$where);
-      $result = gate_db_access("settings");
+  if(!$BillerCode){
 
-      if(is_array($result)){
-        $BPAY_enabled = true;
-        foreach ($result as $key => $value) {
-          if($key == "BillerCode"){
-            $BillerCode = $value;
-          }else if($key == "CRNLength"){
-            $CRNLength = $value;
-          }else if($key == "crnMethod"){
-            $crnMethod = $value;
-          }
-        } //end for each
-      }
-    }
+    $BillerCode = $CRNLength = "";
+    $BPAY_enabled = false;
+    // $table = "mod_bpay_display";
+    // $fields = "option,value";
+    // $result = select_query($table,$fields,$where);
+    $result = gate_db_access("settings");
 
-    if($BillerCode == ""){
-      $BillerCode = 0;
-    }
-    $dir = "";
-    // check if images exist, if not create and store
-    // if($BPAY_enabled == true){
-      if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {
-       $dir = ROOTDIR.'/modules/gateways/'; 
-      }else if (file_exists('modules/gateways/bpay.php')) {
-       $dir = "modules/gateways/";
-      }else if (file_exists('../modules/gateways/bpay.php')) {
-       $dir = "../modules/gateways/";
-      }else if (file_exists('../../modules/gateways/bpay.php')) {
-       $dir = "../../modules/gateways/";
-      }else if (file_exists('../../../modules/gateways/bpay.php')) {
-       $dir = "../../../modules/gateways/";
-      }else{
-        die('Error - no database found');
-      }
-
-      if (!file_exists($dir.'bpay')) {
-        mkdir($dir.'bpay', 0755, true);
-        setup_resource_dir(ROOTDIR.'/modules/gateways/bpay/');
-        // $ch = curl_init('https://relentlesshosting.com.au/members/images/BPAY.jpg');
-        // $fp = fopen($dir.'bpay/BPay.jpg', 'wb');
-        // curl_setopt($ch, CURLOPT_FILE, $fp);
-        // curl_setopt($ch, CURLOPT_HEADER, 0);
-        // curl_exec($ch);
-        // curl_close($ch);
-        // fclose($fp); 
-
-        // $ch = curl_init('https://relentlesshosting.com.au/members/images/arial.ttf');
-        // $fp = fopen($dir.'bpay/arial.ttf', 'wb');
-        // curl_setopt($ch, CURLOPT_FILE, $fp);
-        // curl_setopt($ch, CURLOPT_HEADER, 0);
-        // curl_exec($ch);
-        // curl_close($ch);
-        // fclose($fp); 
-
-        // Add index.html to directorys for security
-        fopen($dir."bpay/index.php", "w") ;
-      }
-
-      $data = new stdClass();
-      $data->CRNLength = $CRNLength;
-      $data->crnMethod = $crnMethod;//"Customer ID""Invoice Number"
-      $data->client = $customer_id;
-      $data->inv = $invoiceNumb;
-
-      //get CRN ref from db
-      $crnNumber = gate_db_access("get_crn_ref", $data);
-
-      if(!$crnNumber){
-        if($crnMethod == "Customer ID")
-          $number = $customer_id;
-        else
-          $number = $invoiceNumb;
-
-        $crnNumber = $data->crn = generateBpayRef($number);
-        if(isset($data->crn))
-          gate_db_access("add_crn_ref", $data);
-        else
-          return false;
-      }
-
-      // check if images directory are there and if not create them
-      if($crnMethod == "Customer ID" || $genCustNum == true){
-        if (!file_exists($dir.'bpay/customers/')) {
-          mkdir($dir.'bpay/customers/', 0755, true); 
-          fopen($dir.'bpay/customers/index.php', "w");
+    if(is_array($result)){
+      $BPAY_enabled = true;
+      foreach ($result as $key => $value) {
+        if($key == "BillerCode"){
+          $BillerCode = $value;
+        }else if($key == "CRNLength"){
+          $CRNLength = $value;
+        }else if($key == "crnMethod"){
+          $crnMethod = $value;
         }
-        $img = ROOTDIR.'/modules/gateways/bpay/customers/'.$customer_id.'.jpg';
-      }else{
-        if (!file_exists($dir.'bpay/invoices/')) {
-          mkdir($dir.'bpay/invoices/', 0755, true); 
-          fopen($dir.'bpay/invoices/index.php', "w");
-        }
-        $img = ROOTDIR.'/modules/gateways/bpay/invoices/'.$invoiceNumb.'.jpg';
-      }
+      } //end for each
+    }
+  }
 
-      if($BillerCode == 0 || $BillerCode == ""){$BillerCode="0";}
+  if($BillerCode == ""){
+    $BillerCode = 0;
+  }
+  $dir = "";
+  // check if images exist, if not create and store
+  // if($BPAY_enabled == true){
+  if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {
+    $dir = ROOTDIR.'/modules/gateways/'; 
+  }else if (file_exists('modules/gateways/bpay.php')) {
+    $dir = "modules/gateways/";
+  }else if (file_exists('../modules/gateways/bpay.php')) {
+    $dir = "../modules/gateways/";
+  }else if (file_exists('../../modules/gateways/bpay.php')) {
+    $dir = "../../modules/gateways/";
+  }else if (file_exists('../../../modules/gateways/bpay.php')) {
+    $dir = "../../../modules/gateways/";
+  }else{
+    die('Error - no database found');
+  }
 
-      // determine if file already exists from previous generate
-      if(!file_exists($img)){
-        generateImage($BillerCode, $crnNumber, $output_type = "file", $img);
-      }
+  if (!file_exists($dir.'bpay')) {
+    mkdir($dir.'bpay', 0755, true);
+    setup_resource_dir(ROOTDIR.'/modules/gateways/bpay/');
+    fopen($dir."bpay/index.php", "w") ;
+  }
 
-      // return $img;
-      //$pdf->Image(ROOTDIR.'/modules/gateways/bpay/customers/'.$clientsdetails["id"].'.jpg',126,45,50);
-      
-      if($crnMethod == "Customer ID" || $genCustNum == true){$output["mode"] = 1;}else{$output["mode"] = 2;}
+  $data = new stdClass();
+  $data->CRNLength = $CRNLength;
+  $data->crnMethod = $crnMethod;//"Customer ID""Invoice Number"
+  $data->client = $customer_id;
+  $data->inv = $invoiceNumb;
 
-      $db_results = gate_db_access("pdf_display_details");
+  //get CRN ref from db
+  $crnNumber = gate_db_access("get_crn_ref", $data);
 
-      // if($db_results->pdf_display->enabled != 1){
-      //   return false; //bpay in invoice display not active
-      // }
-      // return serialize( $db_results);
-      $output["Xaxis"] = $db_results->pdf_display->Xaxis;
-      $output["Yaxis"] = $db_results->pdf_display->Yaxis;
-      $output["size"] = $db_results->pdf_display->size;
-      $output["img"] = $img;
-      return $output;
-    // }else{
-    //   return false;
-    // }
+  if(!$crnNumber){
+    if($crnMethod == "Customer ID")
+      $number = $customer_id;
+    else
+      $number = $invoiceNumb;
+
+    $crnNumber = $data->crn = generateBpayRef($number);
+    if(isset($data->crn))
+      gate_db_access("add_crn_ref", $data);
+    else
+      return false;
+  }
+
+  // check if images directory are there and if not create them
+  if($crnMethod == "Customer ID" || $genCustNum == true){
+    if (!file_exists($dir.'bpay/customers/')) {
+      mkdir($dir.'bpay/customers/', 0755, true); 
+      fopen($dir.'bpay/customers/index.php', "w");
+    }
+    $img = ROOTDIR.'/modules/gateways/bpay/customers/'.$customer_id.'.jpg';
+  }else{
+    if (!file_exists($dir.'bpay/invoices/')) {
+      mkdir($dir.'bpay/invoices/', 0755, true); 
+      fopen($dir.'bpay/invoices/index.php', "w");
+    }
+    $img = ROOTDIR.'/modules/gateways/bpay/invoices/'.$invoiceNumb.'.jpg';
+  }
+
+  if($BillerCode == 0 || $BillerCode == ""){
+    $BillerCode="0";
+  }
+
+  // determine if file already exists from previous generate
+  if(!file_exists($img)){
+    generateImage($BillerCode, $crnNumber, $output_type = "file", $img);
+  }
+
+  // return $img;
+  //$pdf->Image(ROOTDIR.'/modules/gateways/bpay/customers/'.$clientsdetails["id"].'.jpg',126,45,50);
+  
+  if($crnMethod == "Customer ID" || $genCustNum == true){
+    $output["mode"] = 1;
+  }else{
+    $output["mode"] = 2;
+  }
+
+  $db_results = gate_db_access("pdf_display_details");
+
+  // if($db_results->pdf_display->enabled != 1){
+  //   return false; //bpay in invoice display not active
+  // }
+  // return serialize( $db_results);
+  $output["Xaxis"] = $db_results->pdf_display->Xaxis;
+  $output["Yaxis"] = $db_results->pdf_display->Yaxis;
+  $output["size"] = $db_results->pdf_display->size;
+  $output["img"] = $img;
+  return $output;
+  // }else{
+  //   return false;
+  // }
 }
+
 ///////////////////////////////////////////////////////////////////////////
 /// END BPay Generator
 ///////////////////////////////////////////////////////////////////////////
+
 if(isset($_GET['CRNMethod'])){
   echo gate_db_access("crnMethod");
 }
@@ -720,65 +723,63 @@ if(isset($_GET['CRNMethod'])){
 ///////////////////////////////////////////////////////////////////////////
 
 else if(isset($_GET['cust_id'])){
-
-
-    $data = gate_db_access("manager_settings");
-    if(is_array($data)){
-      $biller_code = $data['BillerCode'];
-      if($biller_code == ""){
-        $biller_code = 0;
-      }
-      
-      $crn_l = $data['CRNLength'];
-
-      if(is_numeric($_GET['cust_id']) && is_numeric($biller_code) && is_numeric($crn_l)){
-        //required details to generate CRN
-        $crn_input_id = $_GET['cust_id'];
-
-        $CRN_legth = $crn_l; //Customer Reference Number (CRN) Length
-        //if(!is_numeric($_GET['biller_id']) || is_null($_GET['biller_id']) || $_GET['biller_id'] == NULL || empty($_GET['biller_id']) || $_GET['biller_id'] == ""){$BillerCode="0";}else{$biller_code = $_GET['biller_id'];} //BPay Biller Code
-      }else{
-        die("Not a number");
-      }
-    }
-    
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// START Customer Reference Number(CRN) Generation 
-    ///////////////////////////////////////////////////////////////////////////
-
-    //GET CRN
-    if (strlen($crn_input_id) > $CRN_legth) {
-      // address overflow by removing numbers that spill over
-      $crn_input_id = substr($crn_input_id, ((strlen($crn_input_id)) - $CRN_legth));
+  $data = gate_db_access("manager_settings");
+  if(is_array($data)){
+    $biller_code = $data['BillerCode'];
+    if($biller_code == ""){
+      $biller_code = 0;
     }
 
-    $CRN = $crn_input_id; //generateBpayRef();
+    $crn_l = $data['CRNLength'];
 
-    // pad zeros to reach length
-    if(strlen($CRN) < $CRN_legth){
-      $spacer = "";
-      for($i = 0; $i < ($CRN_legth-strlen($CRN)); $i++)
-        $spacer .= "0";
-      $CRN = $spacer.$CRN;
+    if(is_numeric($_GET['cust_id']) && is_numeric($biller_code) && is_numeric($crn_l)){
+    //required details to generate CRN
+      $crn_input_id = $_GET['cust_id'];
+
+    $CRN_legth = $crn_l; //Customer Reference Number (CRN) Length
+    //if(!is_numeric($_GET['biller_id']) || is_null($_GET['biller_id']) || $_GET['biller_id'] == NULL || empty($_GET['biller_id']) || $_GET['biller_id'] == ""){$BillerCode="0";}else{$biller_code = $_GET['biller_id'];} //BPay Biller Code
+  }else{
+    die("Not a number");
+  }
+}
+  
+
+///////////////////////////////////////////////////////////////////////////
+/// START Customer Reference Number(CRN) Generation 
+///////////////////////////////////////////////////////////////////////////
+
+//GET CRN
+if (strlen($crn_input_id) > $CRN_legth) {
+  // address overflow by removing numbers that spill over
+  $crn_input_id = substr($crn_input_id, ((strlen($crn_input_id)) - $CRN_legth));
+}
+
+$CRN = $crn_input_id; //generateBpayRef();
+
+// pad zeros to reach length
+if(strlen($CRN) < $CRN_legth){
+  $spacer = "";
+  for($i = 0; $i < ($CRN_legth-strlen($CRN)); $i++)
+    $spacer .= "0";
+  $CRN = $spacer.$CRN;
+}
+
+//OUTPUT
+//echo $CRN;
+
+///////////////////////////////////////////////////////////////////////////
+/// END Customer Reference Number(CRN) Generation 
+///////////////////////////////////////////////////////////////////////////
+
+if(isset($_GET['ref'])){
+  if($_GET['ref'] == "clientSummary"){
+    if(gateway_crnMethod() != "Customer ID"){
+      $CRN = "BPAY CRN Error! See setup!";
     }
+  }
+}
 
-    //OUTPUT
-    //echo $CRN;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// END Customer Reference Number(CRN) Generation 
-    ///////////////////////////////////////////////////////////////////////////
-
-    if(isset($_GET['ref'])){
-      if($_GET['ref'] == "clientSummary"){
-        if(gateway_crnMethod() != "Customer ID"){
-          $CRN = "BPAY CRN Error! See setup!";
-        }
-      }
-    }
-
-    die(generateImage($biller_code, $CRN));
+  die(generateImage($biller_code, $CRN));
 }
 
 ///////////////////////////////////////////////////////////////////////////
