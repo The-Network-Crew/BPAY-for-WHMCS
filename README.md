@@ -1,22 +1,10 @@
 # BPAY for WHMCS (Module / Gateway) BPAY Manager
 
-## WIP: This repo is being updated to resolve long-standing bugs.
-For now, the 2019 release is available here, tagged [v2.1.9](https://github.com/LEOPARD-host/BPAY-for-WHMCS/releases/tag/v2.1.9) (final version from RH).
+**_Addon Module for WHMCS which adds BPAY Payment support, image generation, etc._**
 
-We'll bump the version once some of the outstanding issues have been resolved.
+### Module (System) Requirements 
 
-## Downloading the latest version
-
-NOTE: The master branch contains **improved code**, though also reports as v2.1.9!
-
-So in the interim, please [download](https://github.com/LEOPARD-host/BPAY-for-WHMCS/archive/refs/heads/master.zip) the master ZIP and upload into your WHMCS site.
-
-Rename: If upgrading, make sure you remove all legacy (_rh etc) files & directories.
-
-_(the module name/directories/hook/etc were changed from bpay_rh to bpay_mgr)_
-
-## Module (System) Requirements 
-Below is a list of requirements to be met in order for BPAY Manager to work.
+Below is what the module needs in order to work properly.
 - PHP: v8.x (latest stable)
 - WHMCS: v8.x (latest stable)
 - ionCube: No requirement for it
@@ -24,7 +12,8 @@ Below is a list of requirements to be met in order for BPAY Manager to work.
 - Firewall: Need to have TCP/443 open
 - SSL Certificate: WHMCS needs to use one
 
-## Installation Instructions (WHMCS)
+### Installation Instructions (WHMCS)
+
 Below are the proper steps to Upload & Install the Module/Gateway.
 1. Download the latest version of the BPAY Manager for WHMCS from the GitHub repository.
 2. Upload all the files into your WHMCS directory in the same file structure as set in the ZIP.
@@ -35,13 +24,27 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 7. (You will be prompted to separately enable the Payment Gateway of BPAY as well)
 7. You can start using BPAY right away for your existing invoices - done!
 
-## Troubleshooting the Gateway Module
+### Upgrading from a legacy version ⚠️
+
+Due to the module being renamed, it's important to make sure you upgrade properly.
+
+1. Download the v2.1.9 **_and_** latest release and compare the file/folder structures
+2. Based on that, delete & upload the old & new versions respectively, to WHMCS
+3. Do a manual check to verify that all legacy (\_rh) files & folders are gone
+4. Login to WHMCS Admin and check Settings > Addon Modules for its version #
+
+Note: The SQL Tables weren't renamed, so the critical checking is file-only.
+
+### Troubleshooting the Gateway Module
+
 Problem: My biller code / reference number image is not appearing on the invoice.
 - Go to the BPAY Manager in your WHMCS and click the “Health” tab and look for any errors that may be causing BPAY Manager to not work correctly.
 - If all else fails, please raise an Issue on the GitHub Repo - making sure to detail the problem, including errors/logs, steps to reproduce, etc.
 
 Something else not behaving? Check any [Open Issues](https://github.com/LEOPARD-host/BPAY-for-WHMCS/issues) on GitHub.
 
-## BPAY
+### BPAY
 
 BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
+
+#### [The Network Crew Pty Ltd](https://thenetworkcrew.com.au)
