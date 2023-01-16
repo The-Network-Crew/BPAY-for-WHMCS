@@ -2083,12 +2083,7 @@ function health_check(){
         if(get_hooks_latest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-<<<<<<< Updated upstream
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
-            
-=======
             $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager inc/hooks available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
->>>>>>> Stashed changes
         }
     }
 
