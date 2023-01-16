@@ -1391,12 +1391,12 @@ function bpay_mgr_output($vars) {
 }
 
 function bpay_version()
-{    return "2.1.9";
+{    return "2.2.0";
 }
 
 function is_bpay_out_dated(){
     if(get_bpay_latest_version() > bpay_version()){
-        return "<br><span style='float:right;'><b>BPAY Manager is out of Date: <a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></span>";
+        return "<br><span style='float:right;'><b>BPAY Manager is outdated: <a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></span>";
     }
 }
 
