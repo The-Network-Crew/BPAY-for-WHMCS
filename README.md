@@ -29,11 +29,10 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 Due to the module being renamed, it's important to make sure you upgrade properly.
 
 1. Download the v2.1.9 **_and_** latest release and compare the file/folder structures
-2. Based on that, delete & upload the old & new versions respectively, to WHMCS
-3. Do a manual check to verify that all legacy (\_rh) files & folders are gone
-4. Login to WHMCS Admin and check Settings > Addon Modules for its version #
-
-Note: The SQL Tables weren't renamed, so the critical checking is file-only.
+2. From the Admin Area, Deactivate the Legacy Module Version (all vers =< v2.1.9)
+3. Having checked the file structures, delete old files and upload the new ones
+4. Do a manual check to verify that all legacy (\_rh) files & folders are gone
+5. Also within the Admin Area, go to Addon Modules and activate the new ver!
 
 ### Troubleshooting the Gateway Module
 
