@@ -482,9 +482,9 @@ function generateImage($biller_code, $CRN, $output_type = "image", $output_locat
   $image_type = "horizontal";  
   $image_type = gate_db_access('get_img_type');
 
-  $file   =  $dir_base."bpay/img-bpay-biller-code-".$image_type.".jpg";
+  $file   = $dir_base."bpay/img-bpay-biller-code-".$image_type.".jpg";
   $image  = imagecreatefromjpeg($file); // creating the image
-  $font   =  $dir_base."bpay/arial.ttf";
+  $font   = $dir_base."bpay/arial.ttf";
   $size   = 40; //pixels
   $color  = imagecolorallocate($image, 0, 0, 0); //white color
 
@@ -737,9 +737,9 @@ else if(isset($_GET['cust_id'])){
 
   if(is_numeric($_GET['cust_id']) && is_numeric($biller_code) && is_numeric($crn_l)){
     //required details to generate CRN
-      $crn_input_id = $_GET['cust_id'];
+    $crn_input_id = $_GET['cust_id'];
 
-    $CRN_legth = $crn_l; //Customer Reference Number (CRN) Length
+    $CRN_length = $crn_l; //Customer Reference Number (CRN) Length
     //if(!is_numeric($_GET['biller_id']) || is_null($_GET['biller_id']) || $_GET['biller_id'] == NULL || empty($_GET['biller_id']) || $_GET['biller_id'] == ""){$BillerCode="0";}else{$biller_code = $_GET['biller_id'];} //BPay Biller Code
   }else{
     die("Not a number");
@@ -752,17 +752,17 @@ else if(isset($_GET['cust_id'])){
 ///////////////////////////////////////////////////////////////////////////
 
 //GET CRN
-if (strlen($crn_input_id) > $CRN_legth) {
+if (strlen($crn_input_id) > $CRN_length) {
   // address overflow by removing numbers that spill over
-  $crn_input_id = substr($crn_input_id, ((strlen($crn_input_id)) - $CRN_legth));
+  $crn_input_id = substr($crn_input_id, ((strlen($crn_input_id)) - $CRN_length));
 }
 
 $CRN = $crn_input_id; //generateBpayRef();
 
 // pad zeros to reach length
-if(strlen($CRN) < $CRN_legth){
+if(strlen($CRN) < $CRN_length){
   $spacer = "";
-  for($i = 0; $i < ($CRN_legth-strlen($CRN)); $i++)
+  for($i = 0; $i < ($CRN_length-strlen($CRN)); $i++)
     $spacer .= "0";
   $CRN = $spacer.$CRN;
 }
