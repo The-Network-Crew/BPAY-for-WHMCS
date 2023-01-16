@@ -2052,7 +2052,7 @@ function health_check(){
 
     // check addon version is current
     if(get_bpay_latest_version() > bpay_version()){
-        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager and gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+        $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
     }
 
     // check if bpay files for hooks exist
@@ -2066,7 +2066,7 @@ function health_check(){
         if(get_hooks_latest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
     }
@@ -2079,12 +2079,16 @@ function health_check(){
         
     }else{
         // file exist check its version
-        include_once(ROOTDIR."/modules/addons/bpay_mgr/bpay_mgr_hooks.php");
+        include_once(ROOTDIR."/includes/hooks/bpay_mgr_inc.php");
         if(get_hooks_latest_version() > bpay_hook_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
+<<<<<<< Updated upstream
             $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Hooks are available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
+=======
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager inc/hooks available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+>>>>>>> Stashed changes
         }
     }
 
@@ -2099,7 +2103,7 @@ function health_check(){
         if(get_bpay_latest_version() > gate_bpay_version()){
             // Need to download latest version
             // Not needed to display as first constraint checks and displays message for manager and constraint checks for version mismatch
-            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Gateway is available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
+            $results .= '<div class="infobox"><strong><span class="title">A new update is available!</span></strong><br>There is a new version of BPAY Manager Gateway available to download.<br><br><a class="btn btn-primary" href="https://github.com/LEOPARD-host/BPAY-for-WHMCS/" role="button" target="_blank">Download new version!</a></div>';
             
         }
 
