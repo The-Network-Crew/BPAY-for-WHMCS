@@ -14,7 +14,7 @@ function bpay_config() {
    "FriendlyName" => array("Type" => "System", "Value"=>"BPAY"),
    "version" => array("FriendlyName" => "Version Number", "Description" => gate_bpay_version().gateway_check_version(), ),
    "instructions" => array("FriendlyName" => "Test Link", "Description" => "<a href='../modules/gateways/bpay.php?cust_id=12345' target='_blank'>View Test Image</a>", ),
- );
+  );
   return $configarray;
 }
 
@@ -732,7 +732,7 @@ else if(isset($_GET['cust_id'])){
 
     $crn_l = $data['CRNLength'];
 
-    if(is_numeric($_GET['cust_id']) && is_numeric($biller_code) && is_numeric($crn_l)){
+  if(is_numeric($_GET['cust_id']) && is_numeric($biller_code) && is_numeric($crn_l)){
     //required details to generate CRN
       $crn_input_id = $_GET['cust_id'];
 
@@ -790,6 +790,6 @@ if(isset($_GET['crn_check'])){
   die(generateBpayRef($_GET['crn_check']));
 }else if(isset($_GET['crn_img'])){
   die(generateImage("23456", $_GET['crn_img']));
-}else if(!isset("WHMCS") && basename($_SERVER["SCRIPT_FILENAME"], '.php') == "bpay"){
+}else if(!defined("WHMCS") && basename($_SERVER["SCRIPT_FILENAME"], '.php') == "bpay"){
   die("Access Denied");
 }

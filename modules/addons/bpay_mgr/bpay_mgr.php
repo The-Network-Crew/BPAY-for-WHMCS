@@ -1110,57 +1110,46 @@ function bpay_mgr_output($vars) {
             <th><strong>Environment Type</strong></th>
             <th><strong>Result</strong></th>
             <th></th>
-            <th></th>
-            <th></th>
             </tr>
             <tr>
-            <td>Operating System (OS)</td>
+            <td>Operating System (Type)</td>
             <td>'.PHP_OS.'</td>
-            <td></td>
-            <td></td>
             <td></td>
             </tr>
             <tr>
             <td>Web Server (Software)</td>
             <td>'.$_SERVER['SERVER_SOFTWARE'].'</td>
             <td></td>
-            <td></td>
-            <td></td>
             </tr>
             <tr>
             <td>WHMCS Version</td>
             <td>'.db_access('getWHMCSVersion').'</td>
-            <td></td>
-            <td></td>
             <td></td>
             </tr>
             <tr>
             <td>IonCube Version</td>
             <td>'.ioncube_loader_version_information().'</td>
             <td></td>
-            <td></td>
+            </tr>
+            <tr>
+            <td>PHP Version</td>
+            <td>'.phpversion().'</td>
             <td></td>
             </tr>
             <tr '.$bpay_mgr_error.'>
             <td>BPAY Manager: Addon Version</td>
             <td>'.$system_manager_version.'</td>
             <td>'.$update_manager_needed.'</td>
-            <td></td>
-            <td></td>
             </tr>
             <tr '.$bpay_hooks_error.'>
             <td>BPAY Manager: Hooks Version</td>
             <td>'.$system_hooks_version.'</td>
             <td>'.$update_hooks_needed.'</td>
-            <td></td>
-            <td></td>
             </tr>
             <tr '.$bpay_gateway_error.'>
-            <td>BPAY Gateway: Version</td>
+            <td>BPAY Manager: Gateway Version</td>
             <td>'.$system_gateway_version.'</td>
             <td>'.$update_gateway_needed.'</td>
-            <td></td>
-            <td></td>
             </tr>
             </tbody>
             </table>
@@ -2721,53 +2710,44 @@ function installPhase($HTML_Output){
         <th></th>
         </tr>
         <tr>
-        <td>Operating System (OS)</td>
+        <td>Operating System (Type)</td>
         <td>'.PHP_OS.'</td>
-        <td></td>
-        <td></td>
         <td></td>
         </tr>
         <tr>
         <td>Web Server (Software)</td>
         <td>'.$_SERVER['SERVER_SOFTWARE'].'</td>
         <td></td>
-        <td></td>
-        <td></td>
         </tr>
         <tr>
         <td>WHMCS Version</td>
         <td>'.db_access('getWHMCSVersion').'</td>
-        <td></td>
-        <td></td>
         <td></td>
         </tr>
         <tr>
         <td>IonCube Version</td>
         <td>'.ioncube_loader_version_information().'</td>
         <td></td>
-        <td></td>
+        </tr>
+        <tr>
+        <td>PHP Version</td>
+        <td>'.phpversion().'</td>
         <td></td>
         </tr>
         <tr '.$bpay_mgr_error.'>
         <td>BPAY Manager: Module Version</td>
         <td>'.$system_manager_version.'</td>
         <td>'.$update_manager_needed.'</td>
-        <td></td>
-        <td></td>
         </tr>
         <tr '.$bpay_hooks_error.'>
         <td>BPAY Manager: Hooks Version</td>
         <td>'.$system_hooks_version.'</td>
         <td>'.$update_hooks_needed.'</td>
-        <td></td>
-        <td></td>
         </tr>
         <tr '.$bpay_gateway_error.'>
-        <td>BPAY Gateway: Version</td>
+        <td>BPAY Manager: Gateway Version</td>
         <td>'.$system_gateway_version.'</td>
         <td>'.$update_gateway_needed.'</td>
-        <td></td>
-        <td></td>
         </tr>';
         echo '</tbody>
         </table>

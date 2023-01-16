@@ -3,7 +3,7 @@
 // BPAY for WHMCS - /modules/addons/bpay_mgr/bpay_mgr_hooks.php
 // https://github.com/LEOPARD-host/BPAY-for-WHMCS/
 
-if (!isset("WHMCS"))
+if (!defined("WHMCS"))
   die("This file cannot be accessed directly");
 $conn;
 
@@ -53,6 +53,7 @@ function get_hooks_latest_version(){
 /////////////////////////////////////////////
 
 
+// This is used to register hooks via ~/includes/hooks/bpay_mgr_inc.php
 function call_hooks(){
 
   GLOBAL $conn;
@@ -72,8 +73,8 @@ function call_hooks(){
     }
   }
 
-  // Run code to create remote forum account here...
-  add_hook("InvoiceCreation",1,"invoiceCreated");
+  // WHMCS Hook Index: https://developers.whmcs.com/hooks/hook-index/
+  add_hook("InvoiceCreationPreEmail",1,"invoiceCreated");
   add_hook("InvoiceUnpaid",1,"unpaidInvoice");
   add_hook("ClientAdd",1,"createClientCRN");
   // ClientAreaPageViewInvoice
@@ -86,19 +87,16 @@ function adminViewInvoice($var){
   GLOBAL $conn;
   $crn = getCRN($var['invoiceid']);
 
-  // RESOLVED, NEEDS TESTING: Refer to GitHub Issue #3
-
   echo '<script>
   setTimeout(function() { 
     $image = $("<img id='."'".'BpayAdminViewInvoice'."'".' src='."'".'../modules/gateways/bpay.php?cust_id='.$crn."'".' width='."'".'300px'."'".' style='."'".'margin-top:-20px;'."'".' />");
     $image.insertBefore($(\'select[name=tplname]\').parent());
     }, 500);
     </script>';
-
 }
 
 
-// global search hijack jQuery
+// BOOK FIRES in Admin Area (head)
 function bpay_global_search($vars){
   GLOBAL $conn;
 
@@ -216,7 +214,7 @@ function bpay_global_search($vars){
 }
 
 
-// on Invoice creation
+// HOOK FIRES on Invoice Creation
 function invoiceCreated($var){
   GLOBAL $conn;
 
@@ -236,7 +234,7 @@ function invoiceCreated($var){
 }
 
 
-// an invoice has been marked as unpaid from another status. check it exists in the bpay db
+// HOOK FIRES on Invoice Unpaid State
 function unpaidInvoice($var){
   GLOBAL $conn;
 
@@ -250,16 +248,16 @@ function unpaidInvoice($var){
 }
 
 
-// generate crn and store in db if not alread exisitng 
+// generate crn and store in db if not already exisitng 
 function createCRN($clientID, $invoiceID = false){
   GLOBAL $conn;
 
   if (file_exists('modules/gateways/bpay.php')) {include_once("modules/gateways/bpay.php");}else if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {include_once(ROOTDIR."/modules/gateways/bpay.php");}else{die('Error - no BPAY gateway found');}
 
   if($invoiceID){
-    // check if alread exists
+    // check if already exists
     if(!checkRef("invoice", $invoiceID)){
-      // generate crn for invoice and store
+      // generate CRN for invoice and store
       $crn = generateBpayRef($invoiceID);
       $sql = "INSERT INTO `mod_bpay_record` (`crn`, `clientID`, `invoiceID`, `crn_type`) VALUES ('".$crn."', '".$clientID."', '$invoiceID', 'Invoice');";
       $conn->query($sql);
@@ -285,7 +283,7 @@ function createCRN($clientID, $invoiceID = false){
 }
 
 
-// verify if client / invoice ID is already setup in db
+// Check if client/invoice ID present in DB already
 function checkRef($type, $key){
   GLOBAL $conn;
 
@@ -305,7 +303,7 @@ function checkRef($type, $key){
 }
 
 
-// get crn ID based off invoice loaded
+// Get CRN based on the Invoice
 function getCRN($invoiceID){
   GLOBAL $conn;
 
@@ -358,13 +356,13 @@ function getClientID($invoiceID){
 }
 
 
-// generate crn id on client create
+// HOOK FIRES on Client Create in WHMCS
 function createClientCRN($var){
   createCRN($var['userid']);
 }
 
 
-// display client bpay details on client summary page if bpay is enabled and set to run display on this page
+// Admin GUI: Show BPAY Ref on client-basis if configured
 function clientSummaryAdminArea($var){
   GLOBAL $conn;
   $settings = db_hook_access("settings");;
