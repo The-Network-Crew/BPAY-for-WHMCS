@@ -1267,7 +1267,7 @@ function bpay_mgr_output($vars) {
             <div id="invoicePDFdetails" '.$showInvoiceSpec.'>
             <br>
             <div class="col-md-3"><strong>PDF Image X-axis: (Left to Right)</strong> <input class="form-control" name="PDFx-axis" type="text" value="'.$Xaxis.'"> <span class="help-block">Display BPAY image in invoice PDF on x-axis position (Horizontal)</span></div>
-            <div class="col-md-3"><strong>PDF Image Y-axis: (Down to Up)</strong> <input class="form-control" name="PDFy-axis" type="text" value="'.$Yaxis.'"> <span class="help-block">Display BPAY image in invoice PDF on y-axis position (Vertical)</span></div>
+            <div class="col-md-3"><strong>PDF Image Y-axis: (Top to Bottom)</strong> <input class="form-control" name="PDFy-axis" type="text" value="'.$Yaxis.'"> <span class="help-block">Display BPAY image in invoice PDF on y-axis position (Vertical)</span></div>
             <div class="col-md-3"><strong>PDF Image Size: </strong> <input class="form-control" name="PDFsize" type="text" value="'.$size.'"> <span class="help-block">Display BPAY image in invoice PDF size scale</span></div>
             </div>'.$invoice_preview.'
             </td></tr>
@@ -2511,7 +2511,7 @@ function installPhase($HTML_Output){
     $HTML_Settings .= '<table width="100%" class="form" border="0" cellspacing="2" cellpadding="3">
     <tbody>
     <tr><td class="fieldlabel">BPAY Merchant/Bank</td><td class="fieldarea"><select name="Merchant_settings" class="form-control select-inline" '.$Merchant_settings_Error.' id="Merchant_settings" onchange="merchantChange()">'.$Merchant_settings_form.'</select> Either use pre-configured merchant settings or configure manually.</td></tr>
-    <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<br/>Biller name:  <span id="billerName">'.$BillerName.'</span></td></tr>
+    <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<!--<br/>Biller name:  <span id="billerName">'.$BillerName.'</span>--></td></tr>
     <tr><td class="fieldlabel">CRN Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Customer Reference Number length as specified by your bank</td></tr>
     <tr '.$show_prefix.' id="show_prefix"><td class="fieldlabel">CRN Prefix</td><td class="fieldarea"><input class="form-control select-inline"  name="prefix" type="number" size="20" value="'.$prefix.'" '.$prefixCodeError.' id="prefixCode"> Enter your prefix to be at the start of your CRN, as required by EziDebit</td></tr>
     <tr '.$CRN_Generated_via.' id="crnGenBy"><td class="fieldlabel">CRN Generated via</td><td class="fieldarea '.$crnGenBy.'"><label class="radio-inline"><input name="crnMethod" type="radio" value="Customer ID" '.$crnMethodCust.' > Customer ID</label><br><label class="radio-inline"><input name="crnMethod" type="radio" '.$crnMethodInv.' value="Invoice Number"> Invoice Number</label><br></div></td></tr>
@@ -2757,9 +2757,7 @@ function installPhase($HTML_Output){
         </div>
         </div>
         </div>
-        <!--End Environment -->
-        </div>
-    </div>';
+        <!--End Environment -->';
 
     // brackets changed in v2.2.0
     if(!$health_check) {
