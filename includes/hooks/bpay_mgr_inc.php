@@ -1,5 +1,8 @@
 <?php
 
+// BPAY for WHMCS - /includes/hooks/bpay_mgr_inc.php
+// https://github.com/LEOPARD-host/BPAY-for-WHMCS/
+
 /**
  * BPAY Manager - Hook Function
  * This hook is used to manage the invoice management for the BPAY Module system.

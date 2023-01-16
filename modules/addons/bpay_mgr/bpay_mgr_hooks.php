@@ -96,7 +96,7 @@ function adminViewInvoice($var){
 }
 
 
-// BOOK FIRES in Admin Area (head)
+// HOOK FIRES in Admin Area (head)
 function bpay_global_search($vars){
   GLOBAL $conn;
 

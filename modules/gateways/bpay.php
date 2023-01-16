@@ -1,5 +1,8 @@
 <?php
 
+// BPAY for WHMCS - /modules/gateways/bpay.php
+// https://github.com/LEOPARD-host/BPAY-for-WHMCS/
+
 /**
  * @package     BPAY for WHMCS (BPAY Manager)
  * @author      The Network Crew Pty Ltd and Clinton Nesbitt
