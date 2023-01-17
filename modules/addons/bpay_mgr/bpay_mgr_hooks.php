@@ -75,7 +75,7 @@ function call_hooks(){
 
   // WHMCS Hook Index: https://developers.whmcs.com/hooks/hook-index/
   add_hook("ClientAreaPageViewInvoice",1,"clientViewInvoice");
-  add_hook("InvoiceCreationPreEmail",1,"invoiceCreated");
+  add_hook("InvoiceCreation",1,"invoiceCreated");
   add_hook("InvoiceUnpaid",1,"unpaidInvoice");
   add_hook("ClientAdd",1,"createClientCRN");
   // ClientAreaPageViewInvoice
