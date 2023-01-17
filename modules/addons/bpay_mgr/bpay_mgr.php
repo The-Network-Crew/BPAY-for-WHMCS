@@ -2222,29 +2222,29 @@ function initialise_record_table(){
 
 function insertInvoiceFunc($replace = false){
     $insertString = '///////////////////////////////////////////////////////////////////////////
-    /// START: BPAY GENERATOR
-    ///////////////////////////////////////////////////////////////////////////
-    if (file_exists(ROOTDIR."/modules/gateways/bpay.php")) {
-        require_once(ROOTDIR."/modules/gateways/bpay.php");
-        $output = BPAY_PDF($clientsdetails["id"],$invoicenum);
+/// START: BPAY GENERATOR
+///////////////////////////////////////////////////////////////////////////
+if (file_exists(ROOTDIR."/modules/gateways/bpay.php")) {
+    require_once(ROOTDIR."/modules/gateways/bpay.php");
+    $output = BPAY_PDF($clientsdetails["id"],$invoicenum);
 
-        $pagecount = $pdf->getNumPages();
-        // for($i = 1; $i <= $pagecount; $i++){
-            $pdf->setPage(1);
-            if($output["mode"] == 1){
-                $pdf->Image(ROOTDIR."/modules/gateways/bpay/customers/".$clientsdetails["id"].".jpg",$output["Xaxis"],$output["Yaxis"],$output["size"]);
-            }else if($output["mode"] == 2){
-                $pdf->Image(ROOTDIR."/modules/gateways/bpay/invoices/".$invoicenum.".jpg",$output["Xaxis"],$output["Yaxis"],$output["size"]);
-            }
-        // }
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// END: BPAY GENERATOR
-    ///////////////////////////////////////////////////////////////////////////';
+    $pagecount = $pdf->getNumPages();
+    // for($i = 1; $i <= $pagecount; $i++){
+        $pdf->setPage(1);
+        if($output["mode"] == 1){
+            $pdf->Image(ROOTDIR."/modules/gateways/bpay/customers/".$clientsdetails["id"].".jpg",$output["Xaxis"],$output["Yaxis"],$output["size"]);
+        }else if($output["mode"] == 2){
+            $pdf->Image(ROOTDIR."/modules/gateways/bpay/invoices/".$invoicenum.".jpg",$output["Xaxis"],$output["Yaxis"],$output["size"]);
+        }
+    // }
+}
+///////////////////////////////////////////////////////////////////////////
+/// END: BPAY GENERATOR
+///////////////////////////////////////////////////////////////////////////';
 
     $template_name = db_access("getWHMCSTemplate");
     $file = ROOTDIR."/templates/".$template_name."/invoicepdf.tpl";
-    $parentfile = ROOTDIR."/templates/invoicepdf.tpl";
+    $parent_file = ROOTDIR."/templates/invoicepdf.tpl";
 
     $invoiceTemplateFile = file_get_contents($file);
     if($replace == false){
@@ -2254,7 +2254,7 @@ function insertInvoiceFunc($replace = false){
             return false; //bpay function exists dont continue
         }else{
             file_put_contents($file, $insertString, FILE_APPEND);
-            file_put_contents($parentfile, $file);
+            file_put_contents($parent_file, $file);
             return true;
         }
     }else{
