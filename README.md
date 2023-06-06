@@ -26,12 +26,14 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 
 ### 🐛 Troubleshooting the Gateway Module 🐛
 
-Problem: My biller code / reference number image is not appearing in the PDF file.
+```My biller code / reference number image is not appearing in the PDF file.```
+
 - Go to the BPAY Manager in your WHMCS and click the “Health” tab and check for errors.
 - Ensure BPAY code is in /templates/your_template/invoicepdf.tpl AND /templates/invoicepdf.tpl
 - If all else fails, please raise an Issue on the repo - detailing steps, error, logs, etc - thanks!
 
-Problem: Every time I update my WHMCS installation (core), the Invoice PDFs stop having the image.
+```Every time I update WHMCS (core), the Invoice PDFs stop containing the image.```
+
 - This occurs due to the invoicepdf.tpl file/s being over-written. Same when using Clean PDF, etc.
 - You can use the reinject_template_code flag (see Advanced Operation below) to re-inject the code.
 
@@ -49,11 +51,13 @@ Due to the module being renamed, it's important to make sure you upgrade properl
 
 ### ⚙️ Advanced Operation (Flags) ⚙️
 
-##### Bypass initializion without needing to install the BPAY Manager again.
-URL: https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1
+```Bypass initializion without needing to install the BPAY Manager again.```
 
-##### Reinject the Invoice PDF template code without needing to reinitialise.
-URL: https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1
+https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1
+
+```Reinject the Invoice PDF template code without needing to reinitialise.```
+
+https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1
 
 ### ™️ BPAY Trade Marks ™️
 
