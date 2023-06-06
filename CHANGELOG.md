@@ -1,20 +1,37 @@
 # Changelog
 All notable changes to BPAY Manager will be documented in this file.
 
+## [2.2.1] - 2023-06-06
+ 
+### Added
+- Logic to support WHMCS & cron.php being isolated
+- Flag to reinject the Invoice PDF template with code
+ 
+### Changed
+- Hide the BPAY Biller Name lookup (deprecated method) (#2)
+- Fatal Errors updated to reflect origination from BPAY Manager
+- Improved the README file; Added a CONTRIBUTING file to the repo
+ 
+### Fixed
+- SQL Error in bpay_mgr_hooks.php (rogue apostrophe) (resolves #13)
+- More work towards resolving #1 (relative/absolute, superglobals, etc)
+
 ## [2.2.0] - 2023-01-16
  
 ### Added
-- PHP Version now listed in Health Status
+- PHP Version now listed in Health Status (#8)
+- Support added for PHPv8 and WHMCS v8 (latest)
  
 ### Changed
 - Indenting of module files reset and done properly
 - Removed some old code snippets, table columns, etc.
- 
+- Include the BPAY Image on 1st page of PDFs only (#10)
+
 ### Fixed
-- Resolved issue with BPAY Image not appearing in Admin Area
-- Resolved image not appearing in Client Area, viewing Invoice
-- Implemented fix for delayed image generation, re: cron no-image
-- Collectively, should resolve GitHub Issues: #1, #3, #4, #6, #8 and #9
+- Fixed issue with no BPAY Image in Admin > Summary/Invoice (#3/#7)
+- Fixed issue with no BPAY Image in Client > Viewing Invoice (#4/#7)
+- Fixed a range of typos throughout the code-base, including hook (#6)
+- Collectively, should resolve GitHub Issues: #3, #4, #6, #7 & #8
 
 ## [2.1.9] - 2019-01-27
  

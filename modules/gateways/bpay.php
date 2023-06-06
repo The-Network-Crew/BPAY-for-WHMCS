@@ -62,7 +62,7 @@ function bpay_link($params) {
 
 
 function gate_bpay_version(){
-  return "2.2.0";
+  return "2.2.1";
 }
 
 
@@ -488,6 +488,7 @@ function generateImage($biller_code, $CRN, $output_type = "image", $output_locat
   $size   = 40; //pixels
   $color  = imagecolorallocate($image, 0, 0, 0); //white color
 
+  // SPECIFY START-COORDS FOR BILLER CODE AND REF OVER-THE-TOP OF BLANK IMAGE TEMPLATES
   switch ($image_type) {
     case 'credit-horizontal':
       imagettftext($image, $size, 0, 630, 98, $color, $font, $biller_code); // Biller Code Number
@@ -633,7 +634,7 @@ function BPAY_PDF($customer_id, $invoiceNumb = 0, $BillerCode = null, $CRNLength
   }else if (file_exists('../../../modules/gateways/bpay.php')) {
     $dir = "../../../modules/gateways/";
   }else{
-    die('Error - no database found');
+    die('BPAY Manager - Error - Database was not found');
   }
 
   if (!file_exists($dir.'bpay')) {

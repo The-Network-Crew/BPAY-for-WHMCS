@@ -14,6 +14,8 @@
 // Bypass initializion with out need to go through install again. (need active WHMCS session)
 // URL: https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1
 
+// Reinject the Invoice PDF template code without needing to reinitialise the Addon Module
+// URL: https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1
 
 $conn;
 if(!isset($conn))
@@ -26,7 +28,7 @@ function connect_DB(){
   GLOBAL $conn;
   // load DB connection for global access
   if(!isset($db_host))
-    if (file_exists('configuration.php')) {include("configuration.php");}else if (file_exists(ROOTDIR.'/configuration.php')) {include(ROOTDIR."/configuration.php");}else{echo_die('Error - no database found');}
+    if (file_exists('configuration.php')) {include("configuration.php");}else if (file_exists(ROOTDIR.'/configuration.php')) {include(ROOTDIR."/configuration.php");}else{echo_die('BPAY Manager - Error - Database was not found');}
     
   // Create connection
   $conn = new mysqli($db_host, $db_username, $db_password, $db_name);
@@ -439,6 +441,11 @@ function bpay_mgr_output($vars) {
                 }
             }
         }
+    }
+
+    // Supports a manual reinjection of the Invoice PDF template code
+    if (isset($_GET['reinject_template_code'])) {
+        insertInvoiceFunc();
     }
 
     if($install_state === "0"){
@@ -930,7 +937,7 @@ function bpay_mgr_output($vars) {
         <table width="100%" class="form" border="0" cellspacing="2" cellpadding="3">
         <tbody>
         <tr><td class="fieldlabel">BPAY Merchant/Bank</td><td class="fieldarea"><select name="Merchant_settings" class="form-control select-inline" '.$Merchant_settings_Error.' id="Merchant_settings" onchange="merchantChange()">'.$Merchant_settings_form.'</select> Either use pre-configured merchant settings or configure manually.</td></tr>
-        <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<br/>Biller name:  <span id="billerName">'.$BillerName.'</span></td></tr>
+        <tr><td class="fieldlabel">BPAY Biller Code</td><td class="fieldarea"><input class="form-control select-inline" id="BillerCode"  name="BillerCode" type="number" size="20" value="'.$BillerCode.'" '.$billerCodeError.' id="billerCode"> Your Biller Code ID provided by your bank<!--<br/>Biller name:  <span id="billerName">'.$BillerName.'</span>--></td></tr>
         <tr><td class="fieldlabel">CRN Length</td><td class="fieldarea"><select name="CRNLength" class="form-control select-inline '.$crnLengthError.'" id="CRNLength">'.$crnform.'</select> Customer Reference Number length as specified by your bank</td></tr>
         <tr '.$show_prefix.' id="show_prefix"><td class="fieldlabel">CRN Prefix</td><td class="fieldarea"><input class="form-control select-inline"  name="prefix" type="number" size="20" value="'.$prefix.'" '.$prefixCodeError.' id="prefixCode"> Enter your prefix to be at the start of your CRN, as required by EziDebit</td></tr>
         <tr '.$CRN_Generated_via.' id="crnGenBy"><td class="fieldlabel">CRN Generated via</td><td class="fieldarea '.$crnGenBy.'"><label class="radio-inline"><input name="crnMethod" type="radio" value="Customer ID" '.$crnMethodCust.' > Customer ID</label><br><label class="radio-inline"><input name="crnMethod" type="radio" '.$crnMethodInv.' value="Invoice Number"> Invoice Number</label><br></div></td></tr>
@@ -1382,7 +1389,7 @@ function bpay_mgr_output($vars) {
 
 
 function bpay_version(){
-    return "2.2.0";
+    return "2.2.1";
 }
 
 

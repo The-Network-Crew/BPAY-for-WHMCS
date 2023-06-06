@@ -13,7 +13,7 @@ connect_hook_DB();
 function connect_hook_DB(){
   GLOBAL $conn;
   // load DB connection for global access
-  if (file_exists('configuration.php')) {require("configuration.php");}else if (file_exists(ROOTDIR.'/configuration.php')) {require(ROOTDIR."/configuration.php");}else{die('Error - no database found');}
+  if (file_exists('configuration.php')) {require("configuration.php");}else if (file_exists(ROOTDIR.'/configuration.php')) {require(ROOTDIR."/configuration.php");}else{die('BPAY Manager - Error - Database was not found');}
 
   // Create connection
   $conn = new mysqli($db_host, $db_username, $db_password, $db_name);
@@ -26,7 +26,7 @@ function connect_hook_DB(){
 
 
 function bpay_hook_version(){
-  return "2.2.0";
+  return "2.2.1";
 }
 
 
@@ -234,7 +234,7 @@ function bpay_global_search($vars){
 function invoiceCreated($var){
   GLOBAL $conn;
 
-  $sql = "Select `userid` from `tblinvoices` where `id` = ".$var['invoiceid']."'";
+  $sql = "Select `userid` from `tblinvoices` where `id` = ".$var['invoiceid']."";
   $result = $conn->query($sql);
 
   // GOING THROUGH THE DATA
@@ -268,7 +268,7 @@ function unpaidInvoice($var){
 function createCRN($clientID, $invoiceID = false){
   GLOBAL $conn;
 
-  if (file_exists('modules/gateways/bpay.php')) {include_once("modules/gateways/bpay.php");}else if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {include_once(ROOTDIR."/modules/gateways/bpay.php");}else{die('Error - no BPAY gateway found');}
+  if (file_exists('modules/gateways/bpay.php')) {include_once("modules/gateways/bpay.php");}else if (file_exists(ROOTDIR.'/modules/gateways/bpay.php')) {include_once(ROOTDIR."/modules/gateways/bpay.php");}else{die('BPAY Manager - Error - BPAY Gateway was not found');}
 
   if($invoiceID){
     // check if already exists
