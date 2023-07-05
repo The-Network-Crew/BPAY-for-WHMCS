@@ -2,7 +2,7 @@
 
 **_Addon Module for WHMCS which adds BPAY Payment support, image generation, etc._**
 
-### 🎯 Module (System) Requirements 🎯
+## 🎯 MODULE SYSTEM REQUIREMENTS 🎯
 
 Below is what the module needs in order to work properly.
 - PHP: v8.x (latest stable)
@@ -12,7 +12,7 @@ Below is what the module needs in order to work properly.
 - Firewall: Need to have TCP/443 open
 - SSL Certificate: WHMCS needs to use one
 
-### ✅ Installation Instructions (WHMCS) ✅
+## ✅ INSTALLATION INSTRUCTIONS (WHMCS) ✅
 
 Below are the proper steps to Upload & Install the Module/Gateway.
 1. Download the latest version of the BPAY Manager for WHMCS from the GitHub repo.
@@ -24,7 +24,7 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 7. (You will be prompted to separately enable the Payment Gateway of BPAY as well)
 8. You can start using BPAY right away for your existing invoices - done!
 
-### 🐛 Troubleshooting the Gateway Module 🐛
+## 🐛 TROUBLESHOOTING THE BPAY MANAGER MODULE 🐛
 
 ```My biller code / reference number image is not appearing in the PDF file.```
 
@@ -39,7 +39,7 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 
 Something else not behaving? Check any [Open Issues](https://github.com/LEOPARD-host/BPAY-for-WHMCS/issues) on GitHub.
 
-### ⚠️ Upgrading from a legacy version ⚠️
+## ⚠️ UPGRADING FROM A LEGACY _RH VERSION ⚠️
 
 Due to the module being renamed, it's important to make sure you upgrade properly.
 
@@ -49,7 +49,7 @@ Due to the module being renamed, it's important to make sure you upgrade properl
 4. Do a manual check to verify that all legacy (\_rh) files & folders are gone
 5. Also within the Admin Area, go to Addon Modules and activate the new ver!
 
-### ⚙️ Advanced Operation (Flags) ⚙️
+## ⚙️ ADVANCED OPERATIONS (FLAGS) AVAILABLE ⚙️
 
 ```Bypass initializion without needing to install the BPAY Manager again.```
 
@@ -59,8 +59,10 @@ https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_byp
 
 https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1
 
-### ™️ BPAY Trade Marks ™️
+## ™️ BPAY IS A TRADE MARK ™️
 
 BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
+
+## 🏢 DEVELOPMENT 🏢
 
 #### [The Network Crew Pty Ltd](https://thenetworkcrew.com.au)
