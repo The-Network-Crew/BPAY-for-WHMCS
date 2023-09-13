@@ -7,7 +7,6 @@
 Below is what the module needs in order to work properly.
 - PHP: v8.x (latest stable)
 - WHMCS: v8.x (latest stable)
-- ionCube: No requirement for it
 - cURL: Must be enabled in php.ini
 - Firewall: Need to have TCP/443 open
 - SSL Certificate: WHMCS needs to use one
@@ -37,9 +36,9 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 - This occurs due to the invoicepdf.tpl file/s being over-written. Same when using Clean PDF, etc.
 - You can use the reinject_template_code flag (see Advanced Operation below) to re-inject the code.
 
-Something else not behaving? Check any [Open Issues](https://github.com/LEOPARD-host/BPAY-for-WHMCS/issues) on GitHub.
+Something else not behaving? Check any [Open Issues](https://github.com/The-Network-Crew/BPAY-for-WHMCS/issues) on GitHub.
 
-## ⚠️ UPGRADING FROM A LEGACY _RH VERSION ⚠️
+## ⚠️ UPGRADING FROM A LEGACY \_RH VERSION ⚠️
 
 Due to the module being renamed, it's important to make sure you upgrade properly.
 
@@ -66,3 +65,5 @@ BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
 ## 🏢 DEVELOPMENT 🏢
 
 #### [The Network Crew Pty Ltd](https://thenetworkcrew.com.au)
+
+#### [LEOPARD.host](https://leopard.host)

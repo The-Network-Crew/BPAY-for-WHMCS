@@ -1,7 +1,7 @@
 <?php
 
 // BPAY for WHMCS - /includes/hooks/bpay_mgr_inc.php
-// https://github.com/LEOPARD-host/BPAY-for-WHMCS/
+// https://github.com/The-Network-Crew/BPAY-for-WHMCS/
 
 /**
 * BPAY Manager - Hook Function

@@ -1,7 +1,7 @@
 <?php
 
 // BPAY for WHMCS - /modules/gateways/bpay.php
-// https://github.com/LEOPARD-host/BPAY-for-WHMCS/
+// https://github.com/The-Network-Crew/BPAY-for-WHMCS/
 
 /**
  * @package     BPAY for WHMCS (BPAY Manager)
@@ -68,7 +68,7 @@ function gate_bpay_version(){
 
 function gateway_check_version(){
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/version");
+  curl_setopt($ch, CURLOPT_URL, "https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/version");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   $remoteVersion = curl_exec($ch);
   curl_close ($ch);
@@ -76,7 +76,7 @@ function gateway_check_version(){
   $remoteVersion = str_replace("\n", "", $remoteVersion);
 
   if($remoteVersion > gate_bpay_version()){
-    return " - <b><a style='color:red' href='https://github.com/LEOPARD-host/BPAY-for-WHMCS'>Download new version!</a></b>";
+    return " - <b><a style='color:red' href='https://github.com/The-Network-Crew/BPAY-for-WHMCS'>Download new version!</a></b>";
   }else if($remoteVersion == gate_bpay_version()){
     return " - <font color='green'>Curent Version</font>";
   }
@@ -374,7 +374,7 @@ function setup_resource_dir($dir_base){
     mkdir( $dir_base.'bpay', 0755, true);
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-horizontal.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-horizontal.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -384,7 +384,7 @@ function setup_resource_dir($dir_base){
   }
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-credit-vertical.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-credit-vertical.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -394,7 +394,7 @@ function setup_resource_dir($dir_base){
   }
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-fixed-payments.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-fixed-payments.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -404,7 +404,7 @@ function setup_resource_dir($dir_base){
   }
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-horizontal.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-horizontal.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -414,7 +414,7 @@ function setup_resource_dir($dir_base){
   }
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-horizontal.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-horizontal.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -424,7 +424,7 @@ function setup_resource_dir($dir_base){
   }
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-no-credit-vertical.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-no-credit-vertical.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -434,7 +434,7 @@ function setup_resource_dir($dir_base){
   }
 
   if (!file_exists( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg')) {
-    $ch = curl_init('https://raw.githubusercontent.com/LEOPARD-host/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg');
+    $ch = curl_init('https://raw.githubusercontent.com/The-Network-Crew/BPAY-for-WHMCS/master/modules/gateways/bpay/img-bpay-biller-code-vertical.jpg');
     $fp = fopen( $dir_base.'bpay/img-bpay-biller-code-vertical.jpg', 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
