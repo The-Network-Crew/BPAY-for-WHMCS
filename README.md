@@ -28,15 +28,25 @@ Below are the proper steps to Upload & Install the Module/Gateway.
 ### My biller code / reference number image is not appearing in the PDF file.
 
 - Go to the BPAY Manager in your WHMCS and click the “Health” tab and check for errors.
-- Ensure BPAY code is in /templates/your_template/invoicepdf.tpl AND /templates/invoicepdf.tpl
+- Ensure BPAY code is in `/templates/your_template/invoicepdf.tpl` & `/templates/invoicepdf.tpl`
 - If all else fails, please raise an Issue on the repo - detailing steps, error, logs, etc - thanks!
 
 ### Every time I update WHMCS (core), the Invoice PDFs stop containing the image.
 
-- This occurs due to the invoicepdf.tpl file/s being over-written. Same when using Clean PDF, etc.
-- You can use the reinject_template_code flag (see Advanced Operation below) to re-inject the code.
+- This occurs due to the `invoicepdf.tpl` file/s being over-written. Same when using Clean PDF, etc.
+- You can use the `reinject_template_code` flag (see Advanced Operations below) to re-inject the code.
 
 Something else not behaving? Check any [Open Issues](https://github.com/The-Network-Crew/BPAY-for-WHMCS/issues) on GitHub.
+
+## ⚙️ (FLAGS) Advanced Operations you can use ⚙️
+
+### Bypass initializion without needing to install the BPAY Manager again.
+
+`https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1`
+
+### Reinject the Invoice PDF template code without needing to reinitialise.
+
+`https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1`
 
 ## ⚠️ (EOL) Upgrading from old _rh versions ⚠️
 
@@ -47,16 +57,6 @@ Due to the module being renamed, it's important to make sure you upgrade properl
 3. Having checked the file structures, delete old files and upload the new ones
 4. Do a manual check to verify that all legacy (\_rh) files & folders are gone
 5. Also within the Admin Area, go to Addon Modules and activate the new ver!
-
-## ⚙️ (FLAGS) Advanced Operations you can use ⚙️
-
-### Bypass initializion without needing to install the BPAY Manager again.
-
-https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1
-
-### Reinject the Invoice PDF template code without needing to reinitialise.
-
-https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1
 
 ## ™️ (BPAY) Trade Mark clarity ™️
 
