@@ -2,6 +2,16 @@
 
 **_Addon Module for WHMCS which adds BPAY Payment support, image generation, etc._**
 
+## ⚠️ (v3) Rebuild due in 2024 ⚠️
+
+The module that we've inherited is not ideally engineered/evolved up to inheritance, so we've decided to wind down efforts as we have this year, and instead will be taking the key functionality from this module, refactoring it into a new codebase/branch and working almost from the ground up on v3.
+
+v3 will be more stripped-back, focused on doing less well - as well as ensuring that logging is verbose (Matt Pugh from WHMCS agrees the cron/no-cron issue is questionable - I spoke with him in-person in 2023 about this project's issues/history). 
+
+Many companies have made their own micro BPAY-for-WHMCS and unfortunately there is a consistent theme of users of this software claiming to resolve issues then withholding code, so the time-to-fix grows.
+
+https://github.com/The-Network-Crew/BPAY-for-WHMCS/issues/1
+
 ## 🎯 (MODULE) System Requirements 🎯
 
 Below is what the module needs in order to work properly.
