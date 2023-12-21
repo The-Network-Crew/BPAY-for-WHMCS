@@ -2,9 +2,11 @@
 
 **_Addon Module for WHMCS which adds BPAY Payment support, image generation, etc._**
 
+**THE INHERITED CODEBASE IS NOT RELIABLE, MAY CAUSE ISSUES & IS NOT PROD-READY.**
+
 ## ⚠️ (v3) Rebuild due in 2024 ⚠️
 
-The module that we've inherited is not ideally engineered/evolved up to inheritance, so we've decided to wind down efforts as we have this year, and instead will be taking the key functionality from this module, refactoring it into a new codebase/branch and working almost from the ground up on v3.
+The module that we've inherited is not ideally engineered/evolved up to the point of inheritance, so we've decided to wind down efforts, and instead will be taking some key functionality/concepts from this module, refactoring it into a new codebase/branch and working from the ground up on v3.
 
 v3 will be more stripped-back, focused on doing less well - as well as ensuring that logging is verbose (Matt Pugh from WHMCS agrees the cron/no-cron issue is questionable - I spoke with him in-person in 2023 about this project's issues/history). 
 
