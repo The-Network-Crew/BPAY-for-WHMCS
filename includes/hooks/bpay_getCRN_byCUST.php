@@ -1,5 +1,5 @@
 <?php
-// BPAY for WHMCS - v3.x - Reliable CRN Generation & Handling
+// BPAY for WHMCS - v3.x - Reliable CRN Generation & Handling (this file: GENERATION BY CUSTOMER ID)
 // 
 // Adds a BPAY CRN with a MOD10 version 5 check digit for client-related emails and returns it as a merge field.
 // You can then use the {$bpay_reference} merge field in WHMCS Admin > Email Templates, to render the CRN.
@@ -81,6 +81,7 @@ add_hook('EmailPreSend', 1, function($vars) {
             $merge_fields['bpay_reference'] = $CRNwithCheckDigit;
         }
     }
-    
+
+    // Whether empty or filled, return to-spec
     return $merge_fields;
 });
