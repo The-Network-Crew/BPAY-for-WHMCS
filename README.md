@@ -4,15 +4,13 @@
 
 **THE INHERITED CODEBASE IS NOT RELIABLE, MAY CAUSE ISSUES & IS NOT PROD-READY.**
 
-## ⚠️ (v3) Rebuild due in 2024 ⚠️
+## ⚠️ (v3) Rebuilt in 2024 ⚠️
 
-The module that we've inherited is not ideally engineered/evolved up to the point of inheritance, so we've decided to wind down efforts, and instead will be taking some key functionality/concepts from this module, refactoring it into a new codebase/branch and working from the ground up on v3.
+The module that we've inherited is not ideally engineered/evolved up to the point of inheritance, so we've decided to wind down efforts, and instead will be taking some key functionality/concepts from this module, and slowly refactoring it into a radically simpler implementation.
 
-v3 will be more stripped-back, focused on doing less well - as well as ensuring that logging is verbose (Matt Pugh from WHMCS agrees the cron/no-cron issue is questionable - I spoke with him in-person in 2023 about this project's issues/history). 
+v3 is more stripped-back, focused on doing less well.
 
-Many companies have made their own micro BPAY-for-WHMCS and unfortunately there is a consistent theme of users of this software claiming to resolve issues then withholding code, so the time-to-fix grows.
-
-https://github.com/The-Network-Crew/BPAY-for-WHMCS/issues/1
+https://github.com/The-Network-Crew/BPAY-for-WHMCS-v3/
 
 ## 🎯 (MODULE) System Requirements 🎯
 
@@ -78,4 +76,4 @@ BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
 
 #### [The Network Crew Pty Ltd](https://thenetworkcrew.com.au)
 
-#### [LEOPARD.host](https://leopard.host)
+#### [Merlot Digital](https://merlot.digital)
