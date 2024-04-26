@@ -50,25 +50,25 @@ function addMod10v5CheckDigit($number) {
 add_hook('EmailPreSend', 1, function($vars) {
     // Initialise merge fields array
     $merge_fields = [];
-
+    
     // Check if the email is related to a client and 'relid' is available
     if (isset($vars['relid'])) {
         // Assuming 'relid' might be an invoice ID, so fetch the user ID from the invoice
         $invoice = Capsule::table('tblinvoices')->where('id', $vars['relid'])->first();
         
         if ($invoice) {
-          $clientID = $invoice->userid;  // Extract the client ID from the invoice
-  
-          // Pad the pre-check-digit CRN to 7 digits long
-          $paddedClientID = str_pad($clientID, 7, "0", STR_PAD_LEFT);
-  
-          // Generate the check digit using the MOD10v5 algorithm
-          $CRNwithCheckDigit = addMod10v5CheckDigit($paddedClientID);
-  
-          // Add the custom BPAY reference to the email template variables
-          $merge_fields['bpay_reference'] = $CRNwithCheckDigit;
+            $clientID = $invoice->userid;  // Extract the client ID from the invoice
+            
+            // Pad the pre-check-digit CRN to 7 digits long
+            $paddedClientID = str_pad($clientID, 7, "0", STR_PAD_LEFT);
+            
+            // Generate the check digit using the MOD10v5 algorithm
+            $CRNwithCheckDigit = addMod10v5CheckDigit($paddedClientID);
+            
+            // Add the custom BPAY reference to the email template variables
+            $merge_fields['bpay_reference'] = $CRNwithCheckDigit;
         }
     }
-
+    
     return $merge_fields;
 });
