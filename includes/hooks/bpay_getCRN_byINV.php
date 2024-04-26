@@ -1,15 +1,27 @@
 <?php
+// BPAY for WHMCS - v3.x - Reliable CRN Generation & Handling (this file: GENERATION BY INVOICE ID)
+// 
+// Adds a BPAY CRN with a MOD10 version 5 check digit for client-related emails and returns it as a merge field.
+// You can then use the {$bpay_reference} merge field in WHMCS Admin > Email Templates, to render the CRN.
+// 
+// Config: Pick a file (Customer ID- or Invoice ID-based CRNs), then amend zero padding inline!
 
-/**
- * Adds a BPAY CRN with a MOD10 version 5 check digit for client-related emails and returns it as a merge field.
- * https://stackoverflow.com/questions/11024309/luhncalc-and-bpay-mod10-version-5
- * 
- * Only configured to use Invoice ID - ie. always-changing reference (CRN).
- * Set to pad out to 7 digits - amend to suit your business!
- * 
- * Then, in your Email Templates, simply use {$bpay_reference}
- * eg: Biller Code: 000 and CRN: {$bpay_reference}
- */
+/*
+    Copyright (C) The Network Crew Pty Ltd
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 if (!defined('WHMCS')) {
     die('This file cannot be accessed directly');
@@ -22,6 +34,7 @@ if (!defined('WHMCS')) {
  * @return string The number with its check digit
  */
 function addMod10v5CheckDigit($number) {
+    // Strip anything non-numeric from input
     $number = preg_replace("/\D/", "", $number);
 
     // The seed number needs to be numeric
@@ -30,12 +43,11 @@ function addMod10v5CheckDigit($number) {
     // Must be a positive number
     if($number <= 0) return false;
 
-    // Get the length of the seed number
+    // Get the length of the seed
     $length = strlen($number);
 
+    // For each character in seed, sum the character multiplied by its one based array position (instead of normal PHP zero based numbering)
     $total = 0;
-
-    // For each character in seed number, sum the character multiplied by its one based array position (instead of normal PHP zero based numbering)
     for($i = 0; $i < $length; $i++) $total += $number[$i] * ($i + 1);
 
     // The check digit is the result of the sum total from above mod 10
@@ -46,7 +58,7 @@ function addMod10v5CheckDigit($number) {
 }
 
 add_hook('EmailPreSend', 1, function($vars) {
-    // Initialize merge fields array
+    // Initialise merge fields array
     $merge_fields = [];
 
     // Check if the email is related to a client and 'relid' is available
@@ -64,5 +76,6 @@ add_hook('EmailPreSend', 1, function($vars) {
         $merge_fields['bpay_reference'] = $CRNwithCheckDigit;
     }
 
+    // Whether empty or filled, return to-spec
     return $merge_fields;
 });
