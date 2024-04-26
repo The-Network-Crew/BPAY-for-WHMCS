@@ -1,72 +1,45 @@
-# BPAY for WHMCS (Module / Gateway) BPAY Manager
+# BPAY for WHMCS (v3.x)
 
-**_Addon Module for WHMCS which adds BPAY Payment support, image generation, etc._**
+Revised and simplified implementation of the previous BPAY Manager.
 
-**THE INHERITED CODEBASE IS NOT RELIABLE, MAY CAUSE ISSUES & IS NOT PROD-READY.**
+## What's different to v2?
 
-## ⚠️ (v3) Rebuilt in 2024 ⚠️
+Everything.
 
-The module that we've inherited is not ideally engineered/evolved up to the point of inheritance, so we've decided to wind down efforts, and instead will be taking some key functionality/concepts from this module, and slowly refactoring it into a radically simpler implementation.
+**Any prior v2 installation should be uninstalled.** Then you can add the v3 hook easily.
 
-v3 is more stripped-back, focused on doing less well.
+This is just a hook file (pick one: Client ID based or Invoice ID based) for a merge field.
 
-https://github.com/The-Network-Crew/BPAY-for-WHMCS-v3/
+So you add the file you'd like, and then amend padding to suit your needs (pre-check-digit). Done!
 
-## 🎯 (MODULE) System Requirements 🎯
+## What needs configuring?
 
-Below is what the module needs in order to work properly.
-- PHP: v8.x (latest stable)
-- WHMCS: v8.x (latest stable)
-- cURL: Must be enabled in php.ini
-- Firewall: Need to have TCP/443 open
-- SSL Certificate: WHMCS needs to use one
+Potentially nothing, likely 1 thing - CRN padding.
 
-## ✅ (MODULE) Installation Procedure ✅
+Just the number of digits that should be made up, pre-check-digit. 
 
-Below are the proper steps to Upload & Install the Module/Gateway.
-1. Download the latest version of the BPAY Manager for WHMCS from the GitHub repo.
-2. Upload all the files into your WHMCS directory in the same hierarchy as set in the ZIP.
-3. Once all files are uploaded, then go to your WHMCS Admin area. Go to Setup -> Addon Modules.
-4. Find “BPAY Manager”, click “Activate”, then click “Configure” & grant admin access to the module.
-5. Finally, in the top blue menu in WHMCS click “Addons” and then select “BPAY Manager” (per the ACL).
-6. The installer will appear, allowing you to configure the module as the bank specifies.
-7. (You will be prompted to separately enable the Payment Gateway of BPAY as well)
-8. You can start using BPAY right away for your existing invoices - done!
+This is in the file, on the below line (pre-check-digit = 7 chars):
 
-## 🐛 (ISSUES) Troubleshooting Problems 🐛
+    $paddedClientID = str_pad($clientID, 7, "0", STR_PAD_LEFT);
 
-### My biller code / reference number image is not appearing in the PDF file.
+## How do I use it in Email Templates?
 
-- Go to the BPAY Manager in your WHMCS and click the “Health” tab and check for errors.
-- Ensure BPAY code is in `/templates/your_template/invoicepdf.tpl` & `/templates/invoicepdf.tpl`
-- If all else fails, please raise an Issue on the repo - detailing steps, error, logs, etc - thanks!
+Once you've added 1x file (only) based on your generation method, amend your Invoice-related templates.
 
-### Every time I update WHMCS (core), the Invoice PDFs stop containing the image.
+Add the below merge field, which will give you just the BPAY CRN:
 
-- This occurs due to the `invoicepdf.tpl` file/s being over-written. Same when using Clean PDF, etc.
-- You can use the `reinject_template_code` flag (see Advanced Operations below) to re-inject the code.
+    {$bpay_reference}
 
-Something else not behaving? Check any [Open Issues](https://github.com/The-Network-Crew/BPAY-for-WHMCS/issues) on GitHub.
+So for instance, your section might go like this:
 
-## ⚙️ (FLAGS) Advanced Operations you can use ⚙️
+> How to pay us via BPAY:
+>
+> - Biller Code: 000
+> - CRN: {$bpay_reference}
 
-### Bypass initializion without needing to install the BPAY Manager again.
+## Anything else to know?
 
-`https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&initialise_record_bypass=1`
-
-### Reinject the Invoice PDF template code without needing to reinitialise.
-
-`https://{whmcs_admin_url}/addonmodules.php?module=bpay_mgr&reinject_template_code=1`
-
-## ⚠️ (EOL) Upgrading from old _rh versions ⚠️
-
-Due to the module being renamed, it's important to make sure you upgrade properly.
-
-1. Download the v2.1.9 **_and_** latest release and compare the file/folder structures
-2. From the Admin Area, Deactivate the Legacy Module Version (all vers =< v2.1.9)
-3. Having checked the file structures, delete old files and upload the new ones
-4. Do a manual check to verify that all legacy (\_rh) files & folders are gone
-5. Also within the Admin Area, go to Addon Modules and activate the new ver!
+Not really. It's just a MOD10v5 calc, with padding added to ensure it conforms to your Biller Code.
 
 ## ™️ (BPAY) Trade Mark clarity ™️
 
@@ -74,6 +47,6 @@ BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
 
 ## 🏢 (TNC) Links to TNC & Co. 🏢
 
-#### [The Network Crew Pty Ltd](https://thenetworkcrew.com.au)
+#### [The Network Crew Pty Ltd](https://tnc.works)
 
 #### [Merlot Digital](https://merlot.digital)
