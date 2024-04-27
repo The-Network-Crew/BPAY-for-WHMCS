@@ -5,6 +5,9 @@
 // You can then use the {$bpay_reference} merge field in WHMCS Admin > Email Templates, to render the CRN.
 // 
 // Config: Pick a file (Customer ID- or Invoice ID-based CRNs), then amend zero padding inline!
+// 
+// Ref: https://stackoverflow.com/questions/11024309/luhncalc-and-bpay-mod10-version-5
+// Ref: https://developers.whmcs.com/hooks-reference/everything-else/#emailpresend
 
 /*
     Copyright (C) The Network Crew Pty Ltd
