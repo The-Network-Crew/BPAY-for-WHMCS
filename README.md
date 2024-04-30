@@ -1,6 +1,6 @@
 # BPAY for WHMCS (v3.x)
 
-Revised and simplified implementation of the previous BPAY Manager.
+Revised and simplified implementation of the previous BPAY Manager for WHMCS.
 
 ## What's different to v2?
 
@@ -11,6 +11,14 @@ Everything.
 This is just a hook file (pick one: Client ID based or Invoice ID based) for a merge field.
 
 So you add the file you'd like, and then amend padding to suit your needs (pre-check-digit). Done!
+
+## Which file do I use?
+
+This depends on your BPAY Biller Code configuration.
+
+It may be generated based on Client ID or Invoice ID.
+
+Many prefer the static CID-based approach: less hassle.
 
 ## What needs configuring?
 
@@ -41,12 +49,12 @@ So for instance, your section might go like this:
 
 Not really. It's just a MOD10v5 calc, with padding added to ensure it conforms to your Biller Code.
 
-## ™️ (BPAY) Trade Mark clarity ™️
+## (BPAY) Trade Mark clarity ™
 
 BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
 
-## 🏢 (TNC) Links to TNC & Co. 🏢
+## (Corporate Sites) TNC & Merlot Digital
 
-#### [The Network Crew Pty Ltd](https://tnc.works)
+**The Network Crew Pty Ltd :: https://tnc.works
 
-#### [Merlot Digital](https://merlot.digital)
+**Merlot Digital** :: https://merlot.digital
