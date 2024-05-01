@@ -4,7 +4,7 @@ Revised and simplified implementation of the previous BPAY Manager for WHMCS.
 
 ## What's different to v2?
 
-Everything.
+Everything! _We've archived the old code-base into the legacy_v2 branch._
 
 **Any prior v2 installation should be uninstalled.** Then you can add the v3 hook easily.
 
@@ -47,7 +47,9 @@ So for instance, your section might go like this:
 
 ## Anything else to know?
 
-Not really. It's just a MOD10v5 calc, with padding added to ensure it conforms to your Biller Code.
+Not really! We're starting small and reliable, and slowly up-scaling back to image generation etc.
+
+It's a MOD10v5 calc, with padding adjusted to ensure it conforms to your Biller (default: 7 pre-check-digit).
 
 ## (BPAY) Trade Mark clarity ™
 
@@ -55,6 +57,6 @@ BPAY and the BPAY logo are registered trade marks of BPAY Pty Ltd.
 
 ## (Corporate Sites) TNC & Merlot Digital
 
-**The Network Crew Pty Ltd :: https://tnc.works
+**The Network Crew Pty Ltd** :: https://tnc.works
 
 **Merlot Digital** :: https://merlot.digital
