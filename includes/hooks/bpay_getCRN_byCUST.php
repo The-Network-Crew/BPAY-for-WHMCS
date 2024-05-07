@@ -72,7 +72,8 @@ add_hook('EmailPreSend', 1, function($vars) {
         $invoice = Capsule::table('tblinvoices')->where('id', $vars['relid'])->first();
         
         if ($invoice) {
-            $clientID = $invoice->userid;  // Extract the client ID from the invoice
+            // Extract the client ID from the invoice
+            $clientID = $invoice->userid;
             
             // Pad the pre-check-digit CRN to 7 digits long
             $paddedClientID = str_pad($clientID, 7, "0", STR_PAD_LEFT);
