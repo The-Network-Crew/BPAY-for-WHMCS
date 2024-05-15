@@ -82,3 +82,9 @@ add_hook('EmailPreSend', 1, function($vars) {
     // Whether empty or filled, return to-spec
     return $merge_fields;
 });
+
+add_hook('EmailTplMergeFields', 1, function($vars) {
+    $merge_fields = [];
+    $merge_fields['bpay_reference'] = "BPAY Reference";
+    return $merge_fields;
+});
