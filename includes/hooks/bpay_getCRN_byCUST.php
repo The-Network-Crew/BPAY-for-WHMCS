@@ -1,5 +1,5 @@
 <?php
-// BPAY for WHMCS - (v3.0.1) - Reliable CRN Generation & Handling (this file: GENERATION BY CUSTOMER ID)
+// BPAY for WHMCS - (v3.0.2) - Reliable CRN Generation & Handling (this file: GENERATION BY CUSTOMER ID)
 // 
 // Adds a BPAY CRN with a MOD10 version 5 check digit for client-related emails and returns it as a merge field.
 // You can then use the {$bpay_reference} merge field in WHMCS Admin > Email Templates, to render the CRN.
@@ -30,6 +30,7 @@ if (!defined('WHMCS')) {
     die('This file cannot be accessed directly');
 }
 
+// Customer ID generation method requires DB to cross-reference unique (rel) ID
 use WHMCS\Database\Capsule;
 
 /**
@@ -62,6 +63,7 @@ function addMod10v5CheckDigit($number) {
     return $number . $checkdigit;
 }
 
+// Suffix the check digit through the above function; then return the Merge Field
 add_hook('EmailPreSend', 1, function($vars) {
     // Initialise merge fields array
     $merge_fields = [];
@@ -90,8 +92,9 @@ add_hook('EmailPreSend', 1, function($vars) {
     return $merge_fields;
 });
 
+// Present the Merge Field in the GUI, when editing Email Templates
 add_hook('EmailTplMergeFields', 1, function($vars) {
     $merge_fields = [];
-    $merge_fields['bpay_reference'] = "BPAY Reference";
+    $merge_fields['bpay_reference'] = "BPAY Reference (CRN)";
     return $merge_fields;
 });
